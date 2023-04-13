@@ -6,9 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc",
-    "format": "prettier --write ./src/**/*.{js,html,ts,json}",
-    "lint": "eslint './src/**/*.{js,ts}'",
-    "prelint": "npm run format"
+    "format": "prettier --write ./{src,examples}/**/*.{js,html,ts,json,html}",
+    "lint": "eslint './{src,examples}/**/*.{js,ts}'",
+    "prelint": "npm run format",
+    "example-fetch": "npm --prefix examples/fetch run dev"
   },
   "repository": {
     "type": "git",
@@ -39,5 +40,8 @@
     "eslint-plugin-prettier": "4.2.1",
     "prettier": "2.8.7",
     "typescript": "5.0.4"
-  }
+  },
+  "workspaces": [
+    "examples/*"
+  ]
 }
