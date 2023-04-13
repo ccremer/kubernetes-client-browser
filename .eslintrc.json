@@ -1,0 +1,29 @@
+{
+    "root": true,
+    "overrides": [
+        {
+            "files": ["*.ts"],
+            "parserOptions": {
+                "project": ["tsconfig.json"],
+                "createDefaultProgram": true
+            },
+            "extends": [
+                "eslint:recommended",
+                "plugin:@typescript-eslint/eslint-recommended",
+                "plugin:@typescript-eslint/recommended"
+            ],
+            "rules": {
+                "prettier/prettier": "error",
+                "quotes": ["error", "double"],
+                "@typescript-eslint/explicit-function-return-type": [
+                    "error",
+                    {
+                        "allowExpressions": true
+                    }
+                ],
+                "curly": "error"
+            },
+            "plugins": ["prettier"]
+        }
+    ]
+}

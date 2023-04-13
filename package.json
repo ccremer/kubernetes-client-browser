@@ -1,0 +1,43 @@
+{
+  "name": "@ccremer/kubernetes-client",
+  "version": "0.1.0",
+  "description": "Generic Kubernetes client run in the Browser",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "format": "prettier --write ./src/**/*.{js,html,ts,json}",
+    "lint": "eslint './src/**/*.{js,ts}'",
+    "prelint": "npm run format"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ccremer/kubernetes-client-browser.git"
+  },
+  "keywords": [
+    "kubernetes",
+    "client",
+    "browser",
+    "typescript",
+    "fetch"
+  ],
+  "author": "ccremer",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ccremer/kubernetes-client-browser/issues"
+  },
+  "homepage": "https://github.com/ccremer/kubernetes-client-browser#readme",
+  "types": "dist/index.d.ts",
+  "files": [
+    "/dist"
+  ],
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "5.58.0",
+    "@typescript-eslint/parser": "5.58.0",
+    "eslint": "8.38.0",
+    "eslint-config-prettier": "8.8.0",
+    "eslint-plugin-prettier": "4.2.1",
+    "prettier": "2.8.7",
+    "typescript": "5.0.4"
+  }
+}

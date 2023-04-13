@@ -1,0 +1,11 @@
+{
+  "useTabs": false,
+  "arrowParens": "always",
+  "singleQuote": false,
+  "printWidth": 120,
+  "pluginSearchDirs": [
+    "."
+  ],
+  "semi": false,
+  "trailingComma": "es5"
+}
