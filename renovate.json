@@ -1,0 +1,37 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:base",
+    ":disableDependencyDashboard",
+    ":gitSignOff"
+  ],
+  "labels": [
+    "dependency"
+  ],
+  "npm": {
+    "packageRules": [
+      {
+        "matchUpdateTypes": [
+          "minor",
+          "patch",
+          "pin",
+          "digest"
+        ],
+        "automerge": true,
+        "groupName": "npm",
+        "schedule": [
+          "on the first day of the month"
+        ]
+      },
+      {
+        "matchUpdateTypes": [
+          "major"
+        ],
+        "groupName": "npm-major",
+        "schedule": [
+          "on the first day of the month"
+        ]
+      }
+    ]
+  }
+}
