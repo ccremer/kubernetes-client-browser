@@ -4,7 +4,7 @@
   "description": "Generic Kubernetes client run in the Browser",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 0",
+    "test": "vitest",
     "build": "rm -rf ./dist && tsc",
     "format": "prettier --write ./{src,examples}/**/*.{js,html,ts,json,html}",
     "lint": "eslint './{src,examples}/**/*.{js,ts}'",
@@ -39,7 +39,8 @@
     "eslint-config-prettier": "8.8.0",
     "eslint-plugin-prettier": "4.2.1",
     "prettier": "2.8.7",
-    "typescript": "5.0.4"
+    "typescript": "5.0.4",
+    "vitest": "0.30.1"
   },
   "workspaces": [
     "examples/*"
