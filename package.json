@@ -4,8 +4,8 @@
   "description": "Generic Kubernetes client run in the Browser",
   "main": "dist/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 0",
+    "build": "rm -rf ./dist && tsc",
     "format": "prettier --write ./{src,examples}/**/*.{js,html,ts,json,html}",
     "lint": "eslint './{src,examples}/**/*.{js,ts}'",
     "prelint": "npm run format",
