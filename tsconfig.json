@@ -5,9 +5,12 @@
     "declaration": true,
     "outDir": "./dist",
     "moduleResolution": "node",
-    "strict": true,
+    "strict": true
   },
   "include": [
     "src/**/*"
+  ],
+  "exclude": [
+    "src/**/*.spec.ts"
   ]
 }
