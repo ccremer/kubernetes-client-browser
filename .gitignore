@@ -29,3 +29,8 @@ node_modules/
 
 # generated output
 dist
+
+# test output
+playwright-report
+test-results
+playwright/.cache

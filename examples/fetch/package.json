@@ -2,9 +2,12 @@
   "name": "@ccremer/kubernetes-client-example-fetch",
   "scripts": {
     "dev": "vite",
-    "build": "vite build"
+    "build": "vite build",
+    "test-install": "npx playwright install --with-deps",
+    "test": "npx playwright test"
   },
   "devDependencies": {
+    "@playwright/test": "1.32.3",
     "@types/bootstrap": "5.2.6",
     "@types/node": "18.15.11",
     "dotenv": "16.0.3",
