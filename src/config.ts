@@ -2,7 +2,7 @@ export class KubeConfig {
   clusters?: Cluster[]
   users?: User[]
   contexts?: Context[]
-  "current-context"?: string
+  'current-context'?: string
 }
 
 export interface Cluster {
@@ -28,12 +28,12 @@ export interface Context {
 }
 
 export class Config {
-  static FromToken(token: string, server = ""): KubeConfig {
+  static FromToken(token: string, server = ''): KubeConfig {
     return {
-      users: [{ name: "user", user: { token: token } }],
-      clusters: [{ name: "cluster", cluster: { server: server } }],
-      "current-context": "context",
-      contexts: [{ name: "context", context: { user: "user", cluster: "cluster" } }],
+      users: [{ name: 'user', user: { token: token } }],
+      clusters: [{ name: 'cluster', cluster: { server: server } }],
+      'current-context': 'context',
+      contexts: [{ name: 'context', context: { user: 'user', cluster: 'cluster' } }],
     }
   }
 }

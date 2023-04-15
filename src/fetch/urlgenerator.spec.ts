@@ -1,8 +1,8 @@
-import { describe, expect, it } from "vitest"
-import { KubernetesUrlGenerator } from "./urlgenerator"
-import { HttpMethods } from "../urlgenerator"
+import { describe, expect, it } from 'vitest'
+import { KubernetesUrlGenerator } from './urlgenerator'
+import { HttpMethods } from '../urlgenerator'
 
-describe("urlgenerator", () => {
+describe('urlgenerator', () => {
   const tests: {
     name: string
     expected: string
@@ -16,63 +16,63 @@ describe("urlgenerator", () => {
     }
   }[] = [
     {
-      name: "should return /api/v1/namespaces/default/configmaps/test for listing single object in namespace",
+      name: 'should return /api/v1/namespaces/default/configmaps/test for listing single object in namespace',
       input: {
-        method: "GET",
-        apiVersion: "v1",
-        kind: "ConfigMap",
-        name: "test",
-        namespace: "default",
+        method: 'GET',
+        apiVersion: 'v1',
+        kind: 'ConfigMap',
+        name: 'test',
+        namespace: 'default',
       },
-      expected: "/api/v1/namespaces/default/configmaps/test",
+      expected: '/api/v1/namespaces/default/configmaps/test',
     },
     {
-      name: "should return /api/v1/namespaces/default/configmaps for listing all in namespace",
+      name: 'should return /api/v1/namespaces/default/configmaps for listing all in namespace',
       input: {
-        method: "GET",
-        apiVersion: "v1",
-        kind: "ConfigMap",
-        namespace: "default",
+        method: 'GET',
+        apiVersion: 'v1',
+        kind: 'ConfigMap',
+        namespace: 'default',
       },
-      expected: "/api/v1/namespaces/default/configmaps",
+      expected: '/api/v1/namespaces/default/configmaps',
     },
     {
-      name: "should return /api/v1/namespaces/default/configmaps for new objects",
+      name: 'should return /api/v1/namespaces/default/configmaps for new objects',
       input: {
-        method: "POST",
-        apiVersion: "v1",
-        kind: "ConfigMap",
-        namespace: "default",
+        method: 'POST',
+        apiVersion: 'v1',
+        kind: 'ConfigMap',
+        namespace: 'default',
       },
-      expected: "/api/v1/namespaces/default/configmaps",
+      expected: '/api/v1/namespaces/default/configmaps',
     },
     {
-      name: "should return /api/v1/nodes for listing cluster-scoped objects",
+      name: 'should return /api/v1/nodes for listing cluster-scoped objects',
       input: {
-        method: "GET",
-        apiVersion: "v1",
-        kind: "Node",
+        method: 'GET',
+        apiVersion: 'v1',
+        kind: 'Node',
       },
-      expected: "/api/v1/nodes",
+      expected: '/api/v1/nodes',
     },
     {
-      name: "should return /api/v1/namespaces/default for existing object",
+      name: 'should return /api/v1/namespaces/default for existing object',
       input: {
-        method: "GET",
-        apiVersion: "v1",
-        kind: "Namespace",
-        name: "default",
+        method: 'GET',
+        apiVersion: 'v1',
+        kind: 'Namespace',
+        name: 'default',
       },
-      expected: "/api/v1/namespaces/default",
+      expected: '/api/v1/namespaces/default',
     },
     {
-      name: "should return /apis/authorization.k8s.io/v1/selfsubjectaccessreviews for ",
+      name: 'should return /apis/authorization.k8s.io/v1/selfsubjectaccessreviews for ',
       input: {
-        method: "GET",
-        apiVersion: "authorization.k8s.io/v1",
-        kind: "SelfSubjectAccessReview",
+        method: 'GET',
+        apiVersion: 'authorization.k8s.io/v1',
+        kind: 'SelfSubjectAccessReview',
       },
-      expected: "/apis/authorization.k8s.io/v1/selfsubjectaccessreviews",
+      expected: '/apis/authorization.k8s.io/v1/selfsubjectaccessreviews',
     },
   ]
 
@@ -91,17 +91,17 @@ describe("urlgenerator", () => {
     })
   })
 
-  it("buildEndpoint() should return http://localhost:5000", () => {
-    const subject = new KubernetesUrlGenerator("http://localhost:5000")
-    const result = subject.buildEndpoint("GET", "v1", "Namespace", undefined, "default")
-    expect(result).toEqual("http://localhost:5000/api/v1/namespaces/default")
+  it('buildEndpoint() should return http://localhost:5000', () => {
+    const subject = new KubernetesUrlGenerator('http://localhost:5000')
+    const result = subject.buildEndpoint('GET', 'v1', 'Namespace', undefined, 'default')
+    expect(result).toEqual('http://localhost:5000/api/v1/namespaces/default')
   })
 
-  it("buildEndpoint() should return query parameters", () => {
+  it('buildEndpoint() should return query parameters', () => {
     const subject = new KubernetesUrlGenerator()
     const params = new URLSearchParams()
-    params.set("limit", "500")
-    const result = subject.buildEndpoint("GET", "v1", "Namespace", undefined, "default", params)
-    expect(result).toEqual("/api/v1/namespaces/default?limit=500")
+    params.set('limit', '500')
+    const result = subject.buildEndpoint('GET', 'v1', 'Namespace', undefined, 'default', params)
+    expect(result).toEqual('/api/v1/namespaces/default?limit=500')
   })
 })

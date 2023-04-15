@@ -1,10 +1,10 @@
-import { Config, KubeConfig } from "../config"
-import { Client } from "../client"
-import { FetchClient, FetchFn } from "./client"
-import { UrlGenerator } from "../urlgenerator"
-import { KubernetesUrlGenerator } from "./urlgenerator"
-import { Authorizer } from "./authorizer"
-import { DefaultAuthorizer } from "./default-authorizer"
+import { Config, KubeConfig } from '../config'
+import { Client } from '../client'
+import { FetchClient, FetchFn } from './client'
+import { UrlGenerator } from '../urlgenerator'
+import { KubernetesUrlGenerator } from './urlgenerator'
+import { Authorizer } from './authorizer'
+import { DefaultAuthorizer } from './default-authorizer'
 
 export class FetchClientBuilder {
   private fetchFn?: FetchFn
@@ -40,7 +40,7 @@ export class FetchClientBuilder {
     )
   }
 
-  public Default(token: string, server = ""): Client {
+  public Default(token: string, server = ''): Client {
     return FetchClientBuilder.NewWithConfig(Config.FromToken(token, server)).Build()
   }
 }

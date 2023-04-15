@@ -1,8 +1,8 @@
-import { Client } from "../client"
-import { KubeList, KubeObject } from "../types/object"
-import { HttpMethods, UrlGenerator } from "../urlgenerator"
-import { ErrorStatus, KubernetesError } from "../types/error"
-import { Authorizer } from "./authorizer"
+import { Client } from '../client'
+import { KubeList, KubeObject } from '../types/object'
+import { HttpMethods, UrlGenerator } from '../urlgenerator'
+import { ErrorStatus, KubernetesError } from '../types/error'
+import { Authorizer } from './authorizer'
 
 export declare type FetchFn = (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>
 
@@ -19,14 +19,14 @@ export class FetchClient implements Client {
 
   create<K extends KubeObject>(body: K, queryParams?: URLSearchParams): Promise<K> {
     const endpoint = this.urlGenerator.buildEndpoint(
-      "GET",
+      'GET',
       body.apiVersion,
       body.kind,
       body.metadata.namespace,
       body.metadata.name,
       queryParams
     )
-    return this.makeRequest(endpoint, "POST", JSON.stringify(body))
+    return this.makeRequest(endpoint, 'POST', JSON.stringify(body))
   }
 
   get<K extends KubeObject>(fromBody: K, queryParams?: URLSearchParams): Promise<K> {
@@ -46,8 +46,8 @@ export class FetchClient implements Client {
     namespace?: string,
     queryParams?: URLSearchParams
   ): Promise<K> {
-    const endpoint = this.urlGenerator.buildEndpoint("GET", apiVersion, kind, namespace, name, queryParams)
-    return this.makeRequest(endpoint, "GET")
+    const endpoint = this.urlGenerator.buildEndpoint('GET', apiVersion, kind, namespace, name, queryParams)
+    return this.makeRequest(endpoint, 'GET')
   }
 
   listById<K extends KubeObject, L extends KubeList<K>>(
@@ -56,8 +56,8 @@ export class FetchClient implements Client {
     namespace?: string,
     queryParams?: URLSearchParams
   ): Promise<L> {
-    const endpoint = this.urlGenerator.buildEndpoint("GET", apiVersion, kind, namespace, undefined, queryParams)
-    return this.makeRequest(endpoint, "GET")
+    const endpoint = this.urlGenerator.buildEndpoint('GET', apiVersion, kind, namespace, undefined, queryParams)
+    return this.makeRequest(endpoint, 'GET')
   }
 
   list<K extends KubeObject, L extends KubeList<K>>(fromBody: K, queryParams?: URLSearchParams): Promise<L> {
@@ -69,7 +69,7 @@ export class FetchClient implements Client {
       body: body,
       method: method,
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
     }
     const initWithAuth = this.authorizer.applyAuthorization(init)
@@ -79,9 +79,9 @@ export class FetchClient implements Client {
         return response.json()
       })
       .then((json) => {
-        if (Object.prototype.hasOwnProperty.call(json, "kind")) {
+        if (Object.prototype.hasOwnProperty.call(json, 'kind')) {
           const err: ErrorStatus = json as ErrorStatus
-          if (err.kind === "Status") {
+          if (err.kind === 'Status') {
             throw new KubernetesError(err.message, err.reason, err.status, err.code)
           }
         }
@@ -96,8 +96,8 @@ export class FetchClient implements Client {
     namespace?: string,
     queryParams?: URLSearchParams
   ): Promise<void> {
-    const endpoint = this.urlGenerator.buildEndpoint("GET", apiVersion, kind, namespace, name, queryParams)
-    return this.makeRequest(endpoint, "DELETE").then()
+    const endpoint = this.urlGenerator.buildEndpoint('GET', apiVersion, kind, namespace, name, queryParams)
+    return this.makeRequest(endpoint, 'DELETE').then()
   }
 
   delete<K extends KubeObject>(fromBody: K, queryParams?: URLSearchParams): Promise<void> {
