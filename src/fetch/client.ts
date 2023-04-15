@@ -73,8 +73,11 @@ export class FetchClient implements Client {
       },
     }
     const initWithAuth = this.authorizer.applyAuthorization(init)
-    return await this.fetchFn(endpoint, initWithAuth)
-      .then((response) => response.json())
+    return await this.fetchFn
+      .bind(window)(endpoint, initWithAuth)
+      .then((response) => {
+        return response.json()
+      })
       .then((json) => {
         if (Object.prototype.hasOwnProperty.call(json, "kind")) {
           const err: ErrorStatus = json as ErrorStatus
