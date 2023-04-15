@@ -34,3 +34,6 @@ dist
 playwright-report
 test-results
 playwright/.cache
+
+# kind for examples
+kind-kubeconfig

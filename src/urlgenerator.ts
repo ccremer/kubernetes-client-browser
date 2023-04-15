@@ -1,4 +1,4 @@
-export declare type HttpMethods = "DELETE" | "GET" | "POST" | "PUT" | "PATCH"
+export declare type HttpMethods = 'DELETE' | 'GET' | 'POST' | 'PUT' | 'PATCH'
 
 export interface UrlGenerator {
   buildEndpoint(
