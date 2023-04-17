@@ -8,7 +8,7 @@ export interface KubeObject {
  * KubeMeta is the `.metadata` of any Kubernetes resource.
  */
 export interface KubeMeta {
-  name: string
+  name?: string
   namespace?: string
   creationTimestamp?: string
   annotations?: Annotations

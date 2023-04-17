@@ -33,7 +33,7 @@ export class FetchClient implements Client {
     return this.getById(
       fromBody.apiVersion,
       fromBody.kind,
-      fromBody.metadata.name,
+      fromBody.metadata.name ?? '',
       fromBody.metadata.namespace,
       queryParams
     )
