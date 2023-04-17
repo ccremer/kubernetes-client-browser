@@ -40,6 +40,10 @@ jobs:
 
   e2e:
     timeout-minutes: 60
+    strategy:
+      matrix:
+        example:
+          - fetch
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -48,11 +52,11 @@ jobs:
           node-version: 'lts/*'
           cache: 'npm'
       - name: Install dependencies
-        run: npm ci
-      - name: Install Playwright Browsers
-        run: npx --workspace examples/fetch playwright install --with-deps
-      - name: Run Playwright tests
-        run: npx --workspace examples/fetch playwright test
+        run: make -f .github/workflows/e2e.mk -e example_dir=examples/${{ matrix.example }} -j 2 preinstall
+      - name: Setup test tools
+        run: make -f .github/workflows/e2e.mk -e example_dir=examples/${{ matrix.example }} -j 2 install
+      - name: Run tests
+        run: make -f .github/workflows/e2e.mk -e example_dir=examples/${{ matrix.example }} test
       - uses: actions/upload-artifact@v3
         if: always()
         with:
