@@ -1,8 +1,8 @@
 import { describe, expect, it } from 'vitest'
-import { KubernetesUrlGenerator } from './urlgenerator'
-import { HttpMethods } from '../urlgenerator'
+import { HttpMethods, KubernetesUrlGenerator, toURLSearchParams } from './urlgenerator'
+import { ClientOptions } from '../options'
 
-describe('urlgenerator', () => {
+describe('KubernetesUrlGenerator', () => {
   const tests: {
     name: string
     expected: string
@@ -103,5 +103,51 @@ describe('urlgenerator', () => {
     params.set('limit', '500')
     const result = subject.buildEndpoint('GET', 'v1', 'Namespace', undefined, 'default', params)
     expect(result).toEqual('/api/v1/namespaces/default?limit=500')
+  })
+})
+
+describe('toURLSearchParams', () => {
+  const tests: { name: string; options: ClientOptions; expected: string }[] = [
+    {
+      name: 'should return boolean',
+      options: {
+        hideManagedFields: true,
+      },
+      expected: 'hideManagedFields=true',
+    },
+    {
+      name: 'should return number',
+      options: {
+        limit: 500,
+      },
+      expected: 'limit=500',
+    },
+    {
+      name: 'should ignore key for undefined',
+      options: {
+        someKey: undefined,
+      },
+      expected: '',
+    },
+    {
+      name: 'should return string',
+      options: {
+        someKey: 'hi Mom',
+      },
+      expected: 'someKey=hi+Mom',
+    },
+    {
+      name: 'should return empty string',
+      options: {
+        someKey: '',
+      },
+      expected: 'someKey=',
+    },
+  ]
+  tests.forEach((test) => {
+    it(test.name, () => {
+      const result = toURLSearchParams(test.options).toString()
+      expect(result).toEqual(test.expected)
+    })
   })
 })

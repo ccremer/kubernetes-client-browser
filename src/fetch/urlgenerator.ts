@@ -1,4 +1,21 @@
-import { HttpMethods, UrlGenerator } from '../urlgenerator'
+import { OptionValue } from '../options'
+
+export declare type HttpMethods = 'DELETE' | 'GET' | 'POST' | 'PUT' | 'PATCH'
+
+export interface UrlGenerator {
+  /**
+   * Builds the endpoint URL including query parameters for the given resource.
+   * @returns a URL encoded string as expected by Kubernetes API.
+   */
+  buildEndpoint(
+    method: HttpMethods,
+    apiVersion: string,
+    kind: string,
+    inNamespace?: string,
+    name?: string,
+    queryParams?: URLSearchParams
+  ): string
+}
 
 export class KubernetesUrlGenerator implements UrlGenerator {
   constructor(private apiBase = '') {}
@@ -32,4 +49,20 @@ export class KubernetesUrlGenerator implements UrlGenerator {
     }
     return endpoint.join('/')
   }
+}
+
+/**
+ * Converts the given options into {@link URLSearchParams}.
+ * Supported types for each string key are: string, boolean, number.
+ * If a key's value is `undefined`, it will not be part of the params.
+ * @param obj an object with key-value properties.
+ */
+export function toURLSearchParams(obj?: { [key: string]: OptionValue }): URLSearchParams | undefined {
+  if (!obj) return undefined
+  const records: Record<string, string> = {}
+  Object.entries(obj).forEach(([key, value]) => {
+    if (value === undefined) return
+    records[key] = value.toString()
+  })
+  return new URLSearchParams(records)
 }

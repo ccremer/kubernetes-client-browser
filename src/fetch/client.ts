@@ -1,9 +1,10 @@
-import { Client } from '../client'
 import { KubeObject } from '../types/core/KubeObject'
-import { HttpMethods, UrlGenerator } from '../urlgenerator'
 import { ErrorStatus, KubernetesError } from '../types/core/Error'
 import { Authorizer } from './authorizer'
 import { KubeList } from '../types/core/KubeList'
+import { DeleteOptions, GetOptions, ListOptions, MutationOptions, PatchOptions } from '../options'
+import { Client } from './builder'
+import { HttpMethods, toURLSearchParams, UrlGenerator } from './urlgenerator'
 
 export declare type FetchFn = (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>
 
@@ -15,25 +16,13 @@ export class FetchClient implements Client {
     protected thisArg: ThisParameterType<unknown>
   ) {}
 
-  create<K extends KubeObject>(body: K, queryParams?: URLSearchParams): Promise<K> {
-    const endpoint = this.urlGenerator.buildEndpoint(
-      'GET',
-      body.apiVersion,
-      body.kind,
-      body.metadata?.namespace,
-      body.metadata?.name,
-      queryParams
-    )
-    return this.makeRequest(endpoint, 'POST', JSON.stringify(body))
-  }
-
-  get<K extends KubeObject>(fromBody: K, queryParams?: URLSearchParams): Promise<K> {
+  get<K extends KubeObject>(fromBody: K, options?: GetOptions): Promise<K> {
     return this.getById(
       fromBody.apiVersion,
       fromBody.kind,
       fromBody.metadata?.name ?? '',
       fromBody.metadata?.namespace,
-      queryParams
+      options
     )
   }
 
@@ -42,9 +31,16 @@ export class FetchClient implements Client {
     kind: string,
     name: string,
     namespace?: string,
-    queryParams?: URLSearchParams
+    options?: GetOptions
   ): Promise<K> {
-    const endpoint = this.urlGenerator.buildEndpoint('GET', apiVersion, kind, namespace, name, queryParams)
+    const endpoint = this.urlGenerator.buildEndpoint(
+      'GET',
+      apiVersion,
+      kind,
+      namespace,
+      name,
+      toURLSearchParams(options)
+    )
     return this.makeRequest(endpoint, 'GET')
   }
 
@@ -52,14 +48,57 @@ export class FetchClient implements Client {
     apiVersion: string,
     kind: string,
     namespace?: string,
-    queryParams?: URLSearchParams
+    options?: ListOptions
   ): Promise<L> {
-    const endpoint = this.urlGenerator.buildEndpoint('GET', apiVersion, kind, namespace, undefined, queryParams)
+    const endpoint = this.urlGenerator.buildEndpoint(
+      'GET',
+      apiVersion,
+      kind,
+      namespace,
+      undefined,
+      toURLSearchParams(options)
+    )
     return this.makeRequest(endpoint, 'GET')
   }
 
-  list<K extends KubeObject, L extends KubeList<K>>(fromBody: K, queryParams?: URLSearchParams): Promise<L> {
-    return this.listById(fromBody.apiVersion, fromBody.kind, fromBody.metadata?.namespace, queryParams)
+  list<K extends KubeObject, L extends KubeList<K>>(fromBody: K, options?: ListOptions): Promise<L> {
+    return this.listById(fromBody.apiVersion, fromBody.kind, fromBody.metadata?.namespace, options)
+  }
+
+  create<K extends KubeObject>(body: K, options?: MutationOptions): Promise<K> {
+    const endpoint = this.urlGenerator.buildEndpoint(
+      'GET',
+      body.apiVersion,
+      body.kind,
+      body.metadata?.namespace,
+      body.metadata?.name,
+      toURLSearchParams(options)
+    )
+    return this.makeRequest(endpoint, 'POST', JSON.stringify(body))
+  }
+
+  update<K extends KubeObject>(body: K, options?: MutationOptions): Promise<K> {
+    const endpoint = this.urlGenerator.buildEndpoint(
+      'PUT',
+      body.apiVersion,
+      body.kind,
+      body.metadata?.namespace,
+      body.metadata?.name,
+      toURLSearchParams(options)
+    )
+    return this.makeRequest(endpoint, 'PUT', JSON.stringify(body))
+  }
+
+  patch<K extends KubeObject>(body: K, options?: PatchOptions): Promise<K> {
+    const endpoint = this.urlGenerator.buildEndpoint(
+      'PATCH',
+      body.apiVersion,
+      body.kind,
+      body.metadata?.namespace,
+      body.metadata?.name,
+      toURLSearchParams(options)
+    )
+    return this.makeRequest(endpoint, 'PATCH', JSON.stringify(body))
   }
 
   deleteById(
@@ -67,19 +106,26 @@ export class FetchClient implements Client {
     kind: string,
     name?: string,
     namespace?: string,
-    queryParams?: URLSearchParams
+    options?: DeleteOptions
   ): Promise<void> {
-    const endpoint = this.urlGenerator.buildEndpoint('GET', apiVersion, kind, namespace, name, queryParams)
+    const endpoint = this.urlGenerator.buildEndpoint(
+      'GET',
+      apiVersion,
+      kind,
+      namespace,
+      name,
+      toURLSearchParams(options)
+    )
     return this.makeRequest(endpoint, 'DELETE').then()
   }
 
-  delete<K extends KubeObject>(fromBody: K, queryParams?: URLSearchParams): Promise<void> {
+  delete<K extends KubeObject>(fromBody: K, options?: DeleteOptions): Promise<void> {
     return this.deleteById(
       fromBody.apiVersion,
       fromBody.kind,
       fromBody.metadata?.name,
       fromBody.metadata?.namespace,
-      queryParams
+      options
     )
   }
 
@@ -88,7 +134,7 @@ export class FetchClient implements Client {
       body: body,
       method: method,
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': method === 'PATCH' ? 'application/strategic-merge-patch+json' : 'application/json',
       },
     }
     const initWithAuth = this.authorizer.applyAuthorization(init)

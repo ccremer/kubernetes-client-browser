@@ -1,10 +1,23 @@
 import { Config, KubeConfig } from '../config'
-import { Client } from '../client'
+import {
+  ClientWithCreate,
+  ClientWithDelete,
+  ClientWithGet,
+  ClientWithList,
+  ClientWithPatch,
+  ClientWithUpdate,
+} from '../client'
 import { FetchClient, FetchFn } from './client'
-import { UrlGenerator } from '../urlgenerator'
-import { KubernetesUrlGenerator } from './urlgenerator'
-import { Authorizer } from './authorizer'
-import { DefaultAuthorizer } from './default-authorizer'
+import { KubernetesUrlGenerator, UrlGenerator } from './urlgenerator'
+import { Authorizer, DefaultAuthorizer } from './authorizer'
+
+export interface Client
+  extends ClientWithCreate,
+    ClientWithGet,
+    ClientWithList,
+    ClientWithDelete,
+    ClientWithUpdate,
+    ClientWithPatch {}
 
 /**
  * KubeClientBuilder constructs a {@link Client} instance using the Fetch API as implementation.
