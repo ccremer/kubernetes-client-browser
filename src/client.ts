@@ -1,4 +1,5 @@
-import { KubeList, KubeObject } from './types/object'
+import { KubeObject } from './types/core/KubeObject'
+import { KubeList } from './types/core/KubeList'
 
 export interface Client {
   create<K extends KubeObject>(body: K, queryParams?: URLSearchParams): Promise<K>

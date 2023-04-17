@@ -1,29 +1,27 @@
 import { Client } from '../client'
-import { KubeList, KubeObject } from '../types/object'
+import { KubeObject } from '../types/core/KubeObject'
 import { HttpMethods, UrlGenerator } from '../urlgenerator'
-import { ErrorStatus, KubernetesError } from '../types/error'
+import { ErrorStatus, KubernetesError } from '../types/core/Error'
 import { Authorizer } from './authorizer'
+import { KubeList } from '../types/core/KubeList'
 
 export declare type FetchFn = (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>
 
 export class FetchClient implements Client {
-  protected fetchFn: FetchFn
-
-  constructor(protected urlGenerator: UrlGenerator, protected authorizer: Authorizer, fetchFn?: FetchFn) {
-    if (fetchFn) {
-      this.fetchFn = fetchFn
-    } else {
-      this.fetchFn = fetch
-    }
-  }
+  constructor(
+    protected urlGenerator: UrlGenerator,
+    protected authorizer: Authorizer,
+    protected fetchFn: FetchFn,
+    protected thisArg: ThisParameterType<unknown>
+  ) {}
 
   create<K extends KubeObject>(body: K, queryParams?: URLSearchParams): Promise<K> {
     const endpoint = this.urlGenerator.buildEndpoint(
       'GET',
       body.apiVersion,
       body.kind,
-      body.metadata.namespace,
-      body.metadata.name,
+      body.metadata?.namespace,
+      body.metadata?.name,
       queryParams
     )
     return this.makeRequest(endpoint, 'POST', JSON.stringify(body))
@@ -33,8 +31,8 @@ export class FetchClient implements Client {
     return this.getById(
       fromBody.apiVersion,
       fromBody.kind,
-      fromBody.metadata.name ?? '',
-      fromBody.metadata.namespace,
+      fromBody.metadata?.name ?? '',
+      fromBody.metadata?.namespace,
       queryParams
     )
   }
@@ -61,32 +59,7 @@ export class FetchClient implements Client {
   }
 
   list<K extends KubeObject, L extends KubeList<K>>(fromBody: K, queryParams?: URLSearchParams): Promise<L> {
-    return this.listById(fromBody.apiVersion, fromBody.kind, fromBody.metadata.namespace, queryParams)
-  }
-
-  protected async makeRequest<K extends KubeObject>(endpoint: string, method: HttpMethods, body?: string): Promise<K> {
-    const init: RequestInit = {
-      body: body,
-      method: method,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    }
-    const initWithAuth = this.authorizer.applyAuthorization(init)
-    return await this.fetchFn
-      .bind(window)(endpoint, initWithAuth)
-      .then((response) => {
-        return response.json()
-      })
-      .then((json) => {
-        if (Object.prototype.hasOwnProperty.call(json, 'kind')) {
-          const err: ErrorStatus = json as ErrorStatus
-          if (err.kind === 'Status') {
-            throw new KubernetesError(err.message, err.reason, err.status, err.code)
-          }
-        }
-        return json satisfies Promise<K>
-      })
+    return this.listById(fromBody.apiVersion, fromBody.kind, fromBody.metadata?.namespace, queryParams)
   }
 
   deleteById(
@@ -104,9 +77,34 @@ export class FetchClient implements Client {
     return this.deleteById(
       fromBody.apiVersion,
       fromBody.kind,
-      fromBody.metadata.name,
-      fromBody.metadata.namespace,
+      fromBody.metadata?.name,
+      fromBody.metadata?.namespace,
       queryParams
     )
+  }
+
+  protected async makeRequest<K extends KubeObject>(endpoint: string, method: HttpMethods, body?: string): Promise<K> {
+    const init: RequestInit = {
+      body: body,
+      method: method,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    }
+    const initWithAuth = this.authorizer.applyAuthorization(init)
+    return await this.fetchFn
+      .bind(this.thisArg)(endpoint, initWithAuth)
+      .then((response) => {
+        return response.json()
+      })
+      .then((json) => {
+        if (Object.prototype.hasOwnProperty.call(json, 'kind')) {
+          const err: ErrorStatus = json as ErrorStatus
+          if (err.kind === 'Status') {
+            throw new KubernetesError(err.message, err)
+          }
+        }
+        return json satisfies K
+      })
   }
 }

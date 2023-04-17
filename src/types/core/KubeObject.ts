@@ -1,7 +1,7 @@
 export interface KubeObject {
   apiVersion: string
   kind: string
-  metadata: KubeMeta
+  metadata?: KubeMeta
 }
 
 /**
@@ -49,15 +49,4 @@ export interface ManagedFieldsEntry {
   operation: string
   subresource: string
   time: string
-}
-
-export interface KubeList<T extends KubeObject> {
-  apiVersion: string
-  kind: string
-  metadata: {
-    resourceVersion?: string
-    continue?: string
-    name: string
-  }
-  items: T[]
 }
