@@ -3,14 +3,14 @@
     "module": "ESNext",
     "target": "ES2020",
     "declaration": true,
-    "outDir": "./dist",
+    "outDir": "../../dist",
     "moduleResolution": "node",
     "strict": true
   },
   "include": [
-    "src/**/*"
+    "packages/kubernetes-client/src/**/*"
   ],
   "exclude": [
-    "src/**/*.spec.ts"
+    "packages/kubernetes-client/src/**/*.spec.ts"
   ]
 }
