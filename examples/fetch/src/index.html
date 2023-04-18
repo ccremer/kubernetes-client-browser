@@ -11,17 +11,51 @@
     <div class="container mt-5">
       <h1 class="mb-5">Kubernetes Client Example with Fetch</h1>
       <div id="alerts"></div>
-      <div class="row">
+      <div class="row mt-5 mb-5">
         <div class="col">
           <div class="input-group">
-            <label class="visually-hidden" for="token"></label>
+            <label class="visually-hidden" for="token">Token</label>
             <input id="token" class="form-control" type="password" placeholder="Token" />
-            <button type="button" class="btn btn-primary" id="check">Check</button>
+            <button type="button" class="btn btn-primary" id="createClient">Create Client</button>
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col"></div>
+      <div class="row mt-5 mb-5 visually-hidden" id="demo-container">
+        <h3>Demo</h3>
+        <div class="row mb-3">
+          <div class="col">
+            <div class="input-group">
+              <label class="input-group-text" for="resourceKind">Kind</label>
+              <select class="form-select" id="resourceKind">
+                <option disabled selected hidden>Kind...</option>
+                <option value="ConfigMap">ConfigMap</option>
+                <option value="Secret">Secret</option>
+              </select>
+              <label class="input-group-text" for="resourceName">named</label>
+              <input id="resourceName" type="text" class="form-control" placeholder="Name" />
+              <span class="input-group-text">in</span>
+              <label class="visually-hidden" for="namespace">Namespace</label>
+              <input id="namespace" type="text" class="form-control" placeholder="namespace" />
+
+              <button id="getBtn" class="btn btn-primary">Get</button>
+              <button id="listBtn" class="btn btn-secondary">List</button>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <div class="form-check form-switch">
+              <input id="hideManagedFields" type="checkbox" role="switch" class="form-check-input" value="checked" />
+              <label for="hideManagedFields" class="form-check-label">Hide Managed Fields</label>
+            </div>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <label class="visually-hidden">Result</label>
+            <textarea id="kubeobject" rows="20" class="form-control-sm bg-light w-100" disabled></textarea>
+          </div>
+        </div>
       </div>
     </div>
   </body>

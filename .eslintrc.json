@@ -23,8 +23,7 @@
           {
             "allowExpressions": true
           }
-        ],
-        "curly": "error"
+        ]
       },
       "plugins": [
         "prettier"

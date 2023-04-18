@@ -1,14 +1,14 @@
 export interface KubeObject {
   apiVersion: string
   kind: string
-  metadata: KubeMeta
+  metadata?: KubeMeta
 }
 
 /**
  * KubeMeta is the `.metadata` of any Kubernetes resource.
  */
 export interface KubeMeta {
-  name: string
+  name?: string
   namespace?: string
   creationTimestamp?: string
   annotations?: Annotations
@@ -49,15 +49,4 @@ export interface ManagedFieldsEntry {
   operation: string
   subresource: string
   time: string
-}
-
-export interface KubeList<T extends KubeObject> {
-  apiVersion: string
-  kind: string
-  metadata: {
-    resourceVersion?: string
-    continue?: string
-    name: string
-  }
-  items: T[]
 }
