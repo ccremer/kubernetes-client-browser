@@ -1,7 +1,6 @@
 import '../styles.scss'
-import { KubeClientBuilder } from '../../../../packages/kubernetes-client/src/fetch/builder'
+import { Client, KubeClientBuilder } from '@ccremer/kubernetes-client/dist/fetch/builder'
 import { newSelfSubjectRulesReview } from './types'
-import { Client } from '../../../../packages/kubernetes-client/src/client'
 import { createAlert } from './alerts'
 
 console.debug('Starting up...')

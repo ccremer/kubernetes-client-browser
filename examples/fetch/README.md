@@ -51,6 +51,6 @@ npm run example-fetch
 ## Run e2e test
 
 ```bash
-npm --prefix examples/fetch run test-install
-npm --prefix examples/fetch run test
+npm --prefix examples/fetch run e2e-install
+npm --prefix examples/fetch run e2e
 ```

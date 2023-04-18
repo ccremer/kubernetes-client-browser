@@ -1,10 +1,13 @@
 {
   "name": "@ccremer/kubernetes-client-example-fetch",
   "scripts": {
+    "format": "prettier --write ./**/*.{js,html,ts,json,html}",
+    "lint": "eslint './**/*.{js,ts}'",
+    "prelint": "npm run format",
     "dev": "vite",
     "build": "vite build",
-    "test-install": "npx playwright install --with-deps",
-    "test": "npx playwright test"
+    "e2e-install": "npx playwright install --with-deps",
+    "e2e": "npx playwright test"
   },
   "devDependencies": {
     "@playwright/test": "1.32.3",
@@ -15,6 +18,7 @@
     "vite": "4.2.1"
   },
   "dependencies": {
-    "bootstrap": "5.2.3"
+    "bootstrap": "5.2.3",
+    "@ccremer/kubernetes-client": "0.1.0"
   }
 }

@@ -1,0 +1,6 @@
+# Ignore artifacts
+
+.github
+dist
+playwright-report
+package-lock.json

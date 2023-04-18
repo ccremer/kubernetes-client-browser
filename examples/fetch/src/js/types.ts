@@ -1,4 +1,4 @@
-import { SelfSubjectRulesReview } from '../../../../packages/kubernetes-client/src/types/authorization.k8s.io/SelfSubjectRulesReview'
+import { SelfSubjectRulesReview } from '@ccremer/kubernetes-client/dist/types/authorization.k8s.io/SelfSubjectRulesReview'
 
 export function newSelfSubjectRulesReview(namespace: string): SelfSubjectRulesReview {
   return {

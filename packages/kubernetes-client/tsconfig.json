@@ -1,16 +1,8 @@
 {
+  "extends": "../../tsconfig",
   "compilerOptions": {
-    "module": "ESNext",
-    "target": "ES2020",
-    "declaration": true,
-    "outDir": "../../dist",
-    "moduleResolution": "node",
-    "strict": true
+    "outDir": "./dist"
   },
-  "include": [
-    "packages/kubernetes-client/src/**/*"
-  ],
-  "exclude": [
-    "packages/kubernetes-client/src/**/*.spec.ts"
-  ]
+  "include": ["src/**/*"],
+  "exclude": ["src/**/*.spec.ts"]
 }
