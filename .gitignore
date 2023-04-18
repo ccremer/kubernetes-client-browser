@@ -10,6 +10,7 @@ node_modules/
 
 # Optional npm cache directory
 .npm
+.turbo
 
 # Optional eslint cache
 .eslintcache
@@ -23,9 +24,6 @@ node_modules/
 # dotenv environment variables file
 .env
 .env.test
-
-# parcel-bundler cache (https://parceljs.org/)
-.cache
 
 # generated output
 dist

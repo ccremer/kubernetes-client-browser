@@ -34,14 +34,14 @@ install-kind:
 
 .PHONY: install-playwright
 install-playwright:
-	npx --workspace $(example_dir) playwright install
+	npm --workspace $(example_dir) run pree2e
 
 .PHONY: test
 test: run-playwright
 
 .PHONY: run-playwright
 run-playwright: setup-serviceaccount $(example_dir)/.env
-	npx --workspace $(example_dir) playwright test
+	npx turbo --filter=./$(example_dir) run e2e
 
 .PHONY: setup-serviceaccount
 setup-serviceaccount: export KUBECONFIG=$(kubeconfig)
