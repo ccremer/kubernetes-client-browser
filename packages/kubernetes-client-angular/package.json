@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "dev": "ng serve",
-    "build": "ng build",
+    "lint": "ng lint",
+    "build": "ng build kubernetes-client-angular && ng build kubernetes-client-example-angular",
     "watch": "ng build --watch --configuration development"
   },
   "private": true,
@@ -25,8 +26,15 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^15.2.6",
+    "@angular-eslint/builder": "15.2.1",
+    "@angular-eslint/eslint-plugin": "15.2.1",
+    "@angular-eslint/eslint-plugin-template": "15.2.1",
+    "@angular-eslint/schematics": "15.2.1",
+    "@angular-eslint/template-parser": "15.2.1",
     "@angular/cli": "~15.2.6",
     "@angular/compiler-cli": "^15.2.0",
+    "eslint-config-custom": "*",
+    "eslint-plugin-ngrx": "2.1.4",
     "ng-packagr": "^15.2.2"
   }
 }

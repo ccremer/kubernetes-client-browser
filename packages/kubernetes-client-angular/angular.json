@@ -2,6 +2,9 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "projects",
+  "cli": {
+    "schematicCollections": ["@angular-eslint/schematics"]
+  },
   "projects": {
     "kubernetes-client-angular": {
       "projectType": "library",
@@ -24,14 +27,10 @@
           },
           "defaultConfiguration": "production"
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": "projects/kubernetes-client-angular/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
+            "lintFilePatterns": ["projects/kubernetes-client-angular/src/**/*.ts", "projects/kubernetes-client-angular/src/**/*.html"]
           }
         }
       }
@@ -112,23 +111,10 @@
             "browserTarget": "kubernetes-client-example-angular:build"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ],
-            "tsConfig": "projects/kubernetes-client-example-angular/tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              "projects/kubernetes-client-example-angular/src/favicon.ico",
-              "projects/kubernetes-client-example-angular/src/assets"
-            ],
-            "styles": [
-              "projects/kubernetes-client-example-angular/src/styles.scss"
-            ],
-            "scripts": []
+            "lintFilePatterns": ["projects/kubernetes-client-example-angular/src/**/*.ts", "projects/kubernetes-client-example-angular/src/**/*.html"]
           }
         }
       }

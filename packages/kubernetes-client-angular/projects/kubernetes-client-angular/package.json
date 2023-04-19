@@ -3,7 +3,8 @@
   "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^15.2.0",
-    "@angular/core": "^15.2.0"
+    "@angular/core": "^15.2.0",
+    "@ccremer/kubernetes-client": "*"
   },
   "dependencies": {
     "tslib": "2.5.0"

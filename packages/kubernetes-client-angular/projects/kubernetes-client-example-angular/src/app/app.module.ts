@@ -3,11 +3,11 @@ import { BrowserModule } from '@angular/platform-browser'
 
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
-import { KubernetesClientAngularModule } from 'kubernetes-client-angular'
+import { KubernetesClientModule } from 'kubernetes-client-angular'
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, AppRoutingModule, KubernetesClientAngularModule],
+  imports: [BrowserModule, AppRoutingModule, KubernetesClientModule],
   providers: [],
   bootstrap: [AppComponent],
 })
