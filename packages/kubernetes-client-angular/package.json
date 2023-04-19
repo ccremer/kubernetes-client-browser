@@ -10,6 +10,8 @@
   },
   "private": true,
   "dependencies": {
+    "bootstrap": "5.2.3",
+    "jose": "4.14.0",
     "@ccremer/kubernetes-client": "*",
     "@angular/animations": "^15.2.0",
     "@angular/common": "^15.2.0",

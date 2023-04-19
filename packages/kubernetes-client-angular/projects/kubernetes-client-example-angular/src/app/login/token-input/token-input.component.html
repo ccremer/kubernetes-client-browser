@@ -1,0 +1,21 @@
+<div class="input-group has-validation">
+  <label class="visually-hidden" for="token">Token</label>
+  <input
+    id="token"
+    class="form-control"
+    [class]="tokenClass"
+    type="password"
+    placeholder="Token"
+    [formControl]="tokenControl"
+  />
+  <button
+    type="button"
+    class="btn btn-primary"
+    id="btnSubmit"
+    (click)="buttonClick()"
+    [disabled]="tokenControl.invalid"
+  >
+    Create Client
+  </button>
+  <div class="invalid-feedback">Please provide a valid Kubernetes token</div>
+</div>

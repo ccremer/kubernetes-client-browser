@@ -58,7 +58,7 @@
             "tsConfig": "projects/kubernetes-client-example-angular/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
-              "projects/kubernetes-client-example-angular/src/favicon.ico",
+              "projects/kubernetes-client-example-angular/src/favicon.png",
               "projects/kubernetes-client-example-angular/src/assets"
             ],
             "styles": [
@@ -71,8 +71,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
                 },
                 {
                   "type": "anyComponentStyle",
