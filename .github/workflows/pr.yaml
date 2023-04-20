@@ -43,7 +43,7 @@ jobs:
     strategy:
       matrix:
         example:
-          - fetch
+          - kubernetes-client-example-fetch
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -52,14 +52,14 @@ jobs:
           node-version: 'lts/*'
           cache: 'npm'
       - name: Install dependencies
-        run: make -f .github/workflows/e2e.mk -e example_dir=examples/${{ matrix.example }} -j 2 preinstall
+        run: make -f .github/workflows/e2e.mk -e example_dir=packages/${{ matrix.example }} -j 2 preinstall
       - name: Setup test tools
-        run: make -f .github/workflows/e2e.mk -e example_dir=examples/${{ matrix.example }} -j 2 install
+        run: make -f .github/workflows/e2e.mk -e example_dir=packages/${{ matrix.example }} -j 2 install
       - name: Run tests
-        run: make -f .github/workflows/e2e.mk -e example_dir=examples/${{ matrix.example }} test
+        run: make -f .github/workflows/e2e.mk -e example_dir=packages/${{ matrix.example }} e2e
       - uses: actions/upload-artifact@v3
         if: always()
         with:
           name: playwright-report
-          path: examples/fetch/playwright-report/
+          path: packages/${{ matrix.example }}/playwright-report/
           retention-days: 30
