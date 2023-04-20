@@ -36,8 +36,8 @@ install-kind:
 install-playwright:
 	npm --workspace $(example_dir) run pree2e
 
-.PHONY: test
-test: run-playwright
+.PHONY: e2e
+e2e: run-playwright
 
 .PHONY: run-playwright
 run-playwright: setup-serviceaccount $(example_dir)/.env

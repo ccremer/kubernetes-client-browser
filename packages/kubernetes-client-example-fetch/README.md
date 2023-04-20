@@ -45,12 +45,12 @@ kubectl create token -n default browser-client --duration=72h
 
 ```bash
 npm install
-npm run example-fetch
+npm --prefix packages/kubernetes-client-example-fetch run dev
 ```
 
 ## Run e2e test
 
 ```bash
-npm --prefix examples/fetch run e2e-install
-npm --prefix examples/fetch run e2e
+npm --prefix packages/kubernetes-client-example-fetch run e2e-install
+npm --prefix packages/kubernetes-client-example-fetch run e2e
 ```
