@@ -15,9 +15,18 @@ export interface Authorizer {
  * Note that any other method like client certificates are not (yet?) supported.
  */
 export class DefaultAuthorizer implements Authorizer {
-  private readonly token: string
+  private token: string
 
   constructor(protected kubeConfig: KubeConfig) {
+    this.token = ''
+    this.setKubeConfig(kubeConfig)
+  }
+
+  setToken(token: string): void {
+    this.token = token
+  }
+
+  setKubeConfig(kubeConfig: KubeConfig): void {
     if (kubeConfig['current-context'] === undefined) {
       throw new Error('no current context set')
     }
@@ -33,7 +42,7 @@ export class DefaultAuthorizer implements Authorizer {
     if (!token) {
       throw new Error(`no token defined in user ${user?.name ?? ''}`)
     }
-    this.token = token
+    this.setToken(token)
   }
 
   applyAuthorization(init: RequestInit): RequestInit {
@@ -45,5 +54,11 @@ export class DefaultAuthorizer implements Authorizer {
         Authorization: `Bearer ${this.token}`,
       },
     }
+  }
+}
+
+export class NoopAuthorizer implements Authorizer {
+  applyAuthorization(init: RequestInit): RequestInit {
+    return init
   }
 }

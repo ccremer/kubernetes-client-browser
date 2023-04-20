@@ -1,60 +1,62 @@
 import { EntityCollectionDataService, QueryParams } from '@ngrx/data'
 import { KubeObject } from '@ccremer/kubernetes-client/dist/types/core/KubeObject'
-import { map, Observable } from 'rxjs'
+import { from, map, Observable } from 'rxjs'
 import { Update } from '@ngrx/entity'
-import { HttpClient, HttpParams } from '@angular/common/http'
-import { KubernetesUrlGenerator } from './kubernetes-url-generator.service'
-import { HttpMethods } from '@ccremer/kubernetes-client/dist/fetch/urlgenerator'
+import { HttpOptions } from '@ngrx/data/src/dataservices/interfaces'
+import { Client } from '@ccremer/kubernetes-client/dist/fetch/builder'
+import { KubeList } from '@ccremer/kubernetes-client/dist/types/core/KubeList'
+import { deleteOptions, getOptions, listOptions, mutationOptions } from './kubernetes-options.util'
 
 export class KubernetesDataService<T extends KubeObject> implements EntityCollectionDataService<T> {
   protected _name: string
+  protected _gvk: { apiVersion: string; kind: string }
 
-  constructor(entityName: string, protected http: HttpClient, protected urlGenerator: KubernetesUrlGenerator) {
+  constructor(entityName: string, protected client: Client) {
     this._name = entityName
+    this._gvk = getGVK(entityName)
   }
 
   get name(): string {
     return this._name
   }
 
-  getWithQuery(params: QueryParams | string): Observable<T[]> {
-    const url = this.urlGenerator.getEntityList(this.name, params)
-    let p = params
-    if (typeof params !== 'string') {
-      // Since the EntityCollectionDataService doesn't support path parameter out-of-the-box,
-      //  we include the namespace in the query parameter, but remove it before requesting, as this is actually a path parameter.
-      const clone = Object.assign({}, params)
-      delete clone['namespace']
-      p = clone
-    }
-    return this.executeCollection('GET', url, p)
+  get apiVersion(): string {
+    return this._gvk.apiVersion
   }
 
-  upsert(entity: T): Observable<T> {
-    if (entity.metadata?.creationTimestamp) {
-      return this.execute(
-        'PATCH',
-        this.urlGenerator.getEntity(
-          this.name,
-          buildId(entity.metadata?.name ?? '', entity.metadata.namespace),
-          'PATCH'
-        ),
-        entity
-      )
-    }
-    return this.add(entity)
+  get kind(): string {
+    return this._gvk.kind
   }
 
-  add(entity: T): Observable<T> {
-    return this.execute(
-      'POST',
-      this.urlGenerator.getEntity(this.name, buildId(entity.metadata?.name ?? '', entity.metadata?.namespace), 'POST'),
-      entity
+  getById(id: string, httpOptions?: HttpOptions): Observable<T> {
+    const idSplit = splitID(id)
+    return from(
+      this.client.getById<T>(this.apiVersion, this.kind, idSplit.name, idSplit.namespace, getOptions(httpOptions))
     )
   }
 
-  delete(id: number | string): Observable<number | string> {
-    return this.execute('DELETE', this.urlGenerator.getEntity(this.name, id.toString(), 'DELETE')).pipe(
+  add(entity: T, httpOptions?: HttpOptions): Observable<T> {
+    return from(this.client.create(entity, mutationOptions(httpOptions)))
+  }
+
+  update(update: Update<T>, httpOptions?: HttpOptions): Observable<T> {
+    const entity = update.changes as T
+    return from(this.client.patch(entity, mutationOptions(httpOptions)))
+  }
+
+  upsert(entity: T, httpOptions?: HttpOptions): Observable<T> {
+    if (!entity.metadata?.creationTimestamp) {
+      return this.add(entity, httpOptions)
+    } else {
+      return from(this.client.patch(entity))
+    }
+  }
+
+  delete(id: number | string, httpOptions?: HttpOptions): Observable<number | string> {
+    const idSplit = splitID(id.toString())
+    return from(
+      this.client.deleteById(this.apiVersion, this.kind, idSplit.name, idSplit.namespace, deleteOptions(httpOptions))
+    ).pipe(
       // actually we get a reply from Kubernetes with a status object here, but the interface wants us to return the original entity id 🤷
       map(() => id)
     )
@@ -65,61 +67,26 @@ export class KubernetesDataService<T extends KubeObject> implements EntityCollec
    *   Note: This doesn't work for namespaced collections.
    *   For namespaced collections, use "getWithQuery" and set the "namespace" parameter.
    */
-  getAll(): Observable<T[]> {
-    return this.executeCollection('GET', this.urlGenerator.getEntityList(this.name, 'GET'))
+  getAll(httpOptions?: HttpOptions): Observable<T[]> {
+    return from(
+      this.client.listById<T, KubeList<T>>(this.apiVersion, this.kind, undefined, listOptions(httpOptions))
+    ).pipe(map((list) => list.items))
   }
 
-  getById(id: string): Observable<T> {
-    return this.execute('GET', this.urlGenerator.getEntity(this.name, id, 'GET'))
-  }
-
-  update(update: Update<T>): Observable<T> {
-    const entity = update.changes as T
-    return this.execute('PATCH', this.urlGenerator.getEntity(this.name, update.id.toString(), 'PATCH'), entity)
-  }
-
-  protected executeCollection(method: HttpMethods, url: string, queryParams?: QueryParams | string): Observable<T[]> {
-    const qParams = typeof queryParams === 'string' ? { fromString: queryParams } : { fromObject: queryParams }
-    const params = new HttpParams(qParams)
-    switch (method) {
-      case 'GET': {
-        return this.http
-          .get<{ items: T[] }>(url, { params: params, responseType: 'json' })
-          .pipe(map((list) => list.items))
-      }
-      default: {
-        throw new Error(`Unimplemented HTTP method for collections: ${method}`)
-      }
+  /**
+   *   Gets all entities in a specific namespace.
+   *   @param namespace the namespace name to list objects in.
+   *   @param httpOptions the query options applicable for Kubernetes API. Best used with {@link toHttpOptions} and {@link ListOptions}
+   */
+  getWithQuery(namespace: QueryParams | string, httpOptions?: HttpOptions): Observable<T[]> {
+    if (typeof namespace !== 'string') {
+      throw new Error(
+        'getWithQuery(): The first parameter has to be a string identifying the Kubernetes namespace. Use the second parameter to provide query parameters'
+      )
     }
-  }
-
-  protected execute(method: HttpMethods, url: string, data?: T, queryParams?: QueryParams | string): Observable<T> {
-    const qParams = typeof queryParams === 'string' ? { fromString: queryParams } : { fromObject: queryParams }
-    const params = new HttpParams(qParams)
-    switch (method) {
-      case 'DELETE': {
-        return this.http.delete<T>(url, { params, responseType: 'json' })
-      }
-      case 'GET': {
-        return this.http.get<T>(url, { params, responseType: 'json' })
-      }
-      case 'POST': {
-        return this.http.post<T>(url, data, { params, responseType: 'json' })
-      }
-      case 'PUT': {
-        return this.http.put<T>(url, data, { params, responseType: 'json' })
-      }
-      case 'PATCH': {
-        return this.http.patch<T>(url, data, {
-          params,
-          responseType: 'json',
-          headers: { 'content-type': 'application/merge-patch+json' },
-        })
-      }
-      default: {
-        throw new Error(`Unimplemented HTTP method: ${method}`)
-      }
-    }
+    return from(
+      this.client.listById<T, KubeList<T>>(this.apiVersion, this.kind, namespace, listOptions(httpOptions))
+    ).pipe(map((list) => list.items))
   }
 }
 
@@ -134,4 +101,15 @@ export function splitID(id: string): { name: string; namespace?: string } {
   if (arr.length === 2) return { name: arr[1], namespace: arr[0] }
 
   throw new Error(`id is an invalid Kubernetes name, must be one of ["name", "namespace/name"], : ${id}`)
+}
+
+export function getGVK(entityName: string): { apiVersion: string; kind: string } {
+  const arr = entityName.split('/')
+  if (arr.length !== 3) {
+    throw new Error(`invalid entity name given, must be formatted like "group/version/kind": ${entityName}`)
+  }
+  return {
+    apiVersion: `${arr[0]}/${arr[1]}`,
+    kind: arr[2],
+  }
 }

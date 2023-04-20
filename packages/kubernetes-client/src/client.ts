@@ -8,7 +8,7 @@ export interface ClientWithGet {
     kind: string,
     name: string,
     namespace?: string,
-    queryParams?: GetOptions
+    options?: GetOptions
   ): Promise<K>
 
   get<K extends KubeObject>(fromBody: K, options?: GetOptions): Promise<K>
