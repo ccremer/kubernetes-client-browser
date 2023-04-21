@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output } from '@angular/core'
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { FormControl, ReactiveFormsModule, Validators } from '@angular/forms'
 import { JwtValidator } from '../../validators/jwt-validator'
 
@@ -13,8 +13,13 @@ import { JwtValidator } from '../../validators/jwt-validator'
 export class TokenInputComponent implements OnInit {
   @Output()
   tokenEvent = new EventEmitter<string>()
+  @Input()
+  initialValue = ''
 
-  tokenControl = new FormControl('', { nonNullable: true, validators: [Validators.required, JwtValidator()] })
+  tokenControl = new FormControl('', {
+    nonNullable: true,
+    validators: [Validators.required, JwtValidator()],
+  })
   tokenClass = ''
 
   buttonClick(): void {
@@ -24,6 +29,7 @@ export class TokenInputComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.tokenControl.setValue(this.initialValue)
     this.tokenControl.valueChanges.subscribe(() => {
       if (this.tokenControl.valid) {
         this.tokenClass = 'is-valid'

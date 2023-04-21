@@ -9,7 +9,11 @@ import { KubernetesAuthorizerService } from '../../../../../kubernetes-client-an
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PageComponent {
-  constructor(private authorizer: KubernetesAuthorizerService, private ssrrService: SelfSubjectRulesReviewService) {}
+  initialValue: string
+
+  constructor(private authorizer: KubernetesAuthorizerService, private ssrrService: SelfSubjectRulesReviewService) {
+    this.initialValue = localStorage.getItem('kubetoken') ?? ''
+  }
 
   setToken(token: string): void {
     this.authorizer.setToken(token)
@@ -23,8 +27,14 @@ export class PageComponent {
         },
       })
       .subscribe({
-        next: (value) => console.log('result', value),
-        error: (err) => console.warn('error!', err),
+        next: (value) => {
+          console.log('result', value)
+          localStorage.setItem('kubetoken', token)
+        },
+        error: (err) => {
+          console.warn('error!', err)
+          localStorage.removeItem('kubetoken')
+        },
       })
   }
 }
