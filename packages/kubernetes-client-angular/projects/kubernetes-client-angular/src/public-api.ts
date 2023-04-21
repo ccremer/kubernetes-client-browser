@@ -2,6 +2,7 @@
  * Public API Surface of kubernetes-client-angular
  */
 
+export * from './lib/config'
 export * from './lib/error-handlers'
 export * from './lib/kubernetes-authorizer.service'
 export * from './lib/kubernetes-collection.service'

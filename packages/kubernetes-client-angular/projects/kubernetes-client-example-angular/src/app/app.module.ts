@@ -8,7 +8,10 @@ import { DefaultDataServiceFactory, EntityDataModule } from '@ngrx/data'
 import { entityMetadataMap } from './store/entity-metadata-map'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { HttpClientModule } from '@angular/common/http'
-import { KubernetesDataServiceFactory } from '../../../kubernetes-client-angular/src/lib/kubernetes-data-service-factory.service'
+import {
+  KubernetesDataServiceFactory,
+  KubernetesDataServiceFactoryConfig,
+} from '../../../kubernetes-client-angular/src/lib/kubernetes-data-service-factory.service'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 
@@ -26,7 +29,17 @@ import { EffectsModule } from '@ngrx/effects'
     }),
     StoreDevtoolsModule.instrument(),
   ],
-  providers: [{ provide: DefaultDataServiceFactory, useClass: KubernetesDataServiceFactory }],
+  providers: [
+    { provide: DefaultDataServiceFactory, useClass: KubernetesDataServiceFactory },
+    {
+      provide: KubernetesDataServiceFactoryConfig,
+      useValue: {
+        default: {
+          usePatchInUpsert: true,
+        },
+      } satisfies KubernetesDataServiceFactoryConfig,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

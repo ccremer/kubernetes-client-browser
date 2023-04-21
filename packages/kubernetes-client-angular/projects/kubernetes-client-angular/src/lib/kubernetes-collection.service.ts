@@ -7,7 +7,6 @@ import {
 import { KubeObject } from '@ccremer/kubernetes-client/dist/types/core/KubeObject'
 import { filter, map, Observable, of, take, tap } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
-import { buildId } from './kubernetes-data.service'
 
 export class KubernetesCollectionService<T extends KubeObject> extends EntityCollectionServiceBase<T> {
   // this flag holds the value true when there was an initial collection load.
@@ -156,4 +155,9 @@ export class KubernetesCollectionService<T extends KubeObject> extends EntityCol
       })
     )
   }
+}
+
+export function buildId(name: string, namespace?: string): string {
+  if (namespace && namespace !== '') return `${namespace}/${name}`
+  return name
 }

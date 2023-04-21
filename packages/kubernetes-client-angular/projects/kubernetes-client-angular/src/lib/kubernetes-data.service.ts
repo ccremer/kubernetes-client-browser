@@ -6,12 +6,13 @@ import { HttpOptions } from '@ngrx/data/src/dataservices/interfaces'
 import { Client } from '@ccremer/kubernetes-client/dist/fetch/builder'
 import { KubeList } from '@ccremer/kubernetes-client/dist/types/core/KubeList'
 import { deleteOptions, getOptions, listOptions, mutationOptions } from './kubernetes-options.util'
+import { DataServiceConfig } from './config'
 
 export class KubernetesDataService<T extends KubeObject> implements EntityCollectionDataService<T> {
   protected _name: string
   protected _gvk: { apiVersion: string; kind: string }
 
-  constructor(entityName: string, protected client: Client) {
+  constructor(entityName: string, protected client: Client, protected config?: DataServiceConfig) {
     this._name = entityName
     this._gvk = getGVK(entityName)
   }
@@ -47,8 +48,10 @@ export class KubernetesDataService<T extends KubeObject> implements EntityCollec
   upsert(entity: T, httpOptions?: HttpOptions): Observable<T> {
     if (!entity.metadata?.creationTimestamp) {
       return this.add(entity, httpOptions)
-    } else {
+    } else if (this.config?.usePatchInUpsert) {
       return from(this.client.patch(entity))
+    } else {
+      return from(this.client.update(entity))
     }
   }
 
@@ -88,11 +91,6 @@ export class KubernetesDataService<T extends KubeObject> implements EntityCollec
       this.client.listById<T, KubeList<T>>(this.apiVersion, this.kind, namespace, listOptions(httpOptions))
     ).pipe(map((list) => list.items))
   }
-}
-
-export function buildId(name: string, namespace?: string): string {
-  if (namespace && namespace !== '') return `${namespace}/${name}`
-  return name
 }
 
 export function splitID(id: string): { name: string; namespace?: string } {
