@@ -1,13 +1,13 @@
 import { Component } from '@angular/core'
-import { SelfSubjectRulesReviewService } from '../../store/self-subject-rules-review.service'
-import { KubernetesAuthorizerService } from '../../../../../kubernetes-client-angular/src/lib/kubernetes-authorizer.service'
+import { SelfSubjectRulesReviewService } from '../store/self-subject-rules-review.service'
+import { KubernetesAuthorizerService } from '../../../../kubernetes-client-angular/src/lib/kubernetes-authorizer.service'
 
 @Component({
   selector: 'app-page',
-  templateUrl: './page.component.html',
-  styleUrls: ['./page.component.scss'],
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.scss'],
 })
-export class PageComponent {
+export class LoginComponent {
   initialValue: string
   alerts: string[] = []
 
