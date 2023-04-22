@@ -11,7 +11,7 @@ import { HttpParams } from '@angular/common/http'
 
 export function commonOptions(httpOptions?: HttpOptions): CommonOptions | undefined {
   if (!httpOptions) return undefined
-  const params = new HttpParams(httpOptions?.httpParams?.fromObject)
+  const params = new HttpParams(httpOptions.httpParams)
   return {
     pretty: params.get('pretty')?.toLowerCase() === 'true' ? 'true' : undefined,
     dryRun: params.get('dryRun')?.toLowerCase() === 'all' ? 'All' : undefined,
@@ -21,7 +21,7 @@ export function commonOptions(httpOptions?: HttpOptions): CommonOptions | undefi
 
 export function getOptions(httpOptions?: HttpOptions): GetOptions | undefined {
   if (!httpOptions) return undefined
-  const params = new HttpParams(httpOptions.httpParams?.fromObject)
+  const params = new HttpParams(httpOptions.httpParams)
   return {
     ...commonOptions(httpOptions),
     resourceVersion: params.get('resourceVersion') ?? undefined,
@@ -30,7 +30,7 @@ export function getOptions(httpOptions?: HttpOptions): GetOptions | undefined {
 
 export function mutationOptions(httpOptions?: HttpOptions): MutationOptions | undefined {
   if (!httpOptions) return undefined
-  const params = new HttpParams(httpOptions?.httpParams?.fromObject)
+  const params = new HttpParams(httpOptions.httpParams)
   return {
     ...commonOptions(httpOptions),
     fieldManager: params.get('fieldManager') ?? undefined,
@@ -39,7 +39,7 @@ export function mutationOptions(httpOptions?: HttpOptions): MutationOptions | un
 
 export function deleteOptions(httpOptions?: HttpOptions): DeleteOptions | undefined {
   if (!httpOptions) return undefined
-  const params = new HttpParams(httpOptions?.httpParams?.fromObject)
+  const params = new HttpParams(httpOptions.httpParams)
   const gracePeriodSeconds = params.get('gracePeriodSeconds')
   const propagationPolicy = params.get('propagationPolicy')
   return {
@@ -54,7 +54,7 @@ export function deleteOptions(httpOptions?: HttpOptions): DeleteOptions | undefi
 
 export function listOptions(httpOptions?: HttpOptions): ListOptions | undefined {
   if (!httpOptions) return undefined
-  const params = new HttpParams(httpOptions?.httpParams?.fromObject)
+  const params = new HttpParams(httpOptions.httpParams)
   const limit = params.get('limit')
   const timeoutSeconds = params.get('timeoutSeconds')
   const rvMatch = params.get('resourceVersionMatch')

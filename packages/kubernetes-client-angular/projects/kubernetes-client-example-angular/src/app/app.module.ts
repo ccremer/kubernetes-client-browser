@@ -14,6 +14,7 @@ import {
 } from '../../../kubernetes-client-angular/src/lib/kubernetes-data-service-factory.service'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
+import { ClientComponent } from './client/client.component'
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,6 +29,7 @@ import { EffectsModule } from '@ngrx/effects'
       entityMetadata: entityMetadataMap,
     }),
     StoreDevtoolsModule.instrument(),
+    ClientComponent,
   ],
   providers: [
     { provide: DefaultDataServiceFactory, useClass: KubernetesDataServiceFactory },

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { SelfSubjectRulesReviewService } from '../store/self-subject-rules-review.service'
 import { KubernetesAuthorizerService } from '../../../../kubernetes-client-angular/src/lib/kubernetes-authorizer.service'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-page',
@@ -11,7 +12,11 @@ export class LoginComponent {
   initialValue: string
   alerts: string[] = []
 
-  constructor(private authorizer: KubernetesAuthorizerService, private ssrrService: SelfSubjectRulesReviewService) {
+  constructor(
+    private authorizer: KubernetesAuthorizerService,
+    private ssrrService: SelfSubjectRulesReviewService,
+    private router: Router
+  ) {
     this.initialValue = localStorage.getItem('kubetoken') ?? ''
   }
 
@@ -30,11 +35,14 @@ export class LoginComponent {
         next: (value) => {
           console.log('result', value)
           localStorage.setItem('kubetoken', token)
+          sessionStorage.setItem('loggedIn', 'true')
+          void this.router.navigateByUrl('')
         },
         error: (err) => {
           console.warn('error!', err)
           this.addAlert(err.message)
           localStorage.removeItem('kubetoken')
+          sessionStorage.removeItem('loggedIn')
         },
       })
   }

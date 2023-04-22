@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core'
 import { RouterModule, Routes } from '@angular/router'
 import { LoginComponent } from './login/login.component'
+import { ClientComponent } from './client/client.component'
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'login', // temporary until we know we're already logged in
-    pathMatch: 'full',
+    component: ClientComponent,
   },
   {
     path: 'login',

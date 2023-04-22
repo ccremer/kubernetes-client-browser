@@ -1,0 +1,57 @@
+<h1>Demo</h1>
+<div id="alerts">
+  <div
+    role="alert"
+    *ngFor="let alert of alerts; index as i"
+    class="alert alert-danger fade show d-flex align-items-center justify-content-between"
+  >
+    <span>{{ alert }}</span>
+    <button
+      type="button"
+      class="btn-close"
+      (click)="removeAlert(i)">
+    </button>
+  </div>
+</div>
+<div class="row mb-5 mt-5">
+  <form [formGroup]="form">
+    <div class="col">
+      <div class="input-group">
+        <label class="input-group-text" for="resourceKind">Kind</label>
+        <select class="form-select" id="resourceKind" formControlName="kind">
+          <option *ngFor="let option of kindOptions" [value]="option">{{ option }}</option>
+        </select>
+        <label class="input-group-text" for="resourceName">named</label>
+        <input id="resourceName" type="text" class="form-control" placeholder="Name" formControlName="name" />
+        <span class="input-group-text">in</span>
+        <label class="visually-hidden" for="namespace">Namespace</label>
+        <input id="namespace" type="text" class="form-control" placeholder="Namespace" formControlName="namespace" />
+        <button id="getBtn" class="btn btn-primary" [disabled]="form.invalid" (click)="getObject()">Get</button>
+        <button id="listBtn" class="btn btn-secondary" [disabled]="form.invalid" (click)="listObjects()">List</button>
+      </div>
+    </div>
+
+    <div class="row mb-3 mt-3">
+      <div class="col">
+        <div class="form-check form-switch">
+          <input id="hideManagedFields" type="checkbox" role="switch" class="form-check-input"
+                 formControlName="hideManagedFields" />
+          <label for="hideManagedFields" class="form-check-label">Hide Managed Fields</label>
+        </div>
+      </div>
+    </div>
+    <div class="row mb-3">
+      <div class="col">
+        <label class="visually-hidden">Result</label>
+        <textarea
+          id="kubeobject"
+          rows="20"
+          class="form-control-sm bg-light w-100"
+          disabled
+        >
+          {{ queryResult }}
+        </textarea>
+      </div>
+    </div>
+  </form>
+</div>

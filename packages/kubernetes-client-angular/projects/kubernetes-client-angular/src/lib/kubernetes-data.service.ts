@@ -31,35 +31,36 @@ export class KubernetesDataService<T extends KubeObject> implements EntityCollec
 
   getById(id: string, httpOptions?: HttpOptions): Observable<T> {
     const idSplit = splitID(id)
-    return from(
-      this.client.getById<T>(this.apiVersion, this.kind, idSplit.name, idSplit.namespace, getOptions(httpOptions))
-    )
+    const opts = getOptions(httpOptions)
+    return from(this.client.getById<T>(this.apiVersion, this.kind, idSplit.name, idSplit.namespace, opts))
   }
 
   add(entity: T, httpOptions?: HttpOptions): Observable<T> {
-    return from(this.client.create(entity, mutationOptions(httpOptions)))
+    const opts = mutationOptions(httpOptions)
+    return from(this.client.create(entity, opts))
   }
 
   update(update: Update<T>, httpOptions?: HttpOptions): Observable<T> {
     const entity = update.changes as T
-    return from(this.client.patch(entity, mutationOptions(httpOptions)))
+    const opts = mutationOptions(httpOptions)
+    return from(this.client.patch(entity, opts))
   }
 
   upsert(entity: T, httpOptions?: HttpOptions): Observable<T> {
+    const opts = mutationOptions(httpOptions)
     if (!entity.metadata?.creationTimestamp) {
       return this.add(entity, httpOptions)
     } else if (this.config?.usePatchInUpsert) {
-      return from(this.client.patch(entity))
+      return from(this.client.patch(entity, opts))
     } else {
-      return from(this.client.update(entity))
+      return from(this.client.update(entity, opts))
     }
   }
 
   delete(id: number | string, httpOptions?: HttpOptions): Observable<number | string> {
     const idSplit = splitID(id.toString())
-    return from(
-      this.client.deleteById(this.apiVersion, this.kind, idSplit.name, idSplit.namespace, deleteOptions(httpOptions))
-    ).pipe(
+    const opts = deleteOptions(httpOptions)
+    return from(this.client.deleteById(this.apiVersion, this.kind, idSplit.name, idSplit.namespace, opts)).pipe(
       // actually we get a reply from Kubernetes with a status object here, but the interface wants us to return the original entity id 🤷
       map(() => id)
     )
@@ -71,9 +72,10 @@ export class KubernetesDataService<T extends KubeObject> implements EntityCollec
    *   For namespaced collections, use "getWithQuery" and set the "namespace" parameter.
    */
   getAll(httpOptions?: HttpOptions): Observable<T[]> {
-    return from(
-      this.client.listById<T, KubeList<T>>(this.apiVersion, this.kind, undefined, listOptions(httpOptions))
-    ).pipe(map((list) => list.items))
+    const opts = listOptions(httpOptions)
+    return from(this.client.listById<T, KubeList<T>>(this.apiVersion, this.kind, undefined, opts)).pipe(
+      map((list) => list.items)
+    )
   }
 
   /**
@@ -87,9 +89,10 @@ export class KubernetesDataService<T extends KubeObject> implements EntityCollec
         'getWithQuery(): The first parameter has to be a string identifying the Kubernetes namespace. Use the second parameter to provide query parameters'
       )
     }
-    return from(
-      this.client.listById<T, KubeList<T>>(this.apiVersion, this.kind, namespace, listOptions(httpOptions))
-    ).pipe(map((list) => list.items))
+    const opts = listOptions(httpOptions)
+    return from(this.client.listById<T, KubeList<T>>(this.apiVersion, this.kind, namespace, opts)).pipe(
+      map((list) => list.items)
+    )
   }
 }
 
@@ -103,11 +106,17 @@ export function splitID(id: string): { name: string; namespace?: string } {
 
 export function getGVK(entityName: string): { apiVersion: string; kind: string } {
   const arr = entityName.split('/')
+  if (arr.length === 2) {
+    return {
+      apiVersion: arr[0],
+      kind: arr[1].substring(0, arr[1].length - 1),
+    }
+  }
   if (arr.length !== 3) {
     throw new Error(`invalid entity name given, must be formatted like "group/version/kind": ${entityName}`)
   }
   return {
     apiVersion: `${arr[0]}/${arr[1]}`,
-    kind: arr[2],
+    kind: arr[2].substring(0, arr[2].length - 1),
   }
 }
