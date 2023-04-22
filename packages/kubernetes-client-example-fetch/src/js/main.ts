@@ -47,15 +47,7 @@ function listObjects(): void {
 
   console.debug('Listing Objects in', `${kind}/${namespace}`)
   kubeClient
-    .listById('v1', kind, namespace)
-    .then((list) =>
-      list.items.map((item) => {
-        if (hideManagedFields()) {
-          delete item.metadata?.managedFields
-        }
-        return item
-      })
-    )
+    .listById('v1', kind, namespace, { hideManagedFields: hideManagedFields() })
     .then((items) => {
       fillTextArea(items)
     })
@@ -72,13 +64,7 @@ function getObject(): void {
   if (name) {
     console.debug('Fetching Object', `${kind}${namespace}/${name}`)
     kubeClient
-      .getById('v1', kind, name, namespace)
-      .then((obj) => {
-        if (hideManagedFields()) {
-          delete obj.metadata?.managedFields
-        }
-        return obj
-      })
+      .getById('v1', kind, name, namespace, { hideManagedFields: hideManagedFields() })
       .then((cm) => fillTextArea(cm))
       .catch((err) => createAlert(err.message, 'danger'))
   } else {

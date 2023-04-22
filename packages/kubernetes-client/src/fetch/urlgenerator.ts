@@ -45,7 +45,11 @@ export class KubernetesUrlGenerator implements UrlGenerator {
       endpoint.push(name)
     }
     if (queryParams) {
-      return `${endpoint.join('/')}?${queryParams.toString()}`
+      queryParams.delete('hideManagedFields')
+      const params = queryParams.toString()
+      if (params !== '') {
+        return `${endpoint.join('/')}?${params}`
+      }
     }
     return endpoint.join('/')
   }

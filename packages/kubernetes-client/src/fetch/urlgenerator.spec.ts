@@ -104,6 +104,14 @@ describe('KubernetesUrlGenerator', () => {
     const result = subject.buildEndpoint('GET', 'v1', 'Namespace', undefined, 'default', params)
     expect(result).toEqual('/api/v1/namespaces/default?limit=500')
   })
+
+  it('buildEndpoint() should omit certain query parameters', () => {
+    const subject = new KubernetesUrlGenerator()
+    const params = new URLSearchParams()
+    params.set('hideManagedFields', 'true')
+    const result = subject.buildEndpoint('GET', 'v1', 'Namespace', undefined, 'default', params)
+    expect(result).toEqual('/api/v1/namespaces/default')
+  })
 })
 
 describe('toURLSearchParams', () => {
