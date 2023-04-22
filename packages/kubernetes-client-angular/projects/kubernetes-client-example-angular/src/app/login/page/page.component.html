@@ -1,6 +1,19 @@
 <div class="container mt-5">
   <h1 class="mb-5">Login to Kubernetes</h1>
-  <div id="alerts"></div>
+  <div id="alerts">
+    <div
+      role="alert"
+      *ngFor="let alert of alerts; index as i"
+      class="alert alert-danger fade show d-flex align-items-center justify-content-between"
+    >
+      <span>{{ alert }}</span>
+      <button
+        type="button"
+        class="btn-close"
+        (click)="removeAlert(i)">
+      </button>
+    </div>
+  </div>
   <div class="row mt-5 mb-5">
     <div class="col">
       <app-token-input (tokenEvent)="setToken($event)" [initialValue]="initialValue"/>
