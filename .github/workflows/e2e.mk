@@ -10,7 +10,8 @@ MAKEFLAGS += --no-builtin-variables
 
 kind_image_version=kindest/node:v1.27.0
 kubeconfig=$(PWD)/kind-kubeconfig
-example_dir=
+example=
+example_dir=./packages/$(example)
 
 .PHONY: preinstall
 preinstall: npm-ci pull-image
@@ -41,7 +42,7 @@ e2e: run-playwright
 
 .PHONY: run-playwright
 run-playwright: setup-serviceaccount $(example_dir)/.env
-	npx turbo --filter=./$(example_dir) run e2e
+	npx turbo run --filter=$(example_dir) e2e
 
 .PHONY: setup-serviceaccount
 setup-serviceaccount: export KUBECONFIG=$(kubeconfig)

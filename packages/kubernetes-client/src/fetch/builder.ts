@@ -9,7 +9,7 @@ import {
 } from '../client'
 import { FetchClient, FetchFn } from './client'
 import { KubernetesUrlGenerator, UrlGenerator } from './urlgenerator'
-import { Authorizer, DefaultAuthorizer } from './authorizer'
+import { Authorizer, DefaultAuthorizer, NoopAuthorizer } from './authorizer'
 
 export interface Client
   extends ClientWithCreate,
@@ -29,17 +29,13 @@ export class KubeClientBuilder {
   private urlGenerator?: UrlGenerator
   private authorizer?: Authorizer
 
-  private constructor(private config: KubeConfig) {}
-
   /**
    * Creates a new builder instance to configure the client.
    * Uses sane defaults if not customized.
    * @param config the well-known Kubernetes configuration in the shape of a {@link KubeConfig} file.
    * @returns new KubeClientBuilder instance
    */
-  public static NewWithConfig(config: KubeConfig): KubeClientBuilder {
-    return new KubeClientBuilder(config)
-  }
+  constructor(private config?: KubeConfig) {}
 
   /**
    * Sets the Fetch function for the client.
@@ -82,15 +78,19 @@ export class KubeClientBuilder {
    * @returns current builder instance `this`
    */
   public Build(): Client {
+    let authorizer = this.authorizer
+    if (!authorizer) {
+      authorizer = this.config ? new DefaultAuthorizer(this.config) : new NoopAuthorizer()
+    }
     return new FetchClient(
       this.urlGenerator ?? new KubernetesUrlGenerator(),
-      this.authorizer ?? new DefaultAuthorizer(this.config),
+      authorizer,
       this.fetchFn ?? fetch,
       this.thisArg ?? window
     )
   }
 
   public static DefaultClient(token: string, server = ''): Client {
-    return KubeClientBuilder.NewWithConfig(Config.FromToken(token, server)).Build()
+    return new KubeClientBuilder(Config.FromToken(token, server)).Build()
   }
 }

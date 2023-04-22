@@ -2,7 +2,7 @@ import { KubeObject } from '../types/core/KubeObject'
 import { ErrorStatus, KubernetesError } from '../types/core/Error'
 import { Authorizer } from './authorizer'
 import { KubeList } from '../types/core/KubeList'
-import { DeleteOptions, GetOptions, ListOptions, MutationOptions, PatchOptions } from '../options'
+import { ClientOptions, DeleteOptions, GetOptions, ListOptions, MutationOptions, PatchOptions } from '../options'
 import { Client } from './builder'
 import { HttpMethods, toURLSearchParams, UrlGenerator } from './urlgenerator'
 
@@ -41,7 +41,7 @@ export class FetchClient implements Client {
       name,
       toURLSearchParams(options)
     )
-    return this.makeRequest(endpoint, 'GET')
+    return this.makeRequest(endpoint, 'GET', options)
   }
 
   listById<K extends KubeObject, L extends KubeList<K>>(
@@ -58,7 +58,14 @@ export class FetchClient implements Client {
       undefined,
       toURLSearchParams(options)
     )
-    return this.makeRequest(endpoint, 'GET')
+    return this.makeRequest<L>(endpoint, 'GET', options).then((list) => {
+      if (options?.hideManagedFields) {
+        list.items.forEach((item) => {
+          delete item.metadata?.managedFields
+        })
+      }
+      return list
+    })
   }
 
   list<K extends KubeObject, L extends KubeList<K>>(fromBody: K, options?: ListOptions): Promise<L> {
@@ -74,7 +81,7 @@ export class FetchClient implements Client {
       body.metadata?.name,
       toURLSearchParams(options)
     )
-    return this.makeRequest(endpoint, 'POST', JSON.stringify(body))
+    return this.makeRequest(endpoint, 'POST', options, JSON.stringify(body))
   }
 
   update<K extends KubeObject>(body: K, options?: MutationOptions): Promise<K> {
@@ -86,7 +93,7 @@ export class FetchClient implements Client {
       body.metadata?.name,
       toURLSearchParams(options)
     )
-    return this.makeRequest(endpoint, 'PUT', JSON.stringify(body))
+    return this.makeRequest(endpoint, 'PUT', options, JSON.stringify(body))
   }
 
   patch<K extends KubeObject>(body: K, options?: PatchOptions): Promise<K> {
@@ -98,7 +105,7 @@ export class FetchClient implements Client {
       body.metadata?.name,
       toURLSearchParams(options)
     )
-    return this.makeRequest(endpoint, 'PATCH', JSON.stringify(body))
+    return this.makeRequest(endpoint, 'PATCH', options, JSON.stringify(body))
   }
 
   deleteById(
@@ -116,7 +123,7 @@ export class FetchClient implements Client {
       name,
       toURLSearchParams(options)
     )
-    return this.makeRequest(endpoint, 'DELETE').then()
+    return this.makeRequest(endpoint, 'DELETE', options).then()
   }
 
   delete<K extends KubeObject>(fromBody: K, options?: DeleteOptions): Promise<void> {
@@ -129,7 +136,12 @@ export class FetchClient implements Client {
     )
   }
 
-  protected async makeRequest<K extends KubeObject>(endpoint: string, method: HttpMethods, body?: string): Promise<K> {
+  protected async makeRequest<K extends KubeObject>(
+    endpoint: string,
+    method: HttpMethods,
+    options?: ClientOptions,
+    body?: string
+  ): Promise<K> {
     const init: RequestInit = {
       body: body,
       method: method,
@@ -150,7 +162,11 @@ export class FetchClient implements Client {
             throw new KubernetesError(err.message, err)
           }
         }
-        return json satisfies K
+        const result = json satisfies K
+        if (options?.hideManagedFields) {
+          delete result.metadata?.managedFields
+        }
+        return result
       })
   }
 }

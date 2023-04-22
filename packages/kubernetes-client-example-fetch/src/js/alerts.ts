@@ -10,7 +10,7 @@ export function createAlert(message: string, level: 'danger' | 'success' | 'warn
   const alert = document.createElement('div')
   alert.role = 'alert'
   alert.className = `alert alert-${level} fade show d-flex align-items-center justify-content-between`
-  alert.innerHTML += `<span>${message}</span><button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>`
+  alert.innerHTML += `<span>${message}</span><button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>`
   alertContainer?.appendChild(alert)
   if (timeout) {
     setTimeout(() => {

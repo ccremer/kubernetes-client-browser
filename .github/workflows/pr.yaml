@@ -44,6 +44,7 @@ jobs:
       matrix:
         example:
           - kubernetes-client-example-fetch
+          - kubernetes-client-angular
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -52,11 +53,11 @@ jobs:
           node-version: 'lts/*'
           cache: 'npm'
       - name: Install dependencies
-        run: make -f .github/workflows/e2e.mk -e example_dir=packages/${{ matrix.example }} -j 2 preinstall
+        run: make -f .github/workflows/e2e.mk -e example=${{ matrix.example }} -j 2 preinstall
       - name: Setup test tools
-        run: make -f .github/workflows/e2e.mk -e example_dir=packages/${{ matrix.example }} -j 2 install
+        run: make -f .github/workflows/e2e.mk -e example=${{ matrix.example }} -j 2 install
       - name: Run tests
-        run: make -f .github/workflows/e2e.mk -e example_dir=packages/${{ matrix.example }} e2e
+        run: make -f .github/workflows/e2e.mk -e example=${{ matrix.example }} e2e
       - uses: actions/upload-artifact@v3
         if: always()
         with:

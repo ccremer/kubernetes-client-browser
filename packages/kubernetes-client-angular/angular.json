@@ -1,0 +1,126 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "cli": {
+    "schematicCollections": ["@angular-eslint/schematics"]
+  },
+  "projects": {
+    "kubernetes-client-angular": {
+      "projectType": "library",
+      "root": "projects/kubernetes-client-angular",
+      "sourceRoot": "projects/kubernetes-client-angular/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/kubernetes-client-angular/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/kubernetes-client-angular/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/kubernetes-client-angular/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/kubernetes-client-angular/src/**/*.ts", "projects/kubernetes-client-angular/src/**/*.html"]
+          }
+        }
+      }
+    },
+    "kubernetes-client-example-angular": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "projects/kubernetes-client-example-angular",
+      "sourceRoot": "projects/kubernetes-client-example-angular/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/kubernetes-client-example-angular",
+            "index": "projects/kubernetes-client-example-angular/src/index.html",
+            "main": "projects/kubernetes-client-example-angular/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "projects/kubernetes-client-example-angular/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "projects/kubernetes-client-example-angular/src/favicon.png",
+              "projects/kubernetes-client-example-angular/src/assets"
+            ],
+            "styles": [
+              "projects/kubernetes-client-example-angular/src/styles.scss"
+            ],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "1mb",
+                  "maximumError": "2mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "proxyConfig": "proxy.conf.mjs"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "kubernetes-client-example-angular:build:production"
+            },
+            "development": {
+              "browserTarget": "kubernetes-client-example-angular:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "kubernetes-client-example-angular:build"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["projects/kubernetes-client-example-angular/src/**/*.ts", "projects/kubernetes-client-example-angular/src/**/*.html"]
+          }
+        }
+      }
+    }
+  }
+}
