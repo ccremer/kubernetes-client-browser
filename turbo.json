@@ -12,7 +12,7 @@
       "env": ["CI", "VITE_KUBERNETES_API_URL"]
     },
     "e2e": {
-      "dependsOn": ["^build","^e2e"]
+      "dependsOn": ["build"]
     },
     "dev": {
       "cache": false,
