@@ -1,6 +1,6 @@
 {
   "name": "@ccremer/kubernetes-client",
-  "version": "master",
+  "version": "v0.1.0",
   "scripts": {
     "build": "turbo run build",
     "test": "turbo run test",
@@ -9,11 +9,32 @@
     "dev": "turbo run dev"
   },
   "devDependencies": {
-    "turbo": "1.9.3",
+    "auto": "10.45.0",
     "prettier": "2.8.7",
+    "turbo": "1.9.3",
     "typescript": "5.0.4"
   },
   "workspaces": [
     "packages/*"
-  ]
+  ],
+  "private": true,
+  "repository": "ccremer/kubernetes-client-browser",
+  "author": "ccremer <github.account@chrigel.net>",
+  "auto": {
+    "plugins": [
+      [
+        "npm", {}
+      ]
+    ],
+    "labels": [
+      {
+        "name": "dependency",
+        "changelogTitle": "🔩 Dependency Updates",
+        "description": "Update one or more dependencies version",
+        "releaseType": "patch",
+        "color": "#8732bc",
+        "overwrite": true
+      }
+    ]
+  }
 }

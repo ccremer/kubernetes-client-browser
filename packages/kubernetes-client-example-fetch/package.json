@@ -1,5 +1,6 @@
 {
   "name": "@ccremer/kubernetes-client-example-fetch",
+  "private": true,
   "scripts": {
     "format": "prettier --write ./**/*.{js,html,ts,json}",
     "lint": "eslint './**/*.{js,ts}'",
