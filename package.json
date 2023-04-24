@@ -1,17 +1,17 @@
 {
   "name": "@ccremer/kubernetes-client",
-  "version": "v0.1.0",
+  "version": "latest",
   "scripts": {
-    "build": "turbo run build",
-    "test": "turbo run test",
-    "lint": "turbo run lint",
-    "e2e": "turbo run e2e",
-    "dev": "turbo run dev"
+    "build": "lerna run build",
+    "test": "lerna run test",
+    "lint": "lerna run lint",
+    "e2e": "lerna run e2e",
+    "dev": "lerna run dev"
   },
   "devDependencies": {
     "auto": "10.45.0",
+    "lerna": "6.6.1",
     "prettier": "2.8.7",
-    "turbo": "1.9.3",
     "typescript": "5.0.4"
   },
   "workspaces": [
@@ -23,18 +23,11 @@
   "auto": {
     "plugins": [
       [
-        "npm", {}
+        "npm",
+        {
+          "forcePublish": false
+        }
       ]
-    ],
-    "labels": [
-      {
-        "name": "dependency",
-        "changelogTitle": "🔩 Dependency Updates",
-        "description": "Update one or more dependencies version",
-        "releaseType": "patch",
-        "color": "#8732bc",
-        "overwrite": true
-      }
     ]
   }
 }

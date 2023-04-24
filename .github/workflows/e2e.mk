@@ -42,7 +42,7 @@ e2e: run-playwright
 
 .PHONY: run-playwright
 run-playwright: setup-serviceaccount $(example_dir)/.env
-	npx turbo run --filter=$(example_dir) e2e
+	npx lerna run --scope=@ccremer/$(example) e2e
 
 .PHONY: setup-serviceaccount
 setup-serviceaccount: export KUBECONFIG=$(kubeconfig)

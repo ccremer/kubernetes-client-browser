@@ -6,28 +6,41 @@
     ":gitSignOff"
   ],
   "labels": [
-    "dependency"
+    "dependencies"
   ],
   "npm": {
     "packageRules": [
       {
-        "matchUpdateTypes": [
-          "minor",
-          "patch",
-          "pin",
-          "digest"
-        ],
-        "automerge": true,
-        "groupName": "npm",
+        "matchFiles": ["packages/kubernetes-client"],
+        "groupName": "core",
         "schedule": [
           "on the first day of the month"
         ]
       },
       {
-        "matchUpdateTypes": [
-          "major"
-        ],
-        "groupName": "npm-major",
+        "matchFiles": ["packages/kubernetes-client-example-fetch"],
+        "groupName": "fetch-example",
+        "schedule": [
+          "on the first day of the month"
+        ]
+      },
+      {
+        "matchFiles": ["packages/kubernetes-client-angular"],
+        "groupName": "angular",
+        "schedule": [
+          "on the first day of the month"
+        ]
+      },
+      {
+        "matchFiles": ["packages/kubernetes-client-example-angular"],
+        "groupName": "angular-example",
+        "schedule": [
+          "on the first day of the month"
+        ]
+      },
+      {
+        "matchFiles": ["package.json"],
+        "groupName": "common",
         "schedule": [
           "on the first day of the month"
         ]
