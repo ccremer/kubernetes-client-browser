@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - lerna-test
 
 jobs:
   release:
