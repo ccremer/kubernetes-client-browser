@@ -22,6 +22,11 @@ jobs:
           node-version: 'lts/*'
           cache: 'npm'
 
+      - name: Setup npm publish
+        run:
+          echo "//registry.npmjs.org/:_authToken=${{ secrets. NPM_TOKEN }}" >> ./.npmrc
+          echo "@ccremer:registry=https://registry.npmjs.org/" >> ./.npmrc
+
       - name: Create Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
