@@ -11,29 +11,36 @@
   "npm": {
     "packageRules": [
       {
-        "matchFiles": ["packages/kubernetes-client"],
+        "matchFiles": ["packages/kubernetes-client/package.json"],
         "groupName": "core",
         "schedule": [
           "on the first day of the month"
         ]
       },
       {
-        "matchFiles": ["packages/kubernetes-client-example-fetch"],
+        "matchFiles": ["packages/kubernetes-client-example-fetch/package.json"],
         "groupName": "fetch-example",
         "schedule": [
           "on the first day of the month"
         ]
       },
       {
-        "matchFiles": ["packages/kubernetes-client-angular"],
+        "matchFiles": ["packages/kubernetes-client-angular/package.json"],
         "groupName": "angular",
         "schedule": [
           "on the first day of the month"
         ]
       },
       {
-        "matchFiles": ["packages/kubernetes-client-example-angular"],
+        "matchFiles": ["packages/kubernetes-client-example-angular/package.json"],
         "groupName": "angular-example",
+        "schedule": [
+          "on the first day of the month"
+        ]
+      },
+      {
+        "matchFiles": ["packages/eslint-config-custom/package.json"],
+        "groupName": "eslint",
         "schedule": [
           "on the first day of the month"
         ]
