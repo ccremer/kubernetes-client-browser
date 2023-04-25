@@ -22,5 +22,9 @@
   "dependencies": {
     "bootstrap": "5.2.3",
     "@ccremer/kubernetes-client": "*"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/",
+    "access": "public"
   }
 }
