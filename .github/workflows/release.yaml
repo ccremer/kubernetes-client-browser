@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - lerna-test
 
 jobs:
   release:
@@ -25,7 +24,6 @@ jobs:
       - name: Setup npm publish
         run:
           echo "//registry.npmjs.org/:_authToken=${{ secrets. NPM_TOKEN }}" >> ./.npmrc
-          echo "@ccremer:registry=https://registry.npmjs.org/" >> ./.npmrc
 
       - name: Create Release
         env:
