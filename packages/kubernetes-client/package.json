@@ -1,6 +1,6 @@
 {
   "name": "@ccremer/kubernetes-client",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Generic Kubernetes client run in the Browser",
   "scripts": {
     "format": "prettier --write ./**/*.{js,ts,json}",
@@ -36,8 +36,8 @@
     "index.*"
   ],
   "devDependencies": {
-    "vitest": "0.30.1",
-    "eslint-config-custom": "*"
+    "eslint-config-custom": "*",
+    "vitest": "0.30.1"
   },
   "publishConfig": {
     "access": "public"
