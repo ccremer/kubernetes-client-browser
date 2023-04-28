@@ -14,11 +14,11 @@ example=
 example_dir=./packages/$(example)
 
 .PHONY: preinstall
-preinstall: npm-ci pull-image
+preinstall: npm-i pull-image
 
-.PHONY: npm-ci
-npm-ci:
-	npm ci
+.PHONY: npm-i
+npm-i:
+	npm i
 
 .PHONY: pull-image
 pull-image:
