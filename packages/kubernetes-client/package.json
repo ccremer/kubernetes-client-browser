@@ -40,7 +40,6 @@
     "eslint-config-custom": "*"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
     "access": "public"
   }
 }

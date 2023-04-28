@@ -8,7 +8,9 @@
     "build": "for PROJ in $(ls projects); do ng build $PROJ; done",
     "watch": "ng build --watch --configuration development",
     "pree2e": "playwright install",
-    "e2e": "playwright test"
+    "e2e": "playwright test",
+    "prepack": "yq e -i '. += load(\"package.json\")' dist/kubernetes-client-angular/package.json -o json",
+    "publish": "cd dist/kubernetes-client-angular && npm publish"
   },
   "dependencies": {
     "@angular/animations": "^15.2.0",
@@ -45,7 +47,6 @@
     "ng-packagr": "^15.2.2"
   },
   "publishConfig": {
-    "registry": "https://registry.npmjs.org/",
     "access": "public"
   },
   "files": [
