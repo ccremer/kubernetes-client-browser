@@ -45,12 +45,8 @@
       "plugins": ["ngrx", "prettier"]
     },
     {
-      "files": [
-        "*.html"
-      ],
-      "extends": [
-        "plugin:@angular-eslint/template/recommended"
-      ]
+      "files": ["*.html"],
+      "extends": ["plugin:@angular-eslint/template/recommended"]
     }
   ]
 }

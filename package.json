@@ -6,7 +6,8 @@
     "test": "lerna run test",
     "lint": "lerna run lint",
     "e2e": "lerna run e2e",
-    "dev": "lerna run dev"
+    "dev": "lerna run dev",
+    "release": "auto shipit"
   },
   "devDependencies": {
     "auto": "10.45.0",

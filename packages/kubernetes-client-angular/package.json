@@ -4,6 +4,8 @@
   "scripts": {
     "ng": "ng",
     "dev": "ng serve",
+    "format": "prettier --write ./**/*.{js,ts,json}",
+    "prelint": "npm run format",
     "lint": "ng lint",
     "build": "for PROJ in $(ls projects); do ng build $PROJ; done",
     "watch": "ng build --watch --configuration development",
