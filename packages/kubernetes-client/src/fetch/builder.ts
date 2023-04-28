@@ -1,4 +1,3 @@
-import { Config, KubeConfig } from '../config'
 import {
   ClientWithCreate,
   ClientWithDelete,
@@ -6,7 +5,9 @@ import {
   ClientWithList,
   ClientWithPatch,
   ClientWithUpdate,
-} from '../client'
+  Config,
+  KubeConfig,
+} from '../api'
 import { FetchClient, FetchFn } from './client'
 import { KubernetesUrlGenerator, UrlGenerator } from './urlgenerator'
 import { Authorizer, DefaultAuthorizer, NoopAuthorizer } from './authorizer'

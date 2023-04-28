@@ -19,6 +19,7 @@
     "vite": "4.2.1",
     "eslint-config-custom": "*"
   },
+  "type": "module",
   "dependencies": {
     "bootstrap": "5.2.3",
     "@ccremer/kubernetes-client": "*"

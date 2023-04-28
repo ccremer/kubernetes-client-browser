@@ -1,8 +1,6 @@
-import { KubeObject } from '../types/core/KubeObject'
-import { ErrorStatus, KubernetesError } from '../types/core/Error'
+import { ErrorStatus, KubeList, KubeObject, KubernetesError } from '../types/core'
 import { Authorizer } from './authorizer'
-import { KubeList } from '../types/core/KubeList'
-import { ClientOptions, DeleteOptions, GetOptions, ListOptions, MutationOptions, PatchOptions } from '../options'
+import { ClientOptions, DeleteOptions, GetOptions, ListOptions, MutationOptions, PatchOptions } from '../api'
 import { Client } from './builder'
 import { HttpMethods, toURLSearchParams, UrlGenerator } from './urlgenerator'
 

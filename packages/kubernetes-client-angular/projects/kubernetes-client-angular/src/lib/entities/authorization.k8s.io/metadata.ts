@@ -1,6 +1,5 @@
 import { EntityMetadataMap } from '@ngrx/data'
-import { SelfSubjectRulesReview } from '@ccremer/kubernetes-client/dist/types/authorization.k8s.io/SelfSubjectRulesReview'
-import { SelfSubjectAccessReview } from '@ccremer/kubernetes-client/dist/types/authorization.k8s.io/SelfSubjectAccessReview'
+import { SelfSubjectAccessReview, SelfSubjectRulesReview } from '@ccremer/kubernetes-client/types/authorization.k8s.io'
 
 export const AuthorizationEntityMetadataMap: EntityMetadataMap = {
   'authorization.k8s.io/v1/selfsubjectrulesreviews': {

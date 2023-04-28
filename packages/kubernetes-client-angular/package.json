@@ -5,7 +5,7 @@
     "ng": "ng",
     "dev": "ng serve",
     "lint": "ng lint",
-    "build": "ng build kubernetes-client-angular",
+    "build": "for PROJ in $(ls projects); do ng build $PROJ; done",
     "watch": "ng build --watch --configuration development",
     "pree2e": "playwright install",
     "e2e": "playwright test"
@@ -51,5 +51,15 @@
   "files": [
     "./dist/kubernetes-client-angular"
   ],
-  "types": "./dist/kubernetes-client-angular/index.d.ts"
+  "types": "./dist/kubernetes-client-angular/index.d.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ccremer/kubernetes-client-browser"
+  },
+  "keywords": [
+    "angular",
+    "kubernetes",
+    "client",
+    "browser"
+  ]
 }

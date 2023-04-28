@@ -1,4 +1,4 @@
-import { KubeConfig } from '../config'
+import { KubeConfig } from '../api'
 
 export interface Authorizer {
   /**

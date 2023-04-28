@@ -18,6 +18,7 @@
     "packages/*"
   ],
   "private": true,
+  "type": "module",
   "repository": "ccremer/kubernetes-client-browser",
   "author": "ccremer <github.account@chrigel.net>",
   "auto": {

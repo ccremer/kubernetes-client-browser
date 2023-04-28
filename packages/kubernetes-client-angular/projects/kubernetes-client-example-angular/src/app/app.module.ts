@@ -5,7 +5,6 @@ import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import { LoginModule } from './login/login.module'
 import { DefaultDataServiceFactory, EntityDataModule } from '@ngrx/data'
-import { entityMetadataMap } from './store/entity-metadata-map'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { HttpClientModule } from '@angular/common/http'
 import {
@@ -15,6 +14,7 @@ import {
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { ClientComponent } from './client/client.component'
+import { DefaultEntityMetadataMap } from '../../../kubernetes-client-angular/src/lib/entities/default-entity-metadata-map'
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,7 +26,7 @@ import { ClientComponent } from './client/client.component'
     StoreModule.forRoot(),
     EffectsModule.forRoot(),
     EntityDataModule.forRoot({
-      entityMetadata: entityMetadataMap,
+      entityMetadata: DefaultEntityMetadataMap,
     }),
     StoreDevtoolsModule.instrument(),
     ClientComponent,

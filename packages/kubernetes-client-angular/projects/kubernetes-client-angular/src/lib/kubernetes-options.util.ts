@@ -6,7 +6,7 @@ import {
   GetOptions,
   ListOptions,
   MutationOptions,
-} from '@ccremer/kubernetes-client/dist/options'
+} from '@ccremer/kubernetes-client/api/options'
 import { HttpParams } from '@angular/common/http'
 
 export function commonOptions(httpOptions?: HttpOptions): CommonOptions | undefined {

@@ -1,4 +1,4 @@
-import { KubeObject } from '@ccremer/kubernetes-client/dist/types/core/KubeObject'
+import { KubeObject } from '@ccremer/kubernetes-client/types/core'
 
 /**
  * Returns the namespaced name for the given entity.

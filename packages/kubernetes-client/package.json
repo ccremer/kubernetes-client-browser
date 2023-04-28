@@ -7,8 +7,8 @@
     "lint": "eslint './**/*.{js,ts}'",
     "prelint": "npm run format",
     "test": "vitest run",
-    "build": "rm -rf ./dist && tsc",
-    "dev": "tsc --watch"
+    "clean": "rm -rf types fetch api index.*",
+    "build": "tsc"
   },
   "repository": {
     "type": "git",
@@ -27,9 +27,13 @@
     "url": "https://github.com/ccremer/kubernetes-client-browser/issues"
   },
   "homepage": "https://github.com/ccremer/kubernetes-client-browser#readme",
-  "types": "./dist/index.d.ts",
+  "types": "index.d.ts",
+  "type": "module",
   "files": [
-    "./dist"
+    "api",
+    "fetch",
+    "types",
+    "index.*"
   ],
   "devDependencies": {
     "vitest": "0.30.1",

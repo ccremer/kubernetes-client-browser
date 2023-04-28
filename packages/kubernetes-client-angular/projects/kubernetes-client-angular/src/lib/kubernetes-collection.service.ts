@@ -4,7 +4,7 @@ import {
   EntityCollectionServiceElementsFactory,
   QueryParams,
 } from '@ngrx/data'
-import { KubeObject } from '@ccremer/kubernetes-client/dist/types/core/KubeObject'
+import { KubeObject } from '@ccremer/kubernetes-client/types/core'
 import { filter, map, Observable, of, take, tap } from 'rxjs'
 import { switchMap } from 'rxjs/operators'
 

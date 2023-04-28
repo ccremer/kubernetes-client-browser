@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { HttpMethods, KubernetesUrlGenerator, toURLSearchParams } from './urlgenerator'
-import { ClientOptions } from '../options'
+import { ClientOptions } from '../api'
 
 describe('KubernetesUrlGenerator', () => {
   const tests: {
