@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpMethods, KubernetesUrlGenerator, UrlGenerator } from '@ccremer/kubernetes-client/dist/fetch/urlgenerator'
+import { HttpMethods, KubernetesUrlGenerator, UrlGenerator } from '@ccremer/kubernetes-client/fetch'
 
 @Injectable({
   providedIn: 'root',

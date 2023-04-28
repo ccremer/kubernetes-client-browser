@@ -1,4 +1,4 @@
-import { KubeObject } from '../core/KubeObject'
+import { KubeObject } from '../core'
 
 export interface SelfSubjectAccessReview extends KubeObject {
   kind: 'SelfSubjectAccessReview'

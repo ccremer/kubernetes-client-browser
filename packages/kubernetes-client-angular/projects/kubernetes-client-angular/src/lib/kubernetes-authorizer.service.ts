@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
-import { Authorizer, DefaultAuthorizer, NoopAuthorizer } from '@ccremer/kubernetes-client/dist/fetch/authorizer'
-import { Config } from '@ccremer/kubernetes-client/dist/config'
+import { Authorizer, DefaultAuthorizer, NoopAuthorizer } from '@ccremer/kubernetes-client/fetch'
+import { Config } from '@ccremer/kubernetes-client/api'
 
 @Injectable({
   providedIn: 'root',

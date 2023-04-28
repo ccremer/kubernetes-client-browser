@@ -1,10 +1,9 @@
 import { EntityCollectionDataService, QueryParams } from '@ngrx/data'
-import { KubeObject } from '@ccremer/kubernetes-client/dist/types/core/KubeObject'
+import { KubeList, KubeObject } from '@ccremer/kubernetes-client/types/core'
 import { from, map, Observable } from 'rxjs'
 import { Update } from '@ngrx/entity'
 import { HttpOptions } from '@ngrx/data/src/dataservices/interfaces'
-import { Client } from '@ccremer/kubernetes-client/dist/fetch/builder'
-import { KubeList } from '@ccremer/kubernetes-client/dist/types/core/KubeList'
+import { Client } from '@ccremer/kubernetes-client/fetch'
 import { deleteOptions, getOptions, listOptions, mutationOptions } from './kubernetes-options.util'
 import { DataServiceConfig } from './config'
 

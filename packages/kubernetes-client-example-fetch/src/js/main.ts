@@ -1,5 +1,5 @@
 import '../styles.scss'
-import { Client, KubeClientBuilder } from '@ccremer/kubernetes-client/dist/fetch/builder'
+import { Client, KubeClientBuilder } from '@ccremer/kubernetes-client/fetch'
 import { newSelfSubjectRulesReview } from './types'
 import { createAlert } from './alerts'
 

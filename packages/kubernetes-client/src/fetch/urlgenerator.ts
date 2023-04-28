@@ -1,4 +1,4 @@
-import { OptionValue } from '../options'
+import { OptionValue } from '../api'
 
 export declare type HttpMethods = 'DELETE' | 'GET' | 'POST' | 'PUT' | 'PATCH'
 

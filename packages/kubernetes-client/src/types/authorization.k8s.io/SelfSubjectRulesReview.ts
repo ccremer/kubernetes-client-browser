@@ -1,4 +1,4 @@
-import { KubeObject } from '../core/KubeObject'
+import { KubeObject } from '../core'
 
 export interface SelfSubjectRulesReview extends KubeObject {
   apiVersion: 'authorization.k8s.io/v1'

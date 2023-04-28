@@ -1,7 +1,6 @@
 import { EntityMetadataMap } from '@ngrx/data'
-import { ConfigMap } from '@ccremer/kubernetes-client/dist/types/core/ConfigMap'
+import { ConfigMap, Secret } from '@ccremer/kubernetes-client/types/core'
 import { toNamespacedName } from './validator'
-import { Secret } from '@ccremer/kubernetes-client/dist/types/core/Secret'
 
 export const CoreEntityMetadataMap: EntityMetadataMap = {
   'v1/configmaps': {

@@ -1,5 +1,4 @@
-import { KubeObject } from './types/core/KubeObject'
-import { KubeList } from './types/core/KubeList'
+import { KubeList, KubeObject } from '../types/core'
 import { DeleteOptions, GetOptions, ListOptions, MutationOptions, PatchOptions } from './options'
 
 export interface ClientWithGet {

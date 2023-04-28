@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { KubeObject } from '@ccremer/kubernetes-client/dist/types/core/KubeObject'
+import { KubeObject } from '@ccremer/kubernetes-client/types/core'
 import { EntityCollectionServiceElementsFactory } from '@ngrx/data'
 import { KubernetesCollectionService } from './kubernetes-collection.service'
 

@@ -1,6 +1,5 @@
 {
   "name": "@ccremer/kubernetes-client-angular",
-  "version": "0.0.1",
   "peerDependencies": {
     "@angular/common": "^15.2.0",
     "@angular/core": "^15.2.0",
@@ -9,5 +8,15 @@
   "dependencies": {
     "tslib": "2.5.0"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ccremer/kubernetes-client-browser"
+  },
+  "keywords": [
+    "angular",
+    "kubernetes",
+    "client",
+    "browser"
+  ],
   "sideEffects": false
 }
