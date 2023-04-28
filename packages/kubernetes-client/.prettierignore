@@ -1,6 +1,8 @@
 # Ignore artifacts
 
-.github
-dist
-playwright-report
+/api/
+/fetch/
+/types/
+/index.*
+/playwright-report/
 package-lock.json

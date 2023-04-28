@@ -30,7 +30,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["projects/kubernetes-client-angular/src/**/*.ts", "projects/kubernetes-client-angular/src/**/*.html"]
+            "lintFilePatterns": [
+              "projects/kubernetes-client-angular/src/**/*.ts",
+              "projects/kubernetes-client-angular/src/**/*.html"
+            ]
           }
         }
       }
@@ -52,18 +55,14 @@
             "outputPath": "dist/kubernetes-client-example-angular",
             "index": "projects/kubernetes-client-example-angular/src/index.html",
             "main": "projects/kubernetes-client-example-angular/src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
+            "polyfills": ["zone.js"],
             "tsConfig": "projects/kubernetes-client-example-angular/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
               "projects/kubernetes-client-example-angular/src/favicon.png",
               "projects/kubernetes-client-example-angular/src/assets"
             ],
-            "styles": [
-              "projects/kubernetes-client-example-angular/src/styles.scss"
-            ],
+            "styles": ["projects/kubernetes-client-example-angular/src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -117,7 +116,10 @@
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
-            "lintFilePatterns": ["projects/kubernetes-client-example-angular/src/**/*.ts", "projects/kubernetes-client-example-angular/src/**/*.html"]
+            "lintFilePatterns": [
+              "projects/kubernetes-client-example-angular/src/**/*.ts",
+              "projects/kubernetes-client-example-angular/src/**/*.html"
+            ]
           }
         }
       }

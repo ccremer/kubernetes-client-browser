@@ -1,2 +1,5 @@
-dist/
+/types/
+/api/
+/fetch/
+/index.*
 node_modules/

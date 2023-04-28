@@ -11,9 +11,8 @@ jobs:
     if: "!contains(github.event.head_commit.message, 'ci skip') && !contains(github.event.head_commit.message, 'skip ci')"
     steps:
       - uses: actions/checkout@v3
-
-      - name: Prepare repository
-        run: git fetch --unshallow --tags
+        with:
+          fetch-depth: '0'
 
       - name: Setup Node
         uses: actions/setup-node@v3
@@ -30,6 +29,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
-          npm i
+          npm install
           npm run build
-          npx auto shipit
+          npm run release
