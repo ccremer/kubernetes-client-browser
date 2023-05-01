@@ -4,6 +4,7 @@
   "scripts": {
     "ng": "ng",
     "dev": "ng serve",
+    "preformat": "node ../../README.cjs projects/kubernetes-client-angular/README.md.njk > projects/kubernetes-client-angular/README.md",
     "format": "prettier --write ./**/*.{js,ts,json}",
     "prelint": "npm run format",
     "lint": "ng lint",
@@ -50,19 +51,5 @@
   },
   "publishConfig": {
     "access": "public"
-  },
-  "files": [
-    "./dist/kubernetes-client-angular"
-  ],
-  "types": "./dist/kubernetes-client-angular/index.d.ts",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/ccremer/kubernetes-client-browser"
-  },
-  "keywords": [
-    "angular",
-    "kubernetes",
-    "client",
-    "browser"
-  ]
+  }
 }
