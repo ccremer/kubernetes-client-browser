@@ -36,82 +36,17 @@ npm install @ccremer/kubernetes-client @ccremer/kubernetes-client-angular
 
 Setup the module with `@ngrx/data` in `app.module.ts`:
 ```typescript
-import { NgModule } from '@angular/core'
-import { BrowserModule } from '@angular/platform-browser'
-
-import { DefaultDataServiceFactory, EntityDataModule } from '@ngrx/data'
-import { HttpClientModule } from '@angular/common/http'
-import {
-  DefaultEntityMetadataMap,
-  KubernetesDataServiceFactory,
-  KubernetesDataServiceFactoryConfig,
-} from '@ccremer/kubernetes-client-angular'
-import { StoreModule } from '@ngrx/store'
-import { EffectsModule } from '@ngrx/effects'
-
-@NgModule({
-  declarations: [],
-  imports: [
-    BrowserModule,
-    HttpClientModule, // required by @ngrx/data
-    StoreModule.forRoot(),
-    EffectsModule.forRoot(),
-    EntityDataModule.forRoot({
-      entityMetadata: DefaultEntityMetadataMap,
-    }),
-  ],
-  providers: [
-    { provide: DefaultDataServiceFactory, useClass: KubernetesDataServiceFactory },
-    {
-      provide: KubernetesDataServiceFactoryConfig,
-      useValue: {
-        default: {
-          usePatchInUpsert: true,
-        },
-      } satisfies KubernetesDataServiceFactoryConfig,
-    },
-  ],
-})
-export class AppModule {}
+{% include "projects/kubernetes-client-angular/examples/module.ts" -%}
 ```
 
 Optional but highly recommended: Create an extendable Service for each entity in `config-map.service.ts`:
 ```typescript
-import { Injectable } from '@angular/core'
-import { KubernetesCollectionService } from '@ccremer/kubernetes-client-angular'
-import { ConfigMap } from '@ccremer/kubernetes-client/types/core'
-import { EntityCollectionServiceElementsFactory } from '@ngrx/data'
-
-@Injectable({
-  providedIn: 'root',
-})
-export class ConfigMapService extends KubernetesCollectionService<ConfigMap> {
-  constructor(elementsFactory: EntityCollectionServiceElementsFactory) {
-    super('v1/configmaps', elementsFactory)
-  }
-}
+{% include "projects/kubernetes-client-angular/examples/service.ts" -%}
 ```
 
 Configure and consume the service in a component like `app.component.ts`:
 ```typescript
-import { Component, OnInit } from '@angular/core'
-import { ConfigMapService } from './config-map.service'
-import { KubernetesAuthorizerService } from '@ccremer/kubernetes-client-angular'
-
-@Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css'],
-})
-export class AppComponent implements OnInit {
-  constructor(private configMapService: ConfigMapService, authorizer: KubernetesAuthorizerService) {
-    authorizer.setToken('...')
-  }
-
-  ngOnInit(): void {
-    this.configMapService.getAll().subscribe((items) => console.log(items))
-  }
-}
+{% include "projects/kubernetes-client-angular/examples/component.ts" -%}
 ```
 
 ## Accessing Kubernetes API
@@ -121,20 +56,7 @@ You can change the endpoint for it, e.g. set to `/kube/` (no trailing slash), so
 
 Example configuration for Angular in Dev mode:
 ```typescript
-import dotenv from 'dotenv'
-
-dotenv.config()
-
-export default [
-  {
-    context: [
-      "/api",
-      "/apis"
-    ],
-    target: process.env.ANGULAR_KUBERNETES_API_URL,
-    secure: false,
-  },
-]
+{% include "projects/kubernetes-client-angular/examples/proxy.conf.mjs" -%}
 ```
 Don't forget to tell Angular about the proxy in `angular.json`:
 ```json
@@ -161,15 +83,7 @@ The default built-in client can be extended in various points.
 You can also provide your own resource type, as long as it fulfills the `KubeMeta` interface contract.
 
 ```typescript
-import { KubeObject } from '@ccremer/kubernetes-client/types/core'
-
-export interface MyCustomResource extends KubeObject {
-  apiVersion: 'customgroup/v1'
-  kind: 'CustomResource'
-  spec: {
-    field: string
-  }
-}
+{% include "projects/kubernetes-client-angular/examples/custom-type.ts" -%}
 ```
 ℹ️ The client doesn't set a default name or namespace when querying, so be sure you set the correct metadata.
 
@@ -193,4 +107,3 @@ Other than that, this package follows SemVer.
 
 There is an official [Kubernetes client](https://github.com/kubernetes-client/javascript).
 However, it's not yet ready for browsers and development seems a bit slow.
-

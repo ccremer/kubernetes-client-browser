@@ -18,5 +18,13 @@
     "client",
     "browser"
   ],
+  "files": [
+    "esm2020",
+    "fesm2015",
+    "fesm2020",
+    "lib",
+    "index.d.ts",
+    "public-api.d.ts"
+  ],
   "sideEffects": false
 }
