@@ -17,6 +17,9 @@ export interface UrlGenerator {
   ): string
 }
 
+/**
+ * Default {@link UrlGenerator} that generates API endpoint paths based on resource metadata.
+ */
 export class KubernetesUrlGenerator implements UrlGenerator {
   constructor(private apiBase = '') {}
 
