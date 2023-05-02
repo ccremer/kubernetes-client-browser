@@ -12,8 +12,8 @@
     "watch": "ng build --watch --configuration development",
     "pree2e": "playwright install",
     "e2e": "playwright test",
-    "prepack": "yq e -i '. += load(\"package.json\")' dist/kubernetes-client-angular/package.json -o json",
-    "publish": "cd dist/kubernetes-client-angular && npm publish"
+    "prepack": "echo prepack && yq e -i '. += load(\"package.json\")' dist/kubernetes-client-angular/package.json -o json",
+    "publish": "echo $PWD && cd dist/kubernetes-client-angular && npm publish"
   },
   "dependencies": {
     "@angular/animations": "^15.2.0",
