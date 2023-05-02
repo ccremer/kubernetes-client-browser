@@ -7,6 +7,9 @@ import { KubernetesAuthorizerService } from './kubernetes-authorizer.service'
 import { KubernetesUrlGeneratorService } from './kubernetes-url-generator.service'
 import { DataServiceConfig } from './config'
 
+/**
+ * Factory to create {@link EntityCollectionDataService} for Kubernetes resources.
+ */
 @Injectable()
 export class KubernetesDataServiceFactory {
   private readonly client: Client
@@ -25,8 +28,18 @@ export class KubernetesDataServiceFactory {
   }
 }
 
+/**
+ * Contains settings that configure each Kubernetes client per entity type.
+ */
 export abstract class KubernetesDataServiceFactoryConfig {
+  /**
+   * The default settings that may apply to all entities if not overridden.
+   */
   'default'?: DataServiceConfig
+  /**
+   * An override config for each entity.
+   * The key must match an entity name as defined in the EntityMetadataMap given in the module.
+   */
   overrides?: {
     [key: string]: DataServiceConfig
   }

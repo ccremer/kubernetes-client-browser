@@ -91,6 +91,11 @@ export class KubeClientBuilder {
     )
   }
 
+  /**
+   * Constructs a default implementation of a {@link Client} that uses a static access token.
+   * @param token the access token
+   * @param server the root endpoint path for the Kubernetes API server.
+   */
   public static DefaultClient(token: string, server = ''): Client {
     return new KubeClientBuilder(Config.FromToken(token, server)).Build()
   }

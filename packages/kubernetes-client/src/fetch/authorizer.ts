@@ -57,6 +57,11 @@ export class DefaultAuthorizer implements Authorizer {
   }
 }
 
+/**
+ * This authorizer doesn't modify the request at all, effectively disable authorization.
+ * Any request most likely will fail when using this.
+ * Maybe useful for testing purposes.
+ */
 export class NoopAuthorizer implements Authorizer {
   applyAuthorization(init: RequestInit): RequestInit {
     return init

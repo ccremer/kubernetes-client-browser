@@ -28,6 +28,11 @@ export interface Context {
 }
 
 export class Config {
+  /**
+   * Creates a {@link KubeConfig} with a static access token.
+   * @param token the token
+   * @param server the server's base URI under which all endpoints are available.
+   */
   static FromToken(token: string, server = ''): KubeConfig {
     return {
       users: [{ name: 'user', user: { token: token } }],
