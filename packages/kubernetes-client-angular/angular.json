@@ -52,7 +52,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/kubernetes-client-example-angular",
+            "outputPath": "build/kubernetes-client-example-angular",
             "index": "projects/kubernetes-client-example-angular/src/index.html",
             "main": "projects/kubernetes-client-example-angular/src/main.ts",
             "polyfills": ["zone.js"],
