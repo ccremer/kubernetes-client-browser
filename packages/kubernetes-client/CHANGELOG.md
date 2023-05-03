@@ -1,3 +1,26 @@
+# v0.2.1 (Wed May 03 2023)
+
+#### 🐛 Bug Fix
+
+- Add type documentation ([@ccremer](https://github.com/ccremer))
+- Add Readme documentation for core client ([@ccremer](https://github.com/ccremer))
+- Fix eslint/prettier ([@ccremer](https://github.com/ccremer))
+
+#### 🏠 Internal
+
+- Fix eslint/prettier [#20](https://github.com/ccremer/kubernetes-client-browser/pull/20) ([@ccremer](https://github.com/ccremer))
+
+#### 📝 Documentation
+
+- Add typescript documentation [#27](https://github.com/ccremer/kubernetes-client-browser/pull/27) ([@ccremer](https://github.com/ccremer))
+- Add basic documentation to core Readme [#19](https://github.com/ccremer/kubernetes-client-browser/pull/19) ([@ccremer](https://github.com/ccremer))
+
+#### Authors: 1
+
+- Chris ([@ccremer](https://github.com/ccremer))
+
+---
+
 # v0.2.0 (Fri Apr 28 2023)
 
 #### 🚀 Enhancement
