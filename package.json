@@ -7,7 +7,7 @@
     "lint": "lerna run lint",
     "e2e": "lerna run e2e",
     "dev": "lerna run dev",
-    "release": "auto shipit -v"
+    "release": "auto shipit --no-changelog"
   },
   "devDependencies": {
     "auto": "10.46.0",
@@ -28,7 +28,8 @@
       [
         "npm",
         {
-          "forcePublish": false
+          "forcePublish": false,
+          "publishFolder": "./dist"
         }
       ]
     ]
