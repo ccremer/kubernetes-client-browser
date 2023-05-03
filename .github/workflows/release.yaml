@@ -33,17 +33,8 @@ jobs:
       - name: Create Release
         env:
           GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GIT_TRACE: "/home/runner/work/kubernetes-client-browser/kubernetes-client-browser/git.log"
-          GIT_CURL_VERBOSE: "/home/runner/work/kubernetes-client-browser/kubernetes-client-browser/curl.log"
         run: |
           npm install
           npm run build
           npm run release
-      - uses: actions/upload-artifact@v3
-        if: always()
-        with:
-          name: git.log
-          path: "*.log"
-          retention-days: 30
