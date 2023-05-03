@@ -23,7 +23,8 @@
         "^build"
       ],
       "outputs": [
-        "{projectRoot}/dist"
+        "{projectRoot}/dist",
+        "{projectRoot}/build"
       ]
     },
     "e2e": {
