@@ -1,6 +1,6 @@
 {
   "name": "@ccremer/kubernetes-client",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "description": "Generic Kubernetes client run in the Browser",
   "scripts": {
     "preformat": "node ../../README.cjs README.md.njk > README.md",
