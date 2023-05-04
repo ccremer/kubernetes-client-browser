@@ -11,43 +11,46 @@
   "npm": {
     "packageRules": [
       {
-        "matchFiles": ["packages/kubernetes-client/package.json"],
-        "groupName": "core",
+        "matchPaths": [
+          "packages/kubernetes-client/package.json"
+        ],
+        "groupName": "core packages",
         "schedule": [
           "on the first day of the month"
         ]
       },
       {
-        "matchFiles": ["packages/kubernetes-client-example-fetch/package.json"],
-        "groupName": "fetch-example",
+        "matchPaths": [
+          "packages/kubernetes-client-example-fetch/package.json"
+        ],
+        "groupName": "fetch-example packages",
         "schedule": [
           "on the first day of the month"
         ]
       },
       {
-        "matchFiles": ["packages/kubernetes-client-angular/package.json"],
-        "groupName": "angular",
+        "matchPaths": [
+          "packages/kubernetes-client-angular/**/package.json"
+        ],
+        "groupName": "angular packages",
         "schedule": [
           "on the first day of the month"
         ]
       },
       {
-        "matchFiles": ["packages/kubernetes-client-example-angular/package.json"],
-        "groupName": "angular-example",
-        "schedule": [
-          "on the first day of the month"
-        ]
-      },
-      {
-        "matchFiles": ["packages/eslint-config-custom/package.json"],
+        "matchPaths": [
+          "packages/eslint-config-custom/package.json"
+        ],
         "groupName": "eslint",
         "schedule": [
           "on the first day of the month"
         ]
       },
       {
-        "matchFiles": ["package.json"],
-        "groupName": "common",
+        "matchPaths": [
+          "package.json"
+        ],
+        "groupName": "common packages",
         "schedule": [
           "on the first day of the month"
         ]

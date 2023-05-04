@@ -3,3 +3,4 @@
 /fetch/
 /index.*
 node_modules/
+/dist/
