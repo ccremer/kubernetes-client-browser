@@ -36,17 +36,17 @@ npm install @ccremer/kubernetes-client @ccremer/kubernetes-client-angular
 
 Setup the module with `@ngrx/data` in `app.module.ts`:
 ```typescript
-{% include "projects/kubernetes-client-angular/examples/module.ts" -%}
+{% include "projects/kubernetes-client-angular/examples/app.module.ts" -%}
 ```
 
 Optional but highly recommended: Create an extendable Service for each entity in `config-map.service.ts`:
 ```typescript
-{% include "projects/kubernetes-client-angular/examples/service.ts" -%}
+{% include "projects/kubernetes-client-angular/examples/config-map.service.ts" -%}
 ```
 
 Configure and consume the service in a component like `app.component.ts`:
 ```typescript
-{% include "projects/kubernetes-client-angular/examples/component.ts" -%}
+{% include "projects/kubernetes-client-angular/examples/app.component.ts" -%}
 ```
 
 ## Accessing Kubernetes API

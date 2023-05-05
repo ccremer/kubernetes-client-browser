@@ -1,0 +1,10 @@
+{
+  "extends": "../../../tsconfig",
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@ccremer/kubernetes-client/*": ["../../../../kubernetes-client/dist/*"],
+      "@ccremer/kubernetes-client-angular": ["../../../dist"]
+    }
+  }
+}
