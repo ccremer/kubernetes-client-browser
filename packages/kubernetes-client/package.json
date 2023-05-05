@@ -9,9 +9,8 @@
     "prelint": "npm run format",
     "test": "vitest run",
     "clean": "rm -rf types fetch api index.*",
-    "build": "tsc",
-    "ignore:publishVersion": "yq e -i '. += {\"version\": load(\"package.json\").version}' dist/package.json -o json",
-    "prepack": "tsc --outDir ./dist && cp package.json README.md dist/"
+    "build": "rm -rf dist && tsc",
+    "prepack": "cp package.json README.md dist/"
   },
   "repository": {
     "type": "git",
