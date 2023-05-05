@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import 'dotenv/config'
 import * as path from 'path'
+import tsconfigPaths from 'vite-tsconfig-paths'
 
 // https://vitejs.dev/config/
 export default defineConfig(({ mode }) => {
@@ -8,6 +9,7 @@ export default defineConfig(({ mode }) => {
     console.log('⚠️  WARNING ⚠️ :environment variable VITE_KUBERNETES_API_URL is not defined. API may not be working!')
   }
   return {
+    plugins: [tsconfigPaths()],
     root: path.resolve(__dirname, 'src'),
     resolve: {
       alias: {

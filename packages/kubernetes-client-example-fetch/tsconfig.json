@@ -1,7 +1,11 @@
 {
   "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "baseUrl": ".",
+    "paths": {
+      "@ccremer/kubernetes-client/*": ["../kubernetes-client/dist/*"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["src/**/*.spec.ts"]

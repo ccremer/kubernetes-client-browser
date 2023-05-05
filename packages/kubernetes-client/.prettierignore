@@ -1,8 +1,4 @@
 # Ignore artifacts
-
-/api/
-/fetch/
-/types/
-/index.*
 /playwright-report/
+/dist/
 package-lock.json

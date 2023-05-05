@@ -15,14 +15,15 @@
     "@types/bootstrap": "5.2.6",
     "@types/node": "18.16.3",
     "dotenv": "16.0.3",
+    "eslint-config-custom": "*",
     "sass": "1.62.1",
     "vite": "4.3.3",
-    "eslint-config-custom": "*"
+    "vite-tsconfig-paths": "4.2.0"
   },
   "type": "module",
   "dependencies": {
-    "bootstrap": "5.2.3",
-    "@ccremer/kubernetes-client": "*"
+    "@ccremer/kubernetes-client": "*",
+    "bootstrap": "5.2.3"
   },
   "publishConfig": {
     "access": "public"

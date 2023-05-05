@@ -9,7 +9,8 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "paths": {
-      "kubernetes-client-angular": ["dist/kubernetes-client-angular"]
+      "kubernetes-client-angular": ["dist"],
+      "@ccremer/kubernetes-client/*": ["../kubernetes-client/dist/*"]
     },
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
