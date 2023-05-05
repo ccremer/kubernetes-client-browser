@@ -1,46 +1,22 @@
-name: PullRequest
+name: E2E
 
 on:
-  pull_request: { }
+  pull_request:
+    paths:
+      - ".github/workflows/*.yml"
+      - "package.json"
+      - "packages/kubernetes-client/package.json"
+      - "packages/kubernetes-client/src/**"
+      - "packages/kubernetes-client-angular/projects/**"
+      - "packages/kubernetes-client-angular/package.json"
+      - "packages/kubernetes-client-example-fetch/package.json"
+      - "packages/kubernetes-client-example-fetch/playwright.config.ts"
+      - "packages/kubernetes-client-example-fetch/src/**"
+      - "packages/kubernetes-client-example-fetch/tests/**"
 
 jobs:
 
-  lint:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 'lts/*'
-          cache: 'npm'
-      - run: npm install
-      - run: npm run lint
-      - name: Ensure clean git state
-        run: git diff --exit-code
-
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 'lts/*'
-          cache: 'npm'
-      - run: npm install
-      - run: npm run test
-
-  dist:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 'lts/*'
-          cache: 'npm'
-      - run: npm install
-      - run: npm run build
-
-  e2e:
+  playwright:
     timeout-minutes: 60
     strategy:
       matrix:

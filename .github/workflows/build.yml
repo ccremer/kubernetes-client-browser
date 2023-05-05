@@ -1,0 +1,26 @@
+name: Build
+
+on:
+  pull_request:
+    paths:
+      - ".github/workflows/*.yml"
+      - "*.json"
+      - "packages/kubernetes-client/*.json"
+      - "packages/kubernetes-client/src/**"
+      - "packages/kubernetes-client-angular/projects/**"
+      - "packages/kubernetes-client-angular/*.json"
+      - "packages/kubernetes-client-example-fetch/*.json"
+      - "packages/kubernetes-client-example-fetch/src/**"
+
+jobs:
+
+  dist:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+      - run: npm install
+      - run: npm run build
