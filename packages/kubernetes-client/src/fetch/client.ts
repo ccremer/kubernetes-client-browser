@@ -144,7 +144,7 @@ export class FetchClient implements Client {
       body: body,
       method: method,
       headers: {
-        'Content-Type': method === 'PATCH' ? 'application/strategic-merge-patch+json' : 'application/json',
+        'Content-Type': method === 'PATCH' ? 'application/merge-patch+json' : 'application/json',
       },
     }
     const initWithAuth = this.authorizer.applyAuthorization(init)
