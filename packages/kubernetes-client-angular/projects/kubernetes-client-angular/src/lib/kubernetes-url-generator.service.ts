@@ -1,13 +1,14 @@
-import { Injectable } from '@angular/core'
+import { Injectable, Optional } from '@angular/core'
 import { HttpMethods, KubernetesUrlGenerator, UrlGenerator } from '@ccremer/kubernetes-client/fetch'
+import { KubernetesDataServiceFactoryConfig } from './kubernetes-data-service-factory.service'
 
 @Injectable({
   providedIn: 'root',
 })
 export class KubernetesUrlGeneratorService implements UrlGenerator {
   private wrapped: KubernetesUrlGenerator
-  constructor() {
-    this.wrapped = new KubernetesUrlGenerator()
+  constructor(@Optional() config?: KubernetesDataServiceFactoryConfig) {
+    this.wrapped = new KubernetesUrlGenerator(config?.basePath ?? '')
   }
 
   buildEndpoint(
