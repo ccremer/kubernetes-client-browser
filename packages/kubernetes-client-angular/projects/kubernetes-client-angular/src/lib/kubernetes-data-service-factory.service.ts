@@ -37,6 +37,12 @@ export abstract class KubernetesDataServiceFactoryConfig {
    */
   'default'?: DataServiceConfig
   /**
+   * The base path for the API endpoint URLs, without trailing slash.
+   * Defaults to empty string, which is equivalent to "/", where the paths get constructed like "/api/v1/namespaces/..."
+   * @see KubernetesUrlGenerator
+   */
+  basePath?: string
+  /**
    * An override config for each entity.
    * The key must match an entity name as defined in the EntityMetadataMap given in the module.
    */
