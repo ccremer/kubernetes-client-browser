@@ -12,6 +12,7 @@
     "watch": "ng build --watch --configuration development",
     "pree2e": "playwright install",
     "e2e": "playwright test",
+    "e2e:ui": "playwright test --ui",
     "publishVersion": "yq e -i '. += {\"version\": load(\"package.json\").version}' dist/package.json -o json",
     "postbuild": "npm run publishVersion",
     "prepack": "npm run publishVersion"
