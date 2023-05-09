@@ -1,4 +1,5 @@
 import { OptionValue } from '../api'
+import { DefaultPluralizer, Pluralizer } from './pluralizer'
 
 export declare type HttpMethods = 'DELETE' | 'GET' | 'POST' | 'PUT' | 'PATCH'
 
@@ -21,7 +22,7 @@ export interface UrlGenerator {
  * Default {@link UrlGenerator} that generates API endpoint paths based on resource metadata.
  */
 export class KubernetesUrlGenerator implements UrlGenerator {
-  constructor(private apiBase = '') {}
+  constructor(private apiBase = '', private pluralizer: Pluralizer = new DefaultPluralizer()) {}
 
   buildEndpoint(
     method: HttpMethods,
@@ -43,7 +44,7 @@ export class KubernetesUrlGenerator implements UrlGenerator {
       endpoint.push('namespaces')
       endpoint.push(inNamespace)
     }
-    endpoint.push(kind.toLowerCase().concat('s'))
+    endpoint.push(this.pluralizer.pluralize(kind.toLowerCase()))
     if (name && name !== '' && method !== 'POST') {
       endpoint.push(name)
     }
