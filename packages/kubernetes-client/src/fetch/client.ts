@@ -1,8 +1,17 @@
 import { ErrorStatus, KubeList, KubeObject, KubernetesError } from '../types/core'
 import { Authorizer } from './authorizer'
-import { ClientOptions, DeleteOptions, GetOptions, ListOptions, MutationOptions, PatchOptions } from '../api'
+import {
+  ClientOptions,
+  DeleteOptions,
+  GetOptions,
+  HttpMethods,
+  ListOptions,
+  MutationOptions,
+  PatchOptions,
+  toURLSearchParams,
+  UrlGenerator,
+} from '../api'
 import { Client } from './builder'
-import { HttpMethods, toURLSearchParams, UrlGenerator } from './urlgenerator'
 
 export declare type FetchFn = (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>
 

@@ -1,4 +1,4 @@
-import { OptionValue } from '../api'
+import { OptionValue } from './index'
 import { DefaultPluralizer, Pluralizer } from './pluralizer'
 
 export declare type HttpMethods = 'DELETE' | 'GET' | 'POST' | 'PUT' | 'PATCH'
