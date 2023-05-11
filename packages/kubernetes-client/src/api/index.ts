@@ -1,3 +1,5 @@
 export * from './options'
 export * from './config'
 export * from './client'
+export * from './pluralizer'
+export * from './urlgenerator'

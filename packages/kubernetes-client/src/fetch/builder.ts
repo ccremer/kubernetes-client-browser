@@ -7,9 +7,10 @@ import {
   ClientWithUpdate,
   Config,
   KubeConfig,
+  KubernetesUrlGenerator,
+  UrlGenerator,
 } from '../api'
 import { FetchClient, FetchFn } from './client'
-import { KubernetesUrlGenerator, UrlGenerator } from './urlgenerator'
 import { Authorizer, DefaultAuthorizer, NoopAuthorizer } from './authorizer'
 
 export interface Client
