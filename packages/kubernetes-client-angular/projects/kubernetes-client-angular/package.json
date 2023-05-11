@@ -12,6 +12,7 @@
     "type": "git",
     "url": "https://github.com/ccremer/kubernetes-client-browser"
   },
+  "license": "Apache-2.0",
   "keywords": [
     "angular",
     "kubernetes",

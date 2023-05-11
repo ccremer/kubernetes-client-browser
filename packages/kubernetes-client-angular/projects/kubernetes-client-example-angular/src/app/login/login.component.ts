@@ -1,7 +1,7 @@
 import { Component } from '@angular/core'
 import { SelfSubjectRulesReviewService } from '../store/self-subject-rules-review.service'
-import { KubernetesAuthorizerService } from '../../../../kubernetes-client-angular/src/lib/kubernetes-authorizer.service'
 import { Router } from '@angular/router'
+import { KubernetesAuthorizerService } from 'kubernetes-client-angular'
 
 @Component({
   selector: 'app-page',
