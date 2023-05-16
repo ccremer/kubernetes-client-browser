@@ -45,3 +45,21 @@ export abstract class KubernetesDataServiceFactoryConfig {
     [key: string]: DataServiceConfig
   }
 }
+
+/**
+ * Gets the {@link DataServiceConfig} for the given entity, with the default config as fallback.
+ * @param config the config instance
+ * @param entityName the entity name
+ * @return the config in `overrides`, fallback to `default` or undefined if no default is set either.
+ */
+export function getDataServiceConfigOrDefault(
+  entityName: string,
+  config?: KubernetesDataServiceFactoryConfig
+): DataServiceConfig | undefined {
+  if (!config) return undefined
+  if (config.overrides) {
+    const override = config.overrides[entityName]
+    return override ? override : config.default
+  }
+  return config.default
+}
