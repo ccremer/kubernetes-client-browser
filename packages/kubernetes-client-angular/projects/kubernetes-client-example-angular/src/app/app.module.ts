@@ -6,15 +6,16 @@ import { AppComponent } from './app.component'
 import { LoginModule } from './login/login.module'
 import { DefaultDataServiceFactory, EntityDataModule } from '@ngrx/data'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { HttpClientModule } from '@angular/common/http'
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 import {
+  DefaultEntityMetadataMap,
+  KubernetesAuthorizerInterceptor,
   KubernetesDataServiceFactory,
   KubernetesDataServiceFactoryConfig,
-} from '../../../kubernetes-client-angular/src/lib/kubernetes-data-service-factory.service'
+} from 'kubernetes-client-angular'
 import { StoreModule } from '@ngrx/store'
 import { EffectsModule } from '@ngrx/effects'
 import { ClientComponent } from './client/client.component'
-import { DefaultEntityMetadataMap } from '../../../kubernetes-client-angular/src/lib/entities/default-entity-metadata-map'
 
 @NgModule({
   declarations: [AppComponent],
@@ -33,6 +34,7 @@ import { DefaultEntityMetadataMap } from '../../../kubernetes-client-angular/src
   ],
   providers: [
     { provide: DefaultDataServiceFactory, useClass: KubernetesDataServiceFactory },
+    { provide: HTTP_INTERCEPTORS, useClass: KubernetesAuthorizerInterceptor, multi: true },
     {
       provide: KubernetesDataServiceFactoryConfig,
       useValue: {

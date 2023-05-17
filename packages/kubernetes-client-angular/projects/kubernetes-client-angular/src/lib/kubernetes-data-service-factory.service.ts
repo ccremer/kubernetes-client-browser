@@ -2,29 +2,24 @@ import { Injectable, Optional } from '@angular/core'
 import { KubeObject } from '@ccremer/kubernetes-client/types/core'
 import { EntityCollectionDataService } from '@ngrx/data'
 import { KubernetesDataService } from './kubernetes-data.service'
-import { Client, KubeClientBuilder } from '@ccremer/kubernetes-client/fetch'
-import { KubernetesAuthorizerService } from './kubernetes-authorizer.service'
 import { KubernetesUrlGeneratorService } from './kubernetes-url-generator.service'
 import { DataServiceConfig } from './config'
+import { HttpClient } from '@angular/common/http'
 
 /**
  * Factory to create {@link EntityCollectionDataService} for Kubernetes resources.
  */
 @Injectable()
 export class KubernetesDataServiceFactory {
-  private readonly client: Client
-
   constructor(
-    private authorizer: KubernetesAuthorizerService,
     private urlGenerator: KubernetesUrlGeneratorService,
+    private httpClient: HttpClient,
     @Optional() private config?: KubernetesDataServiceFactoryConfig
-  ) {
-    this.client = new KubeClientBuilder().WithAuthorizer(this.authorizer).WithUrlGenerator(this.urlGenerator).Build()
-  }
+  ) {}
 
   create<T extends KubeObject>(entityName: string): EntityCollectionDataService<T> {
     const overrideConfig = this.config?.overrides ? this.config.overrides[entityName] : this.config?.default
-    return new KubernetesDataService<T>(entityName, this.client, overrideConfig)
+    return new KubernetesDataService<T>(entityName, this.httpClient, this.urlGenerator, overrideConfig)
   }
 }
 
@@ -49,4 +44,22 @@ export abstract class KubernetesDataServiceFactoryConfig {
   overrides?: {
     [key: string]: DataServiceConfig
   }
+}
+
+/**
+ * Gets the {@link DataServiceConfig} for the given entity, with the default config as fallback.
+ * @param config the config instance
+ * @param entityName the entity name
+ * @return the config in `overrides`, fallback to `default` or undefined if no default is set either.
+ */
+export function getDataServiceConfigOrDefault(
+  entityName: string,
+  config?: KubernetesDataServiceFactoryConfig
+): DataServiceConfig | undefined {
+  if (!config) return undefined
+  if (config.overrides) {
+    const override = config.overrides[entityName]
+    return override ? override : config.default
+  }
+  return config.default
 }

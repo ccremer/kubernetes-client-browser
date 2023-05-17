@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { Router } from '@angular/router'
-import { KubernetesAuthorizerService } from '../../../kubernetes-client-angular/src/lib/kubernetes-authorizer.service'
+import { KubernetesAuthorizerService } from 'kubernetes-client-angular'
 
 @Component({
   selector: 'app-root',
