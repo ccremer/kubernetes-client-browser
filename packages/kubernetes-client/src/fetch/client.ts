@@ -10,8 +10,14 @@ import {
   PatchOptions,
   toURLSearchParams,
   UrlGenerator,
+  WatchEvent,
+  WatchHandlers,
+  WatchOptions,
+  WatchResult,
 } from '../api'
 import { Client } from './builder'
+import { JSONLineStream } from './jsonlinestream'
+import { WatchEventStream } from './watcheventstream'
 
 export declare type FetchFn = (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>
 
@@ -175,5 +181,88 @@ export class FetchClient implements Client {
         }
         return result
       })
+  }
+
+  watchByID<K extends KubeObject>(
+    handlers: WatchHandlers<K>,
+    apiVersion: string,
+    kind: string,
+    name?: string,
+    namespace?: string,
+    options?: WatchOptions
+  ): Promise<WatchResult> {
+    if (!options) options = {}
+    options.watch = 'true'
+    const endpoint = this.urlGenerator.buildEndpoint(
+      'GET',
+      apiVersion,
+      kind,
+      namespace,
+      undefined, // watch only works on collections, not single resources
+      toURLSearchParams(options)
+    )
+    const abortController = new AbortController()
+    const init: RequestInit = {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      signal: abortController.signal,
+    }
+    const initWithAuth = this.authorizer.applyAuthorization(init)
+    return this.fetchFn
+      .bind(this.thisArg)(endpoint, initWithAuth)
+      .then((response) => {
+        if (response.ok && response.body) {
+          void response.body
+            .pipeThrough(new TextDecoderStream())
+            .pipeThrough(
+              new JSONLineStream<WatchEvent<K>>((line, err) => {
+                if (handlers.onError) {
+                  handlers.onError(err, {
+                    continue: true,
+                  })
+                } else {
+                  console.debug(`Could not parse JSON: ${err}: ${line}`)
+                }
+              })
+            )
+            .pipeTo(new WatchEventStream(handlers, options?.hideManagedFields, name), {
+              signal: abortController.signal,
+            })
+            .catch((reason) => {
+              if (handlers.onError) {
+                handlers.onError(reason, { closed: true })
+              } else {
+                console.debug('canceling pipes:', reason)
+              }
+            })
+          return { abortController } satisfies WatchResult
+        }
+        console.debug('watch failed with status code', response.status)
+        return response.json()
+      })
+      .then((result) => {
+        if (Object.prototype.hasOwnProperty.call(result, 'abortController')) return result
+        if (Object.prototype.hasOwnProperty.call(result, 'kind')) {
+          const err: ErrorStatus = result as ErrorStatus
+          if (err.kind === 'Status') {
+            throw new KubernetesError(err.message, err)
+          }
+          throw new Error('watch resource failed')
+        }
+        throw new Error('watch resource failed')
+      })
+  }
+
+  watch<K extends KubeObject>(handlers: WatchHandlers<K>, fromBody: K, options?: WatchOptions): Promise<WatchResult> {
+    return this.watchByID(
+      handlers,
+      fromBody.apiVersion,
+      fromBody.kind,
+      fromBody.metadata?.name,
+      fromBody.metadata?.namespace,
+      options
+    )
   }
 }
