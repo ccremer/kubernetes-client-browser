@@ -30,7 +30,8 @@ Configure our cluster
 
 ```bash
 kubectl -n default create sa browser-client
-kubectl create clusterrolebinding browser-client --serviceaccount=default:browser-client --clusterrole cluster-admin 
+kubectl create clusterrolebinding browser-client --serviceaccount=default:browser-client --clusterrole cluster-admin
+echo "VITE_KUBERNETES_API_URL=${VITE_KUBERNETES_API_URL}" > packages/kubernetes-client-example-fetch/.env
 ```
 
 ## Create a token
