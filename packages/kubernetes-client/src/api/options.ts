@@ -41,3 +41,7 @@ export interface MutationOptions extends CommonOptions {
 export interface PatchOptions extends MutationOptions {
   force?: boolean
 }
+
+export interface WatchOptions extends CommonOptions {
+  allowWatchBookmarks?: boolean
+}

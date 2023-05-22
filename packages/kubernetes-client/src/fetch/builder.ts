@@ -5,6 +5,7 @@ import {
   ClientWithList,
   ClientWithPatch,
   ClientWithUpdate,
+  ClientWithWatch,
   Config,
   KubeConfig,
   KubernetesUrlGenerator,
@@ -19,7 +20,8 @@ export interface Client
     ClientWithList,
     ClientWithDelete,
     ClientWithUpdate,
-    ClientWithPatch {}
+    ClientWithPatch,
+    ClientWithWatch {}
 
 /**
  * KubeClientBuilder constructs a {@link Client} instance using the Fetch API as implementation.

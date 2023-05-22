@@ -2,6 +2,8 @@ import '../styles.scss'
 import { Client, KubeClientBuilder } from '@ccremer/kubernetes-client/fetch'
 import { newSelfSubjectRulesReview } from './types'
 import { createAlert } from './alerts'
+import { WatchEvent } from '@ccremer/kubernetes-client/api'
+import { KubeObject } from '@ccremer/kubernetes-client/types/core'
 
 console.debug('Starting up...')
 
@@ -9,6 +11,8 @@ window.onload = function () {
   document.getElementById('createClient')?.addEventListener('click', createClient)
   document.getElementById('listBtn')?.addEventListener('click', listObjects)
   document.getElementById('getBtn')?.addEventListener('click', getObject)
+  document.getElementById('watchBtn')?.addEventListener('click', watchObjects)
+  document.getElementById('clearOutputBtn')?.addEventListener('click', clearOutput)
   const tokenElement = document.getElementById('token')
   if (tokenElement instanceof HTMLInputElement) {
     tokenElement.value = localStorage.getItem('token') ?? ''
@@ -62,7 +66,7 @@ function getObject(): void {
   const name = getName()
 
   if (name) {
-    console.debug('Fetching Object', `${kind}${namespace}/${name}`)
+    console.debug('Fetching Object', `${kind}/${namespace}/${name}`)
     kubeClient
       .getById('v1', kind, name, namespace, { hideManagedFields: hideManagedFields() })
       .then((cm) => fillTextArea(cm))
@@ -70,6 +74,53 @@ function getObject(): void {
   } else {
     createAlert('No name defined', 'warning', 3000)
   }
+}
+
+let abortController: AbortController | undefined
+
+function watchObjects(): void {
+  if (!kubeClient) return
+  if (abortController) {
+    abortController.abort('Stop')
+    abortController = undefined
+    toggleWatchButton(false)
+    return
+  }
+
+  const kind = getKind()
+  const namespace = getNamespace()
+  const name = getName()
+
+  const events: WatchEvent<KubeObject>[] = []
+
+  console.debug('Watching Objects in', `${kind}/${namespace}`)
+  kubeClient
+    .watchByID(
+      {
+        onUpdate: (event) => {
+          if (event) {
+            events.push(event)
+            fillTextArea(events)
+          }
+        },
+        onError: (err, effect) => {
+          console.log('received err', err)
+          if (err instanceof Error) createAlert(`Watch failed: ${err.message}`, 'danger')
+          if (typeof err === 'string' && err === 'Stop') createAlert('Watch stopped', 'warning', 3000)
+          if (effect?.closed) toggleWatchButton(false)
+        },
+      },
+      'v1',
+      kind,
+      name,
+      namespace,
+      { hideManagedFields: hideManagedFields() }
+    )
+    .then((result) => {
+      abortController = result.abortController
+      toggleWatchButton(true)
+    })
+    .catch((err) => createAlert(err.message, 'danger'))
 }
 
 function getNamespace(): string {
@@ -100,9 +151,22 @@ function fillTextArea(value: unknown): void {
   }
 }
 
+function clearOutput(): void {
+  const textArea = document.getElementById('kubeobject')
+  if (textArea instanceof HTMLTextAreaElement) {
+    textArea.value = ''
+  }
+}
+
 function enableDemo(): void {
   const container = document.getElementById('demo-container')
   if (container) {
     container.className = container.className.replace('visually-hidden', '')
   }
+}
+
+function toggleWatchButton(isWatching: boolean): void {
+  const btn = document.getElementById('watchBtn')
+  if (!btn) return
+  btn.innerText = isWatching ? 'Stop' : 'Watch'
 }

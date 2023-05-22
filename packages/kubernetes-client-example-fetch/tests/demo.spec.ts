@@ -61,4 +61,44 @@ test.describe('demo form', () => {
     }
     await expect(value).toEqual(expected)
   })
+
+  test('should watch configmaps', async ({ page }) => {
+    await page.locator('#resourceKind').selectOption('ConfigMap')
+    await page.locator('#namespace').type('default')
+    await page.locator('#watchBtn').click()
+    const area = page.locator('#kubeobject')
+    await expect(area).toBeEnabled()
+    const value = await area
+      .inputValue()
+      .then((v) => JSON.parse(v))
+      .then((json) => {
+        const obj = json[0].object
+        delete obj.metadata.resourceVersion
+        delete obj.metadata.managedFields
+        delete obj.metadata.uid
+        delete obj.metadata.annotations
+        delete obj.metadata.creationTimestamp
+        obj.data['ca.crt'] = ''
+        return json[0]
+      })
+    const expected = {
+      type: 'ADDED',
+      object: {
+        kind: 'ConfigMap',
+        apiVersion: 'v1',
+        metadata: {
+          name: 'kube-root-ca.crt',
+          namespace: 'default',
+        },
+        data: {
+          'ca.crt': '',
+        },
+      },
+    }
+    await expect(value).toEqual(expected)
+    await page.locator('#watchBtn').click()
+
+    const res = await page.locator('#alerts')
+    await expect(res).toHaveText(['Watch stopped'])
+  })
 })

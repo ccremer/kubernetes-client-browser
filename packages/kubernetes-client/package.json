@@ -10,6 +10,7 @@
     "test": "vitest run",
     "clean": "rm -rf types fetch api index.*",
     "build": "rm -rf dist && tsc",
+    "watch": "tsc --watch",
     "prepack": "cp package.json README.md dist/"
   },
   "repository": {
