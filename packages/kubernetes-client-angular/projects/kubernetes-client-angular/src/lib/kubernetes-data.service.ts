@@ -1,24 +1,17 @@
 import { EntityCollectionDataService, QueryParams } from '@ngrx/data'
-import { KubeList, KubeObject } from '@ccremer/kubernetes-client/types/core'
+import { KubeObject } from '@ccremer/kubernetes-client/types/core'
 import { map, Observable } from 'rxjs'
 import { Update } from '@ngrx/entity'
 import { HttpOptions } from '@ngrx/data/src/dataservices/interfaces'
 import { deleteOptions, getOptions, listOptions, mutationOptions } from './kubernetes-options.util'
 import { DataServiceConfig } from './config'
-import { HttpClient } from '@angular/common/http'
-import { KubernetesUrlGeneratorService } from './kubernetes-url-generator.service'
-import { toURLSearchParams } from '@ccremer/kubernetes-client/api/urlgenerator'
+import { KubernetesClientService } from './kubernetes-client.service'
 
 export class KubernetesDataService<T extends KubeObject> implements EntityCollectionDataService<T> {
   protected _name: string
   protected _gvk: { apiVersion: string; kind: string }
 
-  constructor(
-    entityName: string,
-    protected client: HttpClient,
-    protected urlGenerator: KubernetesUrlGeneratorService,
-    protected config?: DataServiceConfig
-  ) {
+  constructor(entityName: string, protected client: KubernetesClientService, protected config?: DataServiceConfig) {
     this._name = entityName
     this._gvk = getGVK(entityName)
   }
@@ -35,111 +28,41 @@ export class KubernetesDataService<T extends KubeObject> implements EntityCollec
     return this._gvk.kind
   }
 
-  protected hideManagedFields<T extends KubeObject>(stream: Observable<T>, hide?: boolean): Observable<T> {
-    if (!hide) return stream
-    return stream.pipe(
-      map((entity) => {
-        delete entity.metadata?.managedFields
-        return entity
-      })
-    )
-  }
-
   getById(id: string, httpOptions?: HttpOptions): Observable<T> {
     const idSplit = splitID(id)
     const opts = getOptions(httpOptions)
-    const endpoint = this.urlGenerator.buildEndpoint(
-      'GET',
-      this.apiVersion,
-      this.kind,
-      idSplit.namespace,
-      idSplit.name,
-      toURLSearchParams(opts)
-    )
-    return this.hideManagedFields(this.client.get<T>(endpoint, { responseType: 'json' }), opts?.hideManagedFields)
+    return this.client.get<T>(this.apiVersion, this.kind, idSplit.name, idSplit.namespace, opts)
   }
 
   add(entity: T, httpOptions?: HttpOptions): Observable<T> {
     const opts = mutationOptions(httpOptions)
-    const endpoint = this.urlGenerator.buildEndpoint(
-      'POST',
-      this.apiVersion,
-      this.kind,
-      entity.metadata?.namespace,
-      entity.metadata?.name,
-      toURLSearchParams(opts)
-    )
-    return this.hideManagedFields(
-      this.client.post<T>(endpoint, entity, { responseType: 'json' }),
-      opts?.hideManagedFields
-    )
+    return this.client.create<T>(entity, opts)
   }
 
   update(update: Update<T>, httpOptions?: HttpOptions): Observable<T> {
     const entity = update.changes as T
     const opts = mutationOptions(httpOptions)
-    const endpoint = this.urlGenerator.buildEndpoint(
-      this.config?.usePatchInUpdate ? 'PATCH' : 'PUT',
-      entity.apiVersion,
-      entity.kind,
-      entity.metadata?.namespace,
-      entity.metadata?.name,
-      toURLSearchParams(opts)
-    )
+
     if (this.config?.usePatchInUpdate) {
-      return this.hideManagedFields(
-        this.client.patch<T>(endpoint, entity, {
-          responseType: 'json',
-          headers: { 'content-type': 'application/merge-patch+json' },
-        }),
-        opts?.hideManagedFields
-      )
+      return this.client.patch<T>(entity, opts)
     }
-    return this.hideManagedFields(
-      this.client.put<T>(endpoint, entity, { responseType: 'json' }),
-      opts?.hideManagedFields
-    )
+    return this.client.update<T>(entity, opts)
   }
 
   upsert(entity: T, httpOptions?: HttpOptions): Observable<T> {
     const opts = mutationOptions(httpOptions)
-    const endpoint = this.urlGenerator.buildEndpoint(
-      this.config?.usePatchInUpdate ? 'PATCH' : 'PUT',
-      entity.apiVersion,
-      entity.kind,
-      entity.metadata?.namespace,
-      entity.metadata?.name,
-      toURLSearchParams(opts)
-    )
     if (!entity.metadata?.creationTimestamp) {
       return this.add(entity, httpOptions)
     } else if (this.config?.usePatchInUpsert) {
-      return this.hideManagedFields(
-        this.client.patch<T>(endpoint, entity, {
-          responseType: 'json',
-          headers: { 'content-type': 'application/merge-patch+json' },
-        }),
-        opts?.hideManagedFields
-      )
+      return this.client.patch<T>(entity, opts)
     }
-    return this.hideManagedFields(
-      this.client.put<T>(endpoint, entity, { responseType: 'json' }),
-      opts?.hideManagedFields
-    )
+    return this.client.update<T>(entity, opts)
   }
 
   delete(id: number | string, httpOptions?: HttpOptions): Observable<number | string> {
     const idSplit = splitID(id.toString())
     const opts = deleteOptions(httpOptions)
-    const endpoint = this.urlGenerator.buildEndpoint(
-      'DELETE',
-      this.apiVersion,
-      this.kind,
-      idSplit.namespace,
-      idSplit.name,
-      toURLSearchParams(opts)
-    )
-    return this.client.delete(endpoint, { responseType: 'json' }).pipe(
+    return this.client.delete(this.apiVersion, this.kind, idSplit.name, idSplit.namespace, opts).pipe(
       // actually we get a reply from Kubernetes with a status object here, but the interface wants us to return the original entity id 🤷
       map(() => id)
     )
@@ -152,23 +75,7 @@ export class KubernetesDataService<T extends KubeObject> implements EntityCollec
    */
   getAll(httpOptions?: HttpOptions): Observable<T[]> {
     const opts = listOptions(httpOptions)
-    const endpoint = this.urlGenerator.buildEndpoint(
-      'GET',
-      this.apiVersion,
-      this.kind,
-      undefined,
-      undefined,
-      toURLSearchParams(opts)
-    )
-    return this.client.get<KubeList<T>>(endpoint, { responseType: 'json' }).pipe(
-      map((list) => {
-        if (!opts?.hideManagedFields) return list.items
-        return list.items.map((item) => {
-          delete item.metadata?.managedFields
-          return item
-        })
-      })
-    )
+    return this.client.list<T>(this.apiVersion, this.kind, undefined, opts).pipe(map((list) => list.items))
   }
 
   /**
@@ -183,23 +90,7 @@ export class KubernetesDataService<T extends KubeObject> implements EntityCollec
       )
     }
     const opts = listOptions(httpOptions)
-    const endpoint = this.urlGenerator.buildEndpoint(
-      'GET',
-      this.apiVersion,
-      this.kind,
-      namespace,
-      undefined,
-      toURLSearchParams(opts)
-    )
-    return this.client.get<KubeList<T>>(endpoint, { responseType: 'json' }).pipe(
-      map((list) => {
-        if (!opts?.hideManagedFields) return list.items
-        return list.items.map((item) => {
-          delete item.metadata?.managedFields
-          return item
-        })
-      })
-    )
+    return this.client.list<T>(this.apiVersion, this.kind, namespace, opts).pipe(map((list) => list.items))
   }
 }
 

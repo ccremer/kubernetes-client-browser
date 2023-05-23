@@ -14,7 +14,6 @@ export class KubernetesAuthorizerInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
     const url = request.url
     const base = this.config?.basePath ?? ''
-    console.log('url', url, 'token', this.authorizer.getToken())
     if (url.startsWith(`${base}/api/`) || url.startsWith(`${base}/apis/`)) {
       return next.handle(
         request.clone({

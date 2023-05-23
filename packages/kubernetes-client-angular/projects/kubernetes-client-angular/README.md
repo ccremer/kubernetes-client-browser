@@ -26,6 +26,7 @@ Ideal for SPA-like apps and CRDs.
 ## Integration in Angular and NGRX
 
 This package is an Angular library that integrates `@ngrx/data` for store management.
+Although, the `KubernetesClientService` can be used natively without store support.
 
 ## Getting started
 
@@ -79,7 +80,7 @@ import { AppComponent } from './app.component'
 export class AppModule {}
 ```
 
-Optional but highly recommended: Create an extendable Service for each entity in `config-map.service.ts`:
+Optional but highly recommended: Create an extendable Service for each entity, for example in `config-map.service.ts`:
 ```typescript
 import { Injectable } from '@angular/core'
 import { KubernetesCollectionService } from '@ccremer/kubernetes-client-angular'
@@ -181,7 +182,7 @@ export interface MyCustomResource extends KubeObject {
 
 * The `Config` class returns a KubeConfig-like structure complete with cluster and user information.
   However, currently only a variant with a JWT token is supported, created with `Config.FromToken()` combined with `DefaultAuthorizer`.
-* `watch` operation isn't yet supported.
+* `watch` operation isn't yet supported (see also: https://github.com/angular/angular/issues/44143).
 * There is no validation to the passed in payloads or returned results.
 * Many Kubernetes resource types are missing, and they're not (yet?) generated from the Kubernetes API scheme.
   Implement your own or better yet, contribute to this package :)
