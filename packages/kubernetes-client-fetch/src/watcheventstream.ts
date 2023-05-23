@@ -1,10 +1,10 @@
-import { KubeObject } from '../types/core'
-import { WatchEvent, WatchHandlers } from '../api'
+import { KubeObject } from '@ccremer/kubernetes-client/types/core'
+import { WatchEvent, WatchHandlers } from './client'
 
 export class WatchEventStream<K extends KubeObject> extends WritableStream<WatchEvent<K>> {
   constructor(handlers: WatchHandlers<K>, hideManagedFields?: boolean, name?: string) {
     super({
-      write(event, controller) {
+      write(event) {
         if (hideManagedFields) {
           delete event.object.metadata?.managedFields
         }

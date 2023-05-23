@@ -23,8 +23,11 @@
   },
   "type": "module",
   "dependencies": {
-    "@ccremer/kubernetes-client": "*",
     "bootstrap": "5.2.3"
+  },
+  "peerDependencies": {
+    "@ccremer/kubernetes-client": "*",
+    "@ccremer/kubernetes-client-fetch": "*"
   },
   "publishConfig": {
     "access": "public"

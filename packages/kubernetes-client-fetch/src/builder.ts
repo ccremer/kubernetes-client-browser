@@ -1,27 +1,7 @@
-import {
-  ClientWithCreate,
-  ClientWithDelete,
-  ClientWithGet,
-  ClientWithList,
-  ClientWithPatch,
-  ClientWithUpdate,
-  ClientWithWatch,
-  Config,
-  KubeConfig,
-  KubernetesUrlGenerator,
-  UrlGenerator,
-} from '../api'
-import { FetchClient, FetchFn } from './client'
+import { Config, KubeConfig, KubernetesUrlGenerator, UrlGenerator } from '@ccremer/kubernetes-client/api'
+import { FetchClient, FetchFn } from './fetch-client'
 import { Authorizer, DefaultAuthorizer, NoopAuthorizer } from './authorizer'
-
-export interface Client
-  extends ClientWithCreate,
-    ClientWithGet,
-    ClientWithList,
-    ClientWithDelete,
-    ClientWithUpdate,
-    ClientWithPatch,
-    ClientWithWatch {}
+import { Client } from './client'
 
 /**
  * KubeClientBuilder constructs a {@link Client} instance using the Fetch API as implementation.

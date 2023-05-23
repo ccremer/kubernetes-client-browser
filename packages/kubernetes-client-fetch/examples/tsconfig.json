@@ -1,0 +1,10 @@
+{
+  "extends": "../../../tsconfig.json",
+  "compilerOptions": {
+    "baseUrl": "./",
+    "paths": {
+      "@ccremer/kubernetes-client/*": ["../../kubernetes-client/src/*"],
+      "@ccremer/kubernetes-client-fetch": ["../src/"]
+    }
+  }
+}
