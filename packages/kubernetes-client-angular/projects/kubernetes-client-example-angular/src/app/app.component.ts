@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core'
-import { Router } from '@angular/router'
+import { Router, RouterOutlet } from '@angular/router'
 import { KubernetesAuthorizerService } from 'kubernetes-client-angular'
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  standalone: true,
+  imports: [RouterOutlet],
 })
 export class AppComponent implements OnInit {
   constructor(private router: Router, private authorizer: KubernetesAuthorizerService) {}

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms'
-import { CommonModule } from '@angular/common'
+import { CommonModule, NgFor } from '@angular/common'
 import { SecretService } from '../store/secret.service'
 import { ConfigMapService } from '../store/config-map.service'
 import { KubeObject } from '@ccremer/kubernetes-client/types/core'
@@ -11,7 +11,7 @@ import { ListOptions } from '@ccremer/kubernetes-client/api'
 
 @Component({
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, NgFor],
   selector: 'app-client',
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.scss'],

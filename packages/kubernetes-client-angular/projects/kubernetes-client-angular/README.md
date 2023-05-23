@@ -35,35 +35,33 @@ Install the dependencies
 npm install @ccremer/kubernetes-client @ccremer/kubernetes-client-angular
 ```
 
-Setup the module with `@ngrx/data` in `app.module.ts`:
+Setup the module with `@ngrx/data` in `main.ts`:
 ```typescript
-import { NgModule } from '@angular/core'
-import { BrowserModule } from '@angular/platform-browser'
-
+import { bootstrapApplication, BrowserModule } from '@angular/platform-browser'
+import { AppComponent } from './app.component'
+import { importProvidersFrom } from '@angular/core'
+import { StoreModule } from '@ngrx/store'
+import { EffectsModule } from '@ngrx/effects'
 import { DefaultDataServiceFactory, EntityDataModule } from '@ngrx/data'
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http'
 import {
   DefaultEntityMetadataMap,
   KubernetesAuthorizerInterceptor,
   KubernetesDataServiceFactory,
   KubernetesDataServiceFactoryConfig,
 } from '@ccremer/kubernetes-client-angular'
-import { StoreModule } from '@ngrx/store'
-import { EffectsModule } from '@ngrx/effects'
-import { AppComponent } from './app.component'
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
-@NgModule({
-  declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    HttpClientModule,
-    StoreModule.forRoot(),
-    EffectsModule.forRoot(),
-    EntityDataModule.forRoot({
-      entityMetadata: DefaultEntityMetadataMap,
-    }),
-  ],
+bootstrapApplication(AppComponent, {
   providers: [
+    importProvidersFrom(
+      BrowserModule,
+      StoreModule.forRoot(),
+      EffectsModule.forRoot(),
+      EntityDataModule.forRoot({
+        entityMetadata: DefaultEntityMetadataMap,
+      })
+    ),
+    provideHttpClient(withInterceptorsFromDi()),
     { provide: DefaultDataServiceFactory, useClass: KubernetesDataServiceFactory },
     { provide: HTTP_INTERCEPTORS, useClass: KubernetesAuthorizerInterceptor, multi: true },
     {
@@ -71,13 +69,11 @@ import { AppComponent } from './app.component'
       useValue: {
         default: {
           usePatchInUpsert: true,
-          usePatchInUpdate: false,
         },
       } satisfies KubernetesDataServiceFactoryConfig,
     },
   ],
-})
-export class AppModule {}
+}).catch((err) => console.error(err))
 ```
 
 Optional but highly recommended: Create an extendable Service for each entity, for example in `config-map.service.ts`:
@@ -107,6 +103,7 @@ import { KubernetesAuthorizerService } from '@ccremer/kubernetes-client-angular'
   selector: 'app-root',
   template: '<p>Kubernetes Client for Angular in Action</p>',
   styles: [],
+  standalone: true,
 })
 export class AppComponent implements OnInit {
   constructor(private configMapService: ConfigMapService, authorizer: KubernetesAuthorizerService) {
