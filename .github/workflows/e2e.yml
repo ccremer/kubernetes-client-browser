@@ -7,6 +7,8 @@ on:
       - "package.json"
       - "packages/kubernetes-client/package.json"
       - "packages/kubernetes-client/src/**"
+      - "packages/kubernetes-client-fetch/package.json"
+      - "packages/kubernetes-client-fetch/src/**"
       - "packages/kubernetes-client-angular/projects/**"
       - "packages/kubernetes-client-angular/package.json"
       - "packages/kubernetes-client-example-fetch/package.json"

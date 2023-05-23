@@ -1,4 +1,4 @@
-import { ErrorStatus, KubeList, KubeObject, KubernetesError } from '../types/core'
+import { ErrorStatus, KubeList, KubeObject, KubernetesError } from '@ccremer/kubernetes-client/types/core'
 import { Authorizer } from './authorizer'
 import {
   ClientOptions,
@@ -10,14 +10,11 @@ import {
   PatchOptions,
   toURLSearchParams,
   UrlGenerator,
-  WatchEvent,
-  WatchHandlers,
   WatchOptions,
-  WatchResult,
-} from '../api'
-import { Client } from './builder'
+} from '@ccremer/kubernetes-client/api'
 import { JSONLineStream } from './jsonlinestream'
 import { WatchEventStream } from './watcheventstream'
+import { Client, WatchEvent, WatchHandlers, WatchResult } from './client'
 
 export declare type FetchFn = (input: RequestInfo | URL, init?: RequestInit | undefined) => Promise<Response>
 

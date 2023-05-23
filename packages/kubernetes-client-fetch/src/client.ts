@@ -1,5 +1,12 @@
-import { KubeList, KubeObject } from '../types/core'
-import { DeleteOptions, GetOptions, ListOptions, MutationOptions, PatchOptions, WatchOptions } from './options'
+import { KubeList, KubeObject } from '@ccremer/kubernetes-client/types/core'
+import {
+  DeleteOptions,
+  GetOptions,
+  ListOptions,
+  MutationOptions,
+  PatchOptions,
+  WatchOptions,
+} from '@ccremer/kubernetes-client/api/options'
 
 export interface ClientWithGet {
   /**
@@ -179,3 +186,12 @@ export interface ClientWithWatch {
    */
   watch<K extends KubeObject>(handlers: WatchHandlers<K>, fromBody: K, options?: WatchOptions): Promise<WatchResult>
 }
+
+export interface Client
+  extends ClientWithCreate,
+    ClientWithGet,
+    ClientWithList,
+    ClientWithDelete,
+    ClientWithUpdate,
+    ClientWithPatch,
+    ClientWithWatch {}

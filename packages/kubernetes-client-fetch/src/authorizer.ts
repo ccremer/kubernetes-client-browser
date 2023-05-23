@@ -1,4 +1,4 @@
-import { KubeConfig } from '../api'
+import { KubeConfig } from '@ccremer/kubernetes-client/api'
 
 export interface Authorizer {
   /**

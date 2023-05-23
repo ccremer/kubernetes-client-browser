@@ -1,4 +1,4 @@
-import { KubeClientBuilder } from '@ccremer/kubernetes-client/fetch'
+import { KubeClientBuilder } from '@ccremer/kubernetes-client-fetch'
 import { SelfSubjectRulesReview } from '@ccremer/kubernetes-client/types/authorization.k8s.io'
 
 // token:

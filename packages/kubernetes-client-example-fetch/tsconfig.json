@@ -4,7 +4,8 @@
     "outDir": "./dist",
     "baseUrl": ".",
     "paths": {
-      "@ccremer/kubernetes-client/*": ["../kubernetes-client/src/*"]
+      "@ccremer/kubernetes-client/*": ["../kubernetes-client/src/*"],
+      "@ccremer/kubernetes-client-fetch": ["../kubernetes-client-fetch/src/"]
     }
   },
   "include": ["src/**/*"],
