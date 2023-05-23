@@ -1,30 +1,26 @@
-import { importProvidersFrom } from '@angular/core'
-import { AppComponent } from './app/app.component'
-import { StoreDevtoolsModule } from '@ngrx/store-devtools'
-import { EffectsModule } from '@ngrx/effects'
-import { StoreModule } from '@ngrx/store'
-import { AppRoutingModule } from './app/app-routing.module'
 import { bootstrapApplication, BrowserModule } from '@angular/platform-browser'
-import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
+import { AppComponent } from './app.component'
+import { importProvidersFrom } from '@angular/core'
+import { StoreModule } from '@ngrx/store'
+import { EffectsModule } from '@ngrx/effects'
+import { DefaultDataServiceFactory, EntityDataModule } from '@ngrx/data'
 import {
   DefaultEntityMetadataMap,
   KubernetesAuthorizerInterceptor,
   KubernetesDataServiceFactory,
   KubernetesDataServiceFactoryConfig,
-} from 'kubernetes-client-angular'
-import { DefaultDataServiceFactory, EntityDataModule } from '@ngrx/data'
+} from '@ccremer/kubernetes-client-angular'
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(
       BrowserModule,
-      AppRoutingModule,
       StoreModule.forRoot(),
       EffectsModule.forRoot(),
       EntityDataModule.forRoot({
         entityMetadata: DefaultEntityMetadataMap,
-      }),
-      StoreDevtoolsModule.instrument()
+      })
     ),
     provideHttpClient(withInterceptorsFromDi()),
     { provide: DefaultDataServiceFactory, useClass: KubernetesDataServiceFactory },

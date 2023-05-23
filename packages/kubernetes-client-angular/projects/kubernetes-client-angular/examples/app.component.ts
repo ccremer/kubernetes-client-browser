@@ -6,6 +6,7 @@ import { KubernetesAuthorizerService } from '@ccremer/kubernetes-client-angular'
   selector: 'app-root',
   template: '<p>Kubernetes Client for Angular in Action</p>',
   styles: [],
+  standalone: true,
 })
 export class AppComponent implements OnInit {
   constructor(private configMapService: ConfigMapService, authorizer: KubernetesAuthorizerService) {

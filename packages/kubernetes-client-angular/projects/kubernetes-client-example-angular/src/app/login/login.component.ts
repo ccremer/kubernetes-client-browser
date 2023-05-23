@@ -2,11 +2,15 @@ import { Component } from '@angular/core'
 import { SelfSubjectRulesReviewService } from '../store/self-subject-rules-review.service'
 import { Router } from '@angular/router'
 import { KubernetesAuthorizerService } from 'kubernetes-client-angular'
+import { TokenInputComponent } from './token-input/token-input.component'
+import { NgFor } from '@angular/common'
 
 @Component({
   selector: 'app-page',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
+  standalone: true,
+  imports: [NgFor, TokenInputComponent],
 })
 export class LoginComponent {
   initialValue: string
