@@ -27,6 +27,7 @@ node_modules/
 
 # generated output
 dist
+/angular.json
 
 # test output
 playwright-report
