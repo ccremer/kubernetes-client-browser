@@ -4,6 +4,7 @@ import { EntityCollectionDataService } from '@ngrx/data'
 import { KubernetesDataService } from './kubernetes-data.service'
 import { KubernetesUrlGeneratorService } from './kubernetes-url-generator.service'
 import { DataServiceConfig } from './config'
+import { KubernetesClientService } from './kubernetes-client.service'
 import { HttpClient } from '@angular/common/http'
 
 /**
@@ -18,8 +19,12 @@ export class KubernetesDataServiceFactory {
   ) {}
 
   create<T extends KubeObject>(entityName: string): EntityCollectionDataService<T> {
-    const overrideConfig = this.config?.overrides ? this.config.overrides[entityName] : this.config?.default
-    return new KubernetesDataService<T>(entityName, this.httpClient, this.urlGenerator, overrideConfig)
+    const overrideConfig = getDataServiceConfigOrDefault(entityName, this.config)
+    return new KubernetesDataService<T>(
+      entityName,
+      new KubernetesClientService(this.httpClient, this.urlGenerator, overrideConfig),
+      overrideConfig
+    )
   }
 }
 

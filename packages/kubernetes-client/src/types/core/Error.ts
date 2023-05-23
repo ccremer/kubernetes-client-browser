@@ -1,10 +1,14 @@
-export interface ErrorStatus {
+export interface Status {
+  kind?: 'Status'
+  apiVersion: string
+  status: string
+  details: unknown
+}
+
+export interface ErrorStatus extends Status {
   message: string
   reason: string
   code: number
-  status: string
-  details: unknown
-  kind?: string
 }
 
 export class KubernetesError extends Error {
