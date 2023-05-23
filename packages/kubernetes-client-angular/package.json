@@ -1,6 +1,6 @@
 {
   "name": "@ccremer/kubernetes-client-angular",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "scripts": {
     "ng": "ng",
     "dev": "ng serve",
@@ -41,8 +41,6 @@
     "@ccremer/kubernetes-client": "*"
   },
   "devDependencies": {
-    "bootstrap": "5.2.3",
-    "jose": "4.14.4",
     "@angular-devkit/build-angular": "16.0.1",
     "@angular-eslint/builder": "16.0.2",
     "@angular-eslint/eslint-plugin": "16.0.2",
@@ -53,8 +51,10 @@
     "@angular/compiler-cli": "^16.0.2",
     "@ngrx/store-devtools": "16.0.0",
     "@playwright/test": "^1.32.3",
+    "bootstrap": "5.2.3",
     "eslint-config-custom": "*",
     "eslint-plugin-ngrx": "2.1.4",
+    "jose": "4.14.4",
     "ng-packagr": "^16.0.1"
   },
   "publishConfig": {
