@@ -1,4 +1,4 @@
-import { KubeList, KubeObject } from '@ccremer/kubernetes-client/types/core'
+import { KubeList, KubeObject } from '@nxt-engineering/kubernetes-client/types/core'
 import {
   DeleteOptions,
   GetOptions,
@@ -6,7 +6,7 @@ import {
   MutationOptions,
   PatchOptions,
   WatchOptions,
-} from '@ccremer/kubernetes-client/api/options'
+} from '@nxt-engineering/kubernetes-client/api/options'
 
 export interface ClientWithGet {
   /**

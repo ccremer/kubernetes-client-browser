@@ -1,4 +1,4 @@
-import { ErrorStatus, KubeList, KubeObject, KubernetesError } from '@ccremer/kubernetes-client/types/core'
+import { ErrorStatus, KubeList, KubeObject, KubernetesError } from '@nxt-engineering/kubernetes-client/types/core'
 import { Authorizer } from './authorizer'
 import {
   ClientOptions,
@@ -11,7 +11,7 @@ import {
   toURLSearchParams,
   UrlGenerator,
   WatchOptions,
-} from '@ccremer/kubernetes-client/api'
+} from '@nxt-engineering/kubernetes-client/api'
 import { JSONLineStream } from './jsonlinestream'
 import { WatchEventStream } from './watcheventstream'
 import { Client, WatchEvent, WatchHandlers, WatchResult } from './client'

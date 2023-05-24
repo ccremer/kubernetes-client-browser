@@ -2,17 +2,17 @@ import { Injectable, Optional } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { KubernetesUrlGeneratorService } from './kubernetes-url-generator.service'
 import { DataServiceConfig } from './config'
-import { KubeObject, Status } from '@ccremer/kubernetes-client/types/core'
+import { KubeObject, Status } from '@nxt-engineering/kubernetes-client/types/core'
 import { map, Observable } from 'rxjs'
-import { toURLSearchParams } from '@ccremer/kubernetes-client/api'
+import { toURLSearchParams } from '@nxt-engineering/kubernetes-client/api'
 import {
   DeleteOptions,
   GetOptions,
   ListOptions,
   MutationOptions,
   PatchOptions,
-} from '@ccremer/kubernetes-client/api/options'
-import { KubeList } from '@ccremer/kubernetes-client/types/core/KubeList'
+} from '@nxt-engineering/kubernetes-client/api/options'
+import { KubeList } from '@nxt-engineering/kubernetes-client/types/core/KubeList'
 
 @Injectable()
 export class KubernetesClientService {

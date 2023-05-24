@@ -27,7 +27,7 @@ Ideal for SPA-like apps and CRDs.
 
 Install the client
 ```bash
-npm install @ccremer/kubernetes-client @ccremer/kubernetes-client-fetch
+npm install @nxt-engineering/kubernetes-client @nxt-engineering/kubernetes-client-fetch
 ```
 
 Setup the client and make a request
@@ -75,7 +75,7 @@ The default built-in client can be extended in various points.
   However, currently only a variant with a JWT token is supported, created with `Config.FromToken()` combined with `DefaultAuthorizer`.
 * There is no validation to the passed in payloads or returned results.
 * Many Kubernetes resource types are missing, and they're not (yet?) generated from the Kubernetes API scheme.
-  Implement your own or better yet, contribute to `@ccremer/kubernetes-client` :)
+  Implement your own or better yet, contribute to `@nxt-engineering/kubernetes-client` :)
 
 ## Production readiness
 

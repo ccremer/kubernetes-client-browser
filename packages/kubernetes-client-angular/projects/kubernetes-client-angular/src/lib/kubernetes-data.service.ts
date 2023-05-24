@@ -1,5 +1,5 @@
 import { EntityCollectionDataService, QueryParams } from '@ngrx/data'
-import { KubeObject } from '@ccremer/kubernetes-client/types/core'
+import { KubeObject } from '@nxt-engineering/kubernetes-client/types/core'
 import { map, Observable } from 'rxjs'
 import { Update } from '@ngrx/entity'
 import { HttpOptions } from '@ngrx/data/src/dataservices/interfaces'

@@ -2,8 +2,8 @@ import '../styles.scss'
 import { Client, KubeClientBuilder } from '../../../kubernetes-client-fetch/src'
 import { newSelfSubjectRulesReview } from './types'
 import { createAlert } from './alerts'
-import { WatchEvent } from '@ccremer/kubernetes-client-fetch'
-import { KubeObject } from '@ccremer/kubernetes-client/types/core'
+import { WatchEvent } from '@nxt-engineering/kubernetes-client-fetch'
+import { KubeObject } from '@nxt-engineering/kubernetes-client/types/core'
 
 console.debug('Starting up...')
 

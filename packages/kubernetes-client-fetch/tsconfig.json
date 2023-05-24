@@ -5,7 +5,7 @@
     "declaration": true,
     "baseUrl": ".",
     "paths": {
-      "@ccremer/kubernetes-client/*": ["../kubernetes-client/dist/*"]
+      "@nxt-engineering/kubernetes-client/*": ["../kubernetes-client/dist/*"]
     }
   },
   "include": ["src/**/*"],

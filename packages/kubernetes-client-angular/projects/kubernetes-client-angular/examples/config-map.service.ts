@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
-import { KubernetesCollectionService } from '@ccremer/kubernetes-client-angular'
-import { ConfigMap } from '@ccremer/kubernetes-client/types/core'
+import { KubernetesCollectionService } from '@nxt-engineering/kubernetes-client-angular'
+import { ConfigMap } from '@nxt-engineering/kubernetes-client/types/core'
 import { EntityCollectionServiceElementsFactory } from '@ngrx/data'
 
 @Injectable({

@@ -32,7 +32,7 @@ Although, the `KubernetesClientService` can be used natively without store suppo
 
 Install the dependencies
 ```bash
-npm install @ccremer/kubernetes-client @ccremer/kubernetes-client-angular
+npm install @nxt-engineering/kubernetes-client @nxt-engineering/kubernetes-client-angular
 ```
 
 Setup the module with `@ngrx/data` in `main.ts`:
@@ -48,7 +48,7 @@ import {
   KubernetesAuthorizerInterceptor,
   KubernetesDataServiceFactory,
   KubernetesDataServiceFactoryConfig,
-} from '@ccremer/kubernetes-client-angular'
+} from '@nxt-engineering/kubernetes-client-angular'
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 bootstrapApplication(AppComponent, {
@@ -79,8 +79,8 @@ bootstrapApplication(AppComponent, {
 Optional but highly recommended: Create an extendable Service for each entity, for example in `config-map.service.ts`:
 ```typescript
 import { Injectable } from '@angular/core'
-import { KubernetesCollectionService } from '@ccremer/kubernetes-client-angular'
-import { ConfigMap } from '@ccremer/kubernetes-client/types/core'
+import { KubernetesCollectionService } from '@nxt-engineering/kubernetes-client-angular'
+import { ConfigMap } from '@nxt-engineering/kubernetes-client/types/core'
 import { EntityCollectionServiceElementsFactory } from '@ngrx/data'
 
 @Injectable({
@@ -97,7 +97,7 @@ Configure and consume the service in a component like `app.component.ts`:
 ```typescript
 import { Component, OnInit } from '@angular/core'
 import { ConfigMapService } from './config-map.service'
-import { KubernetesAuthorizerService } from '@ccremer/kubernetes-client-angular'
+import { KubernetesAuthorizerService } from '@nxt-engineering/kubernetes-client-angular'
 
 @Component({
   selector: 'app-root',
@@ -163,7 +163,7 @@ The default built-in client can be extended in various points.
 You can also provide your own resource type, as long as it fulfills the `KubeMeta` interface contract.
 
 ```typescript
-import { KubeObject } from '@ccremer/kubernetes-client/types/core'
+import { KubeObject } from '@nxt-engineering/kubernetes-client/types/core'
 
 export interface MyCustomResource extends KubeObject {
   apiVersion: 'customgroup/v1'

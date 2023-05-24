@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { KubernetesCollectionService } from 'kubernetes-client-angular'
-import { SelfSubjectRulesReview } from '@ccremer/kubernetes-client/types/authorization.k8s.io'
+import { SelfSubjectRulesReview } from '@nxt-engineering/kubernetes-client/types/authorization.k8s.io'
 import { EntityActionOptions, EntityCollectionServiceElementsFactory } from '@ngrx/data'
 import { map, Observable } from 'rxjs'
 

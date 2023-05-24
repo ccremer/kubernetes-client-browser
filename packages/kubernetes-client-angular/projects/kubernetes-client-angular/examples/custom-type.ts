@@ -1,4 +1,4 @@
-import { KubeObject } from '@ccremer/kubernetes-client/types/core'
+import { KubeObject } from '@nxt-engineering/kubernetes-client/types/core'
 
 export interface MyCustomResource extends KubeObject {
   apiVersion: 'customgroup/v1'

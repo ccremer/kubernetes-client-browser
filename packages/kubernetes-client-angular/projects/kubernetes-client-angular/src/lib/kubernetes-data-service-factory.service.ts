@@ -1,5 +1,5 @@
 import { Injectable, Optional } from '@angular/core'
-import { KubeObject } from '@ccremer/kubernetes-client/types/core'
+import { KubeObject } from '@nxt-engineering/kubernetes-client/types/core'
 import { EntityCollectionDataService } from '@ngrx/data'
 import { KubernetesDataService } from './kubernetes-data.service'
 import { KubernetesUrlGeneratorService } from './kubernetes-url-generator.service'

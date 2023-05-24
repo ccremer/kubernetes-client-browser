@@ -1,5 +1,5 @@
 {
-  "name": "@ccremer/kubernetes-client",
+  "name": "@nxt-engineering/kubernetes-client",
   "version": "latest",
   "scripts": {
     "build": "lerna run build",
@@ -21,8 +21,8 @@
   ],
   "private": true,
   "type": "module",
-  "repository": "ccremer/kubernetes-client-browser",
-  "author": "ccremer <github.account@chrigel.net>",
+  "repository": "nxt-engineering/kubernetes-client-browser",
+  "author": "nxt-engineering <admin@nxt.engineering>",
   "auto": {
     "plugins": [
       [

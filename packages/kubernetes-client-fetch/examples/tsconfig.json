@@ -3,8 +3,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "@ccremer/kubernetes-client/*": ["../../kubernetes-client/src/*"],
-      "@ccremer/kubernetes-client-fetch": ["../src/"]
+      "@nxt-engineering/kubernetes-client/*": ["../../kubernetes-client/src/*"],
+      "@nxt-engineering/kubernetes-client-fetch": ["../src/"]
     }
   }
 }

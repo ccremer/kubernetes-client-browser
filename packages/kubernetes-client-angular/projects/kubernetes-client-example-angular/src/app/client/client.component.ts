@@ -3,11 +3,11 @@ import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators } 
 import { CommonModule, NgFor } from '@angular/common'
 import { SecretService } from '../store/secret.service'
 import { ConfigMapService } from '../store/config-map.service'
-import { KubeObject } from '@ccremer/kubernetes-client/types/core'
+import { KubeObject } from '@nxt-engineering/kubernetes-client/types/core'
 import { Observable } from 'rxjs'
 import { EntityActionOptions } from '@ngrx/data'
 import { toHttpOptions } from 'kubernetes-client-angular'
-import { ListOptions } from '@ccremer/kubernetes-client/api'
+import { ListOptions } from '@nxt-engineering/kubernetes-client/api'
 
 @Component({
   standalone: true,
