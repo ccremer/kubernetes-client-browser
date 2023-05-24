@@ -1,6 +1,6 @@
 {
   "name": "@nxt-engineering/kubernetes-client",
-  "version": "0.7.0",
+  "version": "1.0.0",
   "description": "Generic Kubernetes client run in the Browser",
   "scripts": {
     "preformat": "node ../../README.cjs README.md.njk > README.md",
