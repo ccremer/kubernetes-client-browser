@@ -21,6 +21,15 @@
       },
       {
         "matchPaths": [
+          "packages/kubernetes-client-fetch/package.json"
+        ],
+        "groupName": "fetch packages",
+        "schedule": [
+          "on the first day of the month"
+        ]
+      },
+      {
+        "matchPaths": [
           "packages/kubernetes-client-example-fetch/package.json"
         ],
         "groupName": "fetch-example packages",
