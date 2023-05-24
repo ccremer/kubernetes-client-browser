@@ -20,9 +20,8 @@
     "browser"
   ],
   "files": [
-    "esm2020",
-    "fesm2015",
-    "fesm2020",
+    "esm2022",
+    "fesm2022",
     "lib",
     "index.d.ts",
     "public-api.d.ts"
