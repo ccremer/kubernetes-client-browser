@@ -9,4 +9,3 @@ Check out the other packages with concrete implementations:
 
 * [@nxt-engineering/kubernetes-client-fetch](https://www.npmjs.com/package/@nxt-engineering/kubernetes-client-fetch): Uses the Browser's native Fetch API.
 * [@nxt-engineering/kubernetes-client-angular](https://www.npmjs.com/package/@nxt-engineering/kubernetes-client-angular): Made for Angular framework with NGRX state management.
-

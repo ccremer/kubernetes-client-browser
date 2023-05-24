@@ -143,4 +143,3 @@ Other than that, this package follows SemVer.
 
 There is an official [Kubernetes client](https://github.com/kubernetes-client/javascript).
 However, it's not yet ready for browsers and development seems a bit slow.
-
