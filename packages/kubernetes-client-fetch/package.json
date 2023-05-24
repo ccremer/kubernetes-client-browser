@@ -1,5 +1,5 @@
 {
-  "name": "@ccremer/kubernetes-client-fetch",
+  "name": "@nxt-engineering/kubernetes-client-fetch",
   "version": "0.2.0",
   "description": "Generic Kubernetes client run in the Browser",
   "scripts": {
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ccremer/kubernetes-client-browser.git"
+    "url": "git+https://github.com/nxt-engineering/kubernetes-client-browser.git"
   },
   "keywords": [
     "kubernetes",
@@ -23,12 +23,12 @@
     "typescript",
     "fetch"
   ],
-  "author": "ccremer",
+  "author": "nxt-engineering",
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/ccremer/kubernetes-client-browser/issues"
+    "url": "https://github.com/nxt-engineering/kubernetes-client-browser/issues"
   },
-  "homepage": "https://github.com/ccremer/kubernetes-client-browser#readme",
+  "homepage": "https://github.com/nxt-engineering/kubernetes-client-browser#readme",
   "types": "index.d.ts",
   "type": "module",
   "files": [
@@ -40,7 +40,7 @@
     "vitest": "0.30.1"
   },
   "peerDependencies": {
-    "@ccremer/kubernetes-client": "*"
+    "@nxt-engineering/kubernetes-client": "*"
   },
   "publishConfig": {
     "access": "public"

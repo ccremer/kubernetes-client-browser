@@ -1,5 +1,5 @@
 {
-  "name": "@ccremer/kubernetes-client-angular",
+  "name": "@nxt-engineering/kubernetes-client-angular",
   "version": "0.7.0",
   "scripts": {
     "ng": "ng",
@@ -38,7 +38,7 @@
     "zone.js": "~0.13.0"
   },
   "peerDependencies": {
-    "@ccremer/kubernetes-client": "*"
+    "@nxt-engineering/kubernetes-client": "*"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "16.0.1",

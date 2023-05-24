@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import { ConfigMapService } from './config-map.service'
-import { KubernetesAuthorizerService } from '@ccremer/kubernetes-client-angular'
+import { KubernetesAuthorizerService } from '@nxt-engineering/kubernetes-client-angular'
 
 @Component({
   selector: 'app-root',

@@ -1,5 +1,5 @@
 {
-  "name": "@ccremer/kubernetes-client-example-fetch",
+  "name": "@nxt-engineering/kubernetes-client-example-fetch",
   "private": true,
   "scripts": {
     "format": "prettier --write ./**/*.{js,html,ts,json}",
@@ -26,8 +26,8 @@
     "bootstrap": "5.2.3"
   },
   "peerDependencies": {
-    "@ccremer/kubernetes-client": "*",
-    "@ccremer/kubernetes-client-fetch": "*"
+    "@nxt-engineering/kubernetes-client": "*",
+    "@nxt-engineering/kubernetes-client-fetch": "*"
   },
   "publishConfig": {
     "access": "public"

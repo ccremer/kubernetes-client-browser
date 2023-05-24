@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - nxt-move
 
 jobs:
   release:

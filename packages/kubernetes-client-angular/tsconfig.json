@@ -10,7 +10,7 @@
     "noPropertyAccessFromIndexSignature": true,
     "paths": {
       "kubernetes-client-angular": ["dist"],
-      "@ccremer/kubernetes-client/*": ["../kubernetes-client/dist/*"]
+      "@nxt-engineering/kubernetes-client/*": ["../kubernetes-client/dist/*"]
     },
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,

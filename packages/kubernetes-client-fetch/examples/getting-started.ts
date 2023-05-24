@@ -1,5 +1,5 @@
-import { KubeClientBuilder } from '@ccremer/kubernetes-client-fetch'
-import { SelfSubjectRulesReview } from '@ccremer/kubernetes-client/types/authorization.k8s.io'
+import { KubeClientBuilder } from '@nxt-engineering/kubernetes-client-fetch'
+import { SelfSubjectRulesReview } from '@nxt-engineering/kubernetes-client/types/authorization.k8s.io'
 
 // token:
 // a valid JWT for Kubernetes.

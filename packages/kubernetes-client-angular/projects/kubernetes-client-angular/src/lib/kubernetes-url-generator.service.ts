@@ -1,5 +1,5 @@
 import { Injectable, Optional } from '@angular/core'
-import { HttpMethods, KubernetesUrlGenerator, UrlGenerator } from '@ccremer/kubernetes-client/api'
+import { HttpMethods, KubernetesUrlGenerator, UrlGenerator } from '@nxt-engineering/kubernetes-client/api'
 import { KubernetesDataServiceFactoryConfig } from './kubernetes-data-service-factory.service'
 
 @Injectable({

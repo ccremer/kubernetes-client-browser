@@ -9,7 +9,7 @@ import {
   KubernetesAuthorizerInterceptor,
   KubernetesDataServiceFactory,
   KubernetesDataServiceFactoryConfig,
-} from '@ccremer/kubernetes-client-angular'
+} from '@nxt-engineering/kubernetes-client-angular'
 import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from '@angular/common/http'
 
 bootstrapApplication(AppComponent, {

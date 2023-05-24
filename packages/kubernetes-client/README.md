@@ -5,8 +5,8 @@ Ideal for SPA-like apps and CRDs.
 
 This package is the core of a Kubernetes client made for a frontend.
 
-Checkout the other packages with concrete implementations:
+Check out the other packages with concrete implementations:
 
-* `@ccremer/kubernetes-client-fetch`: Uses the Browser's native Fetch API.
-* `@ccremer/kubernetes-client-angular`: Made for Angular framework with NGRX state management.
+* [@nxt-engineering/kubernetes-client-fetch](https://www.npmjs.com/package/@nxt-engineering/kubernetes-client-fetch): Uses the Browser's native Fetch API.
+* [@nxt-engineering/kubernetes-client-angular](https://www.npmjs.com/package/@nxt-engineering/kubernetes-client-angular): Made for Angular framework with NGRX state management.
 

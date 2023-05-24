@@ -27,13 +27,13 @@ Ideal for SPA-like apps and CRDs.
 
 Install the client
 ```bash
-npm install @ccremer/kubernetes-client @ccremer/kubernetes-client-fetch
+npm install @nxt-engineering/kubernetes-client @nxt-engineering/kubernetes-client-fetch
 ```
 
 Setup the client and make a request
 ```typescript
-import { KubeClientBuilder } from '@ccremer/kubernetes-client-fetch'
-import { SelfSubjectRulesReview } from '@ccremer/kubernetes-client/types/authorization.k8s.io'
+import { KubeClientBuilder } from '@nxt-engineering/kubernetes-client-fetch'
+import { SelfSubjectRulesReview } from '@nxt-engineering/kubernetes-client/types/authorization.k8s.io'
 
 // token:
 // a valid JWT for Kubernetes.
@@ -64,7 +64,7 @@ client
 You can also provide your own resource type, as long as it fulfills the `KubeMeta` interface contract.
 
 ```typescript
-import { KubeObject } from '@ccremer/kubernetes-client/types/core'
+import { KubeObject } from '@nxt-engineering/kubernetes-client/types/core'
 
 export interface MyCustomResource extends KubeObject {
   apiVersion: 'customgroup/v1'
@@ -130,7 +130,7 @@ The default built-in client can be extended in various points.
   However, currently only a variant with a JWT token is supported, created with `Config.FromToken()` combined with `DefaultAuthorizer`.
 * There is no validation to the passed in payloads or returned results.
 * Many Kubernetes resource types are missing, and they're not (yet?) generated from the Kubernetes API scheme.
-  Implement your own or better yet, contribute to `@ccremer/kubernetes-client` :)
+  Implement your own or better yet, contribute to `@nxt-engineering/kubernetes-client` :)
 
 ## Production readiness
 

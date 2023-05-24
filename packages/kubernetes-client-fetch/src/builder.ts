@@ -1,4 +1,4 @@
-import { Config, KubeConfig, KubernetesUrlGenerator, UrlGenerator } from '@ccremer/kubernetes-client/api'
+import { Config, KubeConfig, KubernetesUrlGenerator, UrlGenerator } from '@nxt-engineering/kubernetes-client/api'
 import { FetchClient, FetchFn } from './fetch-client'
 import { Authorizer, DefaultAuthorizer, NoopAuthorizer } from './authorizer'
 import { Client } from './client'
