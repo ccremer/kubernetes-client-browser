@@ -1,7 +1,7 @@
-import type { PageLoad, PageLoadEvent } from "./$types"
+import type { PageLoad, PageLoadEvent } from "./$types.d.ts"
+import { z } from "zod"
 
 export const load = ((e: PageLoadEvent) => {
-  console.debug("Page loaded", e.route.id)
   return {
     fetch: e.fetch,
   }

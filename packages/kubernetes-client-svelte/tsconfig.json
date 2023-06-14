@@ -9,6 +9,20 @@
     "skipLibCheck": true,
     "sourceMap": true,
     "strict": true,
-    "moduleResolution": "NodeNext"
+    "moduleResolution": "NodeNext",
+    "paths": {
+      "@nxt-engineering/kubernetes-client/*": [
+        "../kubernetes-client/dist/*"
+      ],
+      "@nxt-engineering/kubernetes-client-fetch/*": [
+        "../kubernetes-client-fetch/dist/*"
+      ],
+      "$lib": [
+        "./src/lib"
+      ],
+      "$lib/*": [
+        "./src/lib/*"
+      ]
+    }
   }
 }
