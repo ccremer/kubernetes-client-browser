@@ -1,0 +1,41 @@
+{
+  "pr_template": "- ${{TITLE}} (#${{NUMBER}})",
+  "categories": [
+    {
+      "title": "## 🔎 Breaking Changes",
+      "labels": [
+        "major"
+      ]
+    },
+    {
+      "title": "## 🚀 Features",
+      "labels": [
+        "minor"
+      ]
+    },
+    {
+      "title": "## 🐛 Fixes",
+      "labels": [
+        "patch"
+      ]
+    },
+    {
+      "title": "## 🛠️ Internal Changes",
+      "labels": [
+        "internal"
+      ]
+    },
+    {
+      "title": "## 📄 Documentation",
+      "labels": [
+        "documentation"
+      ]
+    },
+    {
+      "title": "## 🔗 Dependency Updates",
+      "labels": [
+        "dependencies"
+      ]
+    }
+  ]
+}

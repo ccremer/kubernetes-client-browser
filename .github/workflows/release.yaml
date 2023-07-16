@@ -30,6 +30,21 @@ jobs:
         run:
           echo "//registry.npmjs.org/:_authToken=${{ secrets. NPM_TOKEN }}" >> ./.npmrc
 
+      - name: Build changelog from PRs with labels
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@v4
+        with:
+          configuration: ".github/changelog-configuration.json"
+          # PreReleases still get a changelog, but the next full release gets a diff since the last full release,
+          # combining possible changelogs of all previous PreReleases in between. PreReleases show a partial changelog
+          # since last PreRelease.
+          ignorePreReleases: "${{ !contains(github.ref, '-rc') }}"
+          outputFile: .github/release-notes.md
+          exportCollected: true
+          exportOnly: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Create Release
         env:
           GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
@@ -38,3 +53,13 @@ jobs:
           npm install
           npm run build
           npm run release
+
+      - name: Echo External Repo Configuration Changelog
+        env:
+          CHANGELOG: ${{ steps.external_changelog.outputs.changelog }}
+          CHANGELOG_SECOND: ${{ steps.external_changelog_second.outputs.changelog }}
+        run: |
+          echo "First:"
+          echo "$CHANGELOG"
+          echo "Second:"
+          echo "$CHANGELOG_SECOND"
