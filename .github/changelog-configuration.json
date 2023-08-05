@@ -1,0 +1,50 @@
+{
+  "pr_template": "- ${{TITLE}} by @${{AUTHOR}} (#${{NUMBER}})",
+  "label_extractor": [
+    {
+      "pattern": "release ([a-z:-]+)",
+      "target": "$1",
+      "method": "match"
+    }
+  ],
+  "categories": [
+    {
+      "title": "## 🚀 Features",
+      "key": "features",
+      "labels": [
+        "minor"
+      ]
+    },
+    {
+      "title": "## 🛠️ Minor Changes",
+      "labels": [
+        "internal"
+      ]
+    },
+    {
+      "title": "## 🔎 Breaking Changes",
+      "labels": [
+        "major"
+      ]
+    },
+    {
+      "title": "## 🐛 Fixes",
+      "labels": [
+        "patch"
+      ]
+    },
+    {
+      "title": "## 📄 Documentation",
+      "labels": [
+        "documentation"
+      ]
+    },
+    {
+      "title": "## 🔗 Dependency Updates",
+      "labels": [
+        "dependencies"
+      ]
+    }
+  ],
+  "template": "${{CHANGELOG}}"
+}

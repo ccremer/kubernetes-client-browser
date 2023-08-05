@@ -9,7 +9,10 @@ import { KubernetesAuthorizerService } from '@nxt-engineering/kubernetes-client-
   standalone: true,
 })
 export class AppComponent implements OnInit {
-  constructor(private configMapService: ConfigMapService, authorizer: KubernetesAuthorizerService) {
+  constructor(
+    private configMapService: ConfigMapService,
+    authorizer: KubernetesAuthorizerService
+  ) {
     authorizer.setToken('...')
   }
 

@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - versioning
 
 jobs:
   release:
@@ -28,13 +29,46 @@ jobs:
 
       - name: Setup npm publish
         run:
-          echo "//registry.npmjs.org/:_authToken=${{ secrets. NPM_TOKEN }}" >> ./.npmrc
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ./.npmrc
 
-      - name: Create Release
+      - name: Build
         env:
           GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: |
           npm install
           npm run build
-          npm run release
+
+      - name: Determine Semver
+        env:
+          GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        run: |
+          echo "SEMVER_TYPE=$(npx auto version)" >> $GITHUB_ENV
+
+      - name: Publish Packages
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          SEMVER_TYPE: prepatch # just to avoid publishing real 2.0.0
+        run: |
+          npx lerna version ${{ env.SEMVER_TYPE }} --force-publish --ignore-changes --preid rc --yes --message "Bump versions [skip ci]"
+          #npx lerna publish from-git --yes
+          echo "NEXT_VERSION=$(yq e '.version' -o yaml lerna.json)" >> $GITHUB_ENV
+
+      - name: Build changelog
+        id: build_changelog
+        uses: mikepenz/release-changelog-builder-action@v3
+        with:
+          configuration: ".github/changelog-configuration.json"
+          outputFile: .github/release-notes.md
+          # PreReleases still get a changelog, but the next full release gets a diff since the last full release,
+          #  combining possible changelogs of all previous PreReleases in between.
+          # PreReleases show a partial changelog since last PreRelease.
+          ignorePreReleases: "${{ !contains(env.NEXT_VERSION, '-rc') }}"
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+      - name: Create Release
+        env:
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
+        run: |
+          gh release create "v${{ env.NEXT_VERSION }}" --notes-file .github/release-notes.md --prerelease=${{ contains(env.NEXT_VERSION, '-rc') }} --title "v${{ env.NEXT_VERSION }}"

@@ -1,6 +1,6 @@
 {
   "name": "@nxt-engineering/kubernetes-client-fetch",
-  "version": "1.0.0",
+  "version": "2.0.7-rc.0",
   "description": "Generic Kubernetes client run in the Browser",
   "scripts": {
     "preformat": "node ../../README.cjs README.md.njk > README.md",

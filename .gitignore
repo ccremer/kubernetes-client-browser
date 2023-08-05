@@ -28,6 +28,7 @@ node_modules/
 # generated output
 dist
 /angular.json
+.github/release-notes.md
 
 # test output
 playwright-report

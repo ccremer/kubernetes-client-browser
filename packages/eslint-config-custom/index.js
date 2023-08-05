@@ -1,10 +1,9 @@
 module.exports = {
-  extends: ['turbo', 'prettier'],
+  extends: ['prettier'],
   overrides: [
     {
       files: ['*.ts'],
       parserOptions: {
-        project: ['tsconfig.json'],
         createDefaultProgram: true,
       },
       extends: [
