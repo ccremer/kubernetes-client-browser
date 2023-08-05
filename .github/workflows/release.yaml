@@ -29,7 +29,7 @@ jobs:
 
       - name: Setup npm publish
         run:
-          echo "//registry.npmjs.org/:_authToken=${{ secrets. NPM_TOKEN }}" >> ./.npmrc
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ./.npmrc
 
       - name: Build
         env:
@@ -43,7 +43,6 @@ jobs:
         env:
           GH_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: |
-          echo "PREVIOUS_VERSION=$(yq e '.version' -o yaml lerna.json)" >> $GITHUB_ENV
           echo "SEMVER_TYPE=$(npx auto version)" >> $GITHUB_ENV
 
       - name: Publish Packages
@@ -52,7 +51,7 @@ jobs:
           SEMVER_TYPE: prepatch # just to avoid publishing real 2.0.0
         run: |
           npx lerna version ${{ env.SEMVER_TYPE }} --force-publish --ignore-changes --preid rc --yes --message "Bump versions [skip ci]"
-          npx lerna publish from-git --yes
+          #npx lerna publish from-git --yes
           echo "NEXT_VERSION=$(yq e '.version' -o yaml lerna.json)" >> $GITHUB_ENV
 
       - name: Build changelog
@@ -65,8 +64,6 @@ jobs:
           #  combining possible changelogs of all previous PreReleases in between.
           # PreReleases show a partial changelog since last PreRelease.
           ignorePreReleases: "${{ !contains(env.NEXT_VERSION, '-rc') }}"
-          fromTag: ${{ env.PREVIOUS_VERSION }}
-          toTag: ${{ env.NEXT_VERSION }}
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
@@ -74,4 +71,4 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: |
-          gh release create ${{ env.NEXT_VERSION }} --notes-file .github/release-notes.md --prerelease=${{ contains(env.NEXT_VERSION, '-rc') }}
+          gh release create "v${{ env.NEXT_VERSION }}" --notes-file .github/release-notes.md --prerelease=${{ contains(env.NEXT_VERSION, '-rc') }} --title "v${{ env.NEXT_VERSION }}"
