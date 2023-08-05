@@ -1,7 +1,6 @@
 {
   "$schema": "node_modules/lerna/schemas/lerna-schema.json",
-  "useWorkspaces": true,
-  "version": "independent",
+  "version": "1.0.0",
   "command": {
     "version": {
       "private": false

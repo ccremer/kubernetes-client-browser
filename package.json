@@ -10,10 +10,10 @@
     "release": "auto shipit --no-changelog"
   },
   "devDependencies": {
-    "auto": "10.46.0",
-    "lerna": "6.6.1",
+    "auto": "11.0.0",
+    "lerna": "7.1.4",
     "nunjucks": "3.2.4",
-    "prettier": "2.8.8",
+    "prettier": "3.0.1",
     "typescript": "5.0.4"
   },
   "workspaces": [
@@ -28,7 +28,6 @@
       [
         "npm",
         {
-          "forcePublish": false,
           "publishFolder": "./dist"
         }
       ]
