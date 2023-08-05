@@ -22,7 +22,10 @@ export interface UrlGenerator {
  * Default {@link UrlGenerator} that generates API endpoint paths based on resource metadata.
  */
 export class KubernetesUrlGenerator implements UrlGenerator {
-  constructor(private apiBase = '', private pluralizer: Pluralizer = new DefaultPluralizer()) {}
+  constructor(
+    private apiBase = '',
+    private pluralizer: Pluralizer = new DefaultPluralizer()
+  ) {}
 
   buildEndpoint(
     method: HttpMethods,

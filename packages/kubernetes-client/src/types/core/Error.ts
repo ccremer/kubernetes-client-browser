@@ -12,7 +12,10 @@ export interface ErrorStatus extends Status {
 }
 
 export class KubernetesError extends Error {
-  constructor(msg: string, public readonly status: ErrorStatus) {
+  constructor(
+    msg: string,
+    public readonly status: ErrorStatus
+  ) {
     super(msg)
   }
 }

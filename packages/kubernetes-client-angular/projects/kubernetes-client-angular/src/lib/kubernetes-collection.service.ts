@@ -14,7 +14,10 @@ export class KubernetesCollectionService<T extends KubeObject> extends EntityCol
   private memoizedAllEntities = false
   private memoizedAllPerNamespace = new Map<string, boolean>()
 
-  constructor(entityName: string, private serviceElementsFactory: EntityCollectionServiceElementsFactory) {
+  constructor(
+    entityName: string,
+    private serviceElementsFactory: EntityCollectionServiceElementsFactory
+  ) {
     super(entityName, serviceElementsFactory)
   }
 

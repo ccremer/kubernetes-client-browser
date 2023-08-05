@@ -11,7 +11,11 @@ export class KubernetesDataService<T extends KubeObject> implements EntityCollec
   protected _name: string
   protected _gvk: { apiVersion: string; kind: string }
 
-  constructor(entityName: string, protected client: KubernetesClientService, protected config?: DataServiceConfig) {
+  constructor(
+    entityName: string,
+    protected client: KubernetesClientService,
+    protected config?: DataServiceConfig
+  ) {
     this._name = entityName
     this._gvk = getGVK(entityName)
   }

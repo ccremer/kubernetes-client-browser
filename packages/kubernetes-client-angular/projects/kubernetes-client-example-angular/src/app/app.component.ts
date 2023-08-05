@@ -10,7 +10,10 @@ import { KubernetesAuthorizerService } from 'kubernetes-client-angular'
   imports: [RouterOutlet],
 })
 export class AppComponent implements OnInit {
-  constructor(private router: Router, private authorizer: KubernetesAuthorizerService) {}
+  constructor(
+    private router: Router,
+    private authorizer: KubernetesAuthorizerService
+  ) {}
   ngOnInit(): void {
     const loggedIn = sessionStorage.getItem('loggedIn')
     if (loggedIn === 'true') {
