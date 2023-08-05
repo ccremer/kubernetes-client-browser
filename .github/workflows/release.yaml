@@ -51,7 +51,7 @@ jobs:
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           SEMVER_TYPE: prepatch # just to avoid publishing real 2.0.0
         run: |
-          npx lerna version ${{ env.SEMVER_TYPE }} --force-publish --ignore-changes --preid rc --yes
+          npx lerna version ${{ env.SEMVER_TYPE }} --force-publish --ignore-changes --preid rc --yes --message "Bump versions [skip ci]"
           npx lerna publish from-git --yes
           echo "NEXT_VERSION=$(yq e '.version' -o yaml lerna.json)" >> $GITHUB_ENV
 
@@ -72,6 +72,6 @@ jobs:
 
       - name: Create Release
         env:
-          GITHUB_TOKEN: ${{ github.token }}
+          GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
         run: |
           gh release create ${{ env.NEXT_VERSION }} --notes-file .github/release-notes.md --prerelease=${{ contains(env.NEXT_VERSION, '-rc') }}
