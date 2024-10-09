@@ -11,10 +11,10 @@
   },
   "devDependencies": {
     "auto": "10.46.0",
-    "lerna": "6.6.1",
+    "lerna": "6.6.2",
     "nunjucks": "3.2.4",
     "prettier": "2.8.8",
-    "typescript": "5.0.4"
+    "typescript": "5.6.3"
   },
   "workspaces": [
     "packages/*"
