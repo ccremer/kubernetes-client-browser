@@ -35,26 +35,26 @@
     "@ngrx/store": "^16.0.0",
     "rxjs": "~7.8.0",
     "tslib": "2.5.0",
-    "zone.js": "~0.13.0"
+    "zone.js": "~0.15.0"
   },
   "peerDependencies": {
     "@nxt-engineering/kubernetes-client": "*"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "16.0.1",
-    "@angular-eslint/builder": "16.0.2",
-    "@angular-eslint/eslint-plugin": "16.0.2",
-    "@angular-eslint/eslint-plugin-template": "16.0.2",
-    "@angular-eslint/schematics": "16.0.2",
-    "@angular-eslint/template-parser": "16.0.2",
-    "@angular/cli": "~16.0.2",
+    "@angular-devkit/build-angular": "16.2.16",
+    "@angular-eslint/builder": "16.3.1",
+    "@angular-eslint/eslint-plugin": "16.3.1",
+    "@angular-eslint/eslint-plugin-template": "16.3.1",
+    "@angular-eslint/schematics": "16.3.1",
+    "@angular-eslint/template-parser": "16.3.1",
+    "@angular/cli": "~16.2.0",
     "@angular/compiler-cli": "^16.0.2",
-    "@ngrx/store-devtools": "16.0.0",
+    "@ngrx/store-devtools": "16.3.0",
     "@playwright/test": "^1.32.3",
-    "bootstrap": "5.2.3",
+    "bootstrap": "5.3.3",
     "eslint-config-custom": "*",
     "eslint-plugin-ngrx": "2.1.4",
-    "jose": "4.14.4",
+    "jose": "4.15.9",
     "ng-packagr": "^16.0.1"
   },
   "publishConfig": {

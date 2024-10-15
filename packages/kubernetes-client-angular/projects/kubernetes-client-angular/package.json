@@ -6,7 +6,7 @@
     "@nxt-engineering/kubernetes-client": "*"
   },
   "dependencies": {
-    "tslib": "2.5.0"
+    "tslib": "2.8.0"
   },
   "repository": {
     "type": "git",
